@@ -122,6 +122,9 @@
 
 - (void)interstitialDidTrackImpression {
     if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(adDidOpen)]) {
+            [self.delegate adDidOpen];
+        }
         if ([self.delegate respondsToSelector:@selector(adDidShowSucceed)]) {
             [self.delegate adDidShowSucceed];
         }
