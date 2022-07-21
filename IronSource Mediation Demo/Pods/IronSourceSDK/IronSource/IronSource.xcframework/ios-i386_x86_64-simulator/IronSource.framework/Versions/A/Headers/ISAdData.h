@@ -6,22 +6,21 @@
 //  Copyright © 2021 ironSource. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ISAdData : NSObject
 
-@property (nonatomic, strong, readonly) NSString                    *serverData;
-@property (nonatomic, strong, readonly) NSDictionary                *configuration;
+@property (nonatomic, strong, readonly, nullable) NSString                  *serverData;
+@property (nonatomic, strong, readonly) NSDictionary                        *configuration;
 
 
--(instancetype)initWithData:(NSString*)serverData configuration:(NSDictionary*)configuration;
+-(instancetype)initWithData:(nullable NSString*)serverData configuration:(NSDictionary*)configuration;
 
--(NSString*)getString:(NSString*)key;
+-(nullable NSString*)getString:(NSString* )key;
 -(NSInteger)getInt:(NSString*)key;
 -(BOOL)getBoolean:(NSString*)key;
--(NSNumber*)getNumber:(NSString*)key;
+-(nullable NSNumber*)getNumber:(NSString*)key;
 
 @end
 

@@ -11,6 +11,7 @@
 
 typedef NS_ENUM(NSInteger, ISAdapterErrorType) {
     ISAdapterErrorTypeNoFill,
+    ISAdapterErrorTypeAdExpired,
     ISAdapterErrorTypeInternal
 };
 

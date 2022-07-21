@@ -52,11 +52,12 @@ typedef enum {
 @property (nonatomic, assign) BOOL autoShowOnLoad;
 @property (nonatomic) HyBidBannerPosition bannerPosition;
 @property (nonatomic, assign) BOOL isAutoCacheOnLoad;
+@property (nonatomic) NSInteger autoRefreshTimeInSeconds;
 
-- (instancetype)initWithSize:(HyBidAdSize *)adSize NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithSize:(HyBidAdSize *)adSize;
 - (instancetype)initWithCoder:(NSCoder *)coder NS_UNAVAILABLE;
-- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (void)loadWithZoneID:(NSString *)zoneID andWithDelegate:(NSObject<HyBidAdViewDelegate> *)delegate;
+- (void)loadWithZoneID:(NSString *)zoneID withAppToken:(NSString *)appToken andWithDelegate:(NSObject<HyBidAdViewDelegate> *)delegate;
 - (void)loadWithZoneID:(NSString *)zoneID withPosition:(HyBidBannerPosition)bannerPosition andWithDelegate:(NSObject<HyBidAdViewDelegate> *)delegate;
 - (void)setupAdView:(UIView *)adView;
 - (void)renderAd;
@@ -65,6 +66,10 @@ typedef enum {
 - (void)stopTracking;
 - (void)prepare;
 - (void)show;
+- (void)refresh;
+- (void)stopAutoRefresh;
 - (HyBidAdPresenter *)createAdPresenter;
+
+- (void)setMediationVendor:(NSString *)mediationVendor;
 
 @end

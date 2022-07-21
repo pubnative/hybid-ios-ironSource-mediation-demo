@@ -14,6 +14,7 @@
 #import "ISRewardedVideoDelegate.h"
 #import "ISOfferwallDelegate.h"
 #import "ISInterstitialDelegate.h"
+#import "ISRewardedVideoManualDelegate.h"
 #import "ISLogDelegate.h"
 #import "ISConfigurations.h"
 #import "ISPlacementInfo.h"
@@ -28,6 +29,14 @@
 #import "ISBannerSize.h"
 #import "ISImpressionDataDelegate.h"
 #import "ISConsentViewDelegate.h"
+
+// imports used for custom adapters infra
+#import "ISBaseInterstitial.h"
+#import "ISBaseRewardedVideo.h"
+#import "ISBaseNetworkAdapter.h"
+#import "ISAdapterErrors.h"
+#import "ISDataKeys.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define IS_REWARDED_VIDEO @"rewardedvideo"
@@ -35,8 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define IS_OFFERWALL @"offerwall"
 #define IS_BANNER @"banner"
 
-static NSString * const MEDIATION_SDK_VERSION     = @"7.1.14";
-static NSString * GitHash = @"64e5b8575";
+static NSString * const MEDIATION_SDK_VERSION     = @"7.2.0";
+static NSString * GitHash = @"c5e106383";
 
 /*
     This constant is for sending an external impression data from mopub
@@ -107,7 +116,7 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  
  @param segment A segment name, which should not exceed 64 characters.
  */
-+ (void)setMediationSegment:(NSString *)segment __attribute__((deprecated("This method has been deprecated and won’t be included in ironSource SDK versions 7.2.0 and above.")));
++ (void)setMediationSegment:(NSString *)segment __attribute__((deprecated("This method has been deprecated and won’t be included in ironSource SDK versions 7.3.0 and above.")));
 
 /**
  @abstract Sets a segment.
@@ -298,6 +307,24 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  @return YES if rewarded video is ready to be played, NO otherwise.
  */
 + (BOOL)hasISDemandOnlyRewardedVideo:(NSString *)instanceId;
+
+
+/**
+ @abstract Sets Rewarded Video flow for manual load.
+ @discussion The ironSource SDK fires several events to inform you of ad availability.
+ @discussion By implementing the ISRewardedVideoManualDelegate you will receive the Rewarded Video events.
+ @discussion Pass this object within the ISRewardedVideoManualDelegate(…) method.
+ @discussion The SDK will notify your delegate of all possible events.
+ @param delegate The 'ISRewardedVideoManualDelegate' for IronSource to send callbacks to.
+ */
++ (void)setRewardedVideoManualDelegate:(nullable id<ISRewardedVideoManualDelegate>)delegate;
+
+/**
+ @abstract Loads a Rewarded Video.
+ @discussion This method will load Rewarded Video ads from the underlying ad networks according to their priority when in manual Rewarded Video mode.
+ */
++ (void)loadRewardedVideo;
+
 
 #pragma mark - Interstitial
 
@@ -516,7 +543,7 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  @param delegate The 'ISImpressionDataDelegate' for IronSource to send callbacks to.
  */
 
-+ (void)setImpressionDataDelegate:(id<ISImpressionDataDelegate>)delegate __attribute__((deprecated("This method has been deprecated and won’t be included in ironSource SDK versions 7.2.0 and above. Please use addImpressionDataDelegate instead.")));
++ (void)setImpressionDataDelegate:(id<ISImpressionDataDelegate>)delegate __attribute__((deprecated("This method has been deprecated and won’t be included in ironSource SDK versions 7.3.0 and above. Please use addImpressionDataDelegate instead.")));
 
 /**
  @abstract Adds the delegate for impression data callbacks.

@@ -53,6 +53,5 @@
 - (void)setRewardedVideoSettings:(NSDictionary *)rewardedVideoSettings;
 - (void)setBannerSettings:(NSDictionary *)bannerSettings;
 - (void)setProviderDefaultInstance:(NSString *)providerDefaultInstance;
-- (void)setCustomNetwork:(NSString *)customNetwork;
 - (NSString *)customNetworkAdapterNameForAdUnit:(ISAdUnit *)adUnit;
 @end

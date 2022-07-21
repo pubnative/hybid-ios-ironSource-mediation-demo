@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
 #import "IronSource/ISAdData.h"
 
 @interface ISVerveUtils : NSObject

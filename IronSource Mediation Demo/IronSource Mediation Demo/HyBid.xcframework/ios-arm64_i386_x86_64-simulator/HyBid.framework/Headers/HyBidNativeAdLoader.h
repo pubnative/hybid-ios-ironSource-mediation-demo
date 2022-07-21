@@ -33,7 +33,12 @@
 @interface HyBidNativeAdLoader : NSObject
 
 @property (nonatomic, assign) BOOL isMediation;
+@property (nonatomic) NSInteger autoRefreshTimeInSeconds;
 
 - (void)loadNativeAdWithDelegate:(NSObject<HyBidNativeAdLoaderDelegate> *)delegate withZoneID:(NSString *)zoneID;
+- (void)loadNativeAdWithDelegate:(NSObject<HyBidNativeAdLoaderDelegate> *)delegate withZoneID:(NSString *)zoneID withAppToken:(NSString *)appToken;
+- (void)refresh;
+- (void)stopAutoRefresh;
+- (void)prepareNativeAdWithDelegate:(NSObject<HyBidNativeAdLoaderDelegate> *)delegate withContent:(NSString *)adContent;
 
 @end

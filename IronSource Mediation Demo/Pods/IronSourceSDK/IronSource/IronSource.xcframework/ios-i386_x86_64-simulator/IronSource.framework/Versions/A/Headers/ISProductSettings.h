@@ -13,7 +13,7 @@
 @property (readonly, strong)    NSArray         *placements;
 @property (readonly, assign)    NSUInteger      maxNumOfAdaptersToLoadOnStart;
 @property (readonly, assign)    BOOL            advancedLoading;
-@property (readonly, assign)    double          adapterTimeOutInSeconds;
+@property (readonly, assign)    NSUInteger      adapterTimeOutInSeconds;
 @property (readonly, strong)    NSString        *algo;
 @property (nonatomic, copy)     NSString        *backFillProviderName;
 @property (nonatomic, copy)     NSString        *premiumProviderName;
@@ -21,16 +21,18 @@
 @property (assign)              NSInteger       loadRVInterval;
 @property (assign)              NSUInteger      delayLoadFailureNotificationInSeconds;
 @property (readonly,assign)     NSInteger       expiredDurationInMinutes;
+@property (readonly,assign)     NSInteger       delayLoadFailureTimeout;
 
 
 
 - (instancetype) initWithplacements:(NSArray *)placements
       maxNumOfAdaptersToLoadOnStart:(NSUInteger)maxAdapters
                     advancedLoading:(BOOL)advancedLoading
-            adapterTimeOutInSeconds:(double)adapterTimeout
+            adapterTimeOutInSeconds:(NSUInteger)adapterTimeout
 delayLoadFailureNotificationInSeconds:(NSUInteger)delayLoadFailure
                                algo:(NSString *)algo
                backFillProviderName:(NSString *)backFillProviderName
                 premiumProviderName:(NSString *)premiumProviderName
-           expiredDurationInMinutes:(NSInteger)expiredDurationInMinutes;
+           expiredDurationInMinutes:(NSInteger)expiredDurationInMinutes
+            delayLoadFailureTimeout:(NSInteger)delayLoadFailureTimeout;
 @end

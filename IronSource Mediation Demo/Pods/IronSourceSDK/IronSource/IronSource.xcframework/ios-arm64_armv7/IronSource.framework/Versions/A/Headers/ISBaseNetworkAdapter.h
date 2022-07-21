@@ -6,15 +6,16 @@
 //  Copyright © 2021 ironSource. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "ISAdapterBaseProtocol.h"
 #import "ISAdapterDebugProtocol.h"
 #import "ISAdapterConsentProtocol.h"
 #import "ISAdapterMetaDataProtocol.h"
+#import "ISAdapterSettingsProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ISBaseNetworkAdapter : NSObject<ISAdapterBaseProtocol, ISAdapterDebugProtocol, ISAdapterConsentProtocol, ISAdapterMetaDataProtocol>
+@interface ISBaseNetworkAdapter : NSObject
+<ISAdapterBaseProtocol, ISAdapterDebugProtocol, ISAdapterConsentProtocol, ISAdapterMetaDataProtocol, ISAdapterSettingsProtocol>
 
 @end
 
