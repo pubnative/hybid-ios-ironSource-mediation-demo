@@ -6,7 +6,6 @@
 //  Copyright © 2021 ironSource. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "ISAdUnit.h"
 #import "ISAdapterConfig.h"
 #import "ISAdapterBaseProtocol.h"
@@ -18,26 +17,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ISBaseAdAdapterProtocol <NSObject>
 
-- (void)loadAdWithAdData:(ISAdData*)adData delegate:(id<ISAdapterAdDelegate>)delegate;
-- (void)showAdWithViewController:(UIViewController *)viewController adData:(ISAdData*)adData delegate:(id<ISAdapterAdDelegate>)delegate;
-- (BOOL)isAdAvailableWithAdData:(ISAdData*)adData;
+/// load the ad
+/// @param adData data containing the configuration passed from the server and other related parameters passed from the publisher like userId
+/// @param delegate the delegate to return mandatory callbacks based on the network - load success, load failure, ad opened, ad closed, show failed
+/// optional callbacks - show success, clicked
+- (void)loadAdWithAdData:(ISAdData*)adData
+                delegate:(id<ISAdapterAdDelegate>)delegate;
 
 @end
 
 @interface ISBaseAdAdapter : NSObject<ISBaseAdAdapterProtocol>
 
-@property (nonatomic, readonly) ISAdUnit                    *adUnit;
+@property (nonatomic) ISAdUnit                              *adUnit; 
 @property (nonatomic, readonly) ISAdapterConfig             *adapterConfig;
 
+/// @param adUnit the ad unit represented by the adapter
+/// @param adapterConfig the configuration relevant for the adapter instance
 - (instancetype)initWithAdUnit:(ISAdUnit*)adUnit
                  adapterConfig:(ISAdapterConfig*)adapterConfig;
 
--(id<ISAdapterBaseProtocol>)getNetworkAdapter;
+/// the network sdk version
+-(nullable id<ISAdapterBaseProtocol>)getNetworkAdapter;
 
-/**
-     * When the adapter needs to release certain elements to avoid memory leaks before being destroyed
- */
-- (void) releaseMemory;
+/// When the adapter needs to release certain elements to avoid memory leaks before being destroyed
+- (void)releaseMemory;
 
 @end
 

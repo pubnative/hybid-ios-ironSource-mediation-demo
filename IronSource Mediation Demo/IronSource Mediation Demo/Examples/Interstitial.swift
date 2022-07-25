@@ -1,4 +1,8 @@
-import Foundation
+// For IronSource SDK Mediation Interstitial integration, simply just follow IronSource's documentation.
+// IronSource Mediation HyBid Adapters that you've added to the project, will do all the work.
+// You don't have to write any HyBid related code for this integration.
+
+import UIKit
 
 class Interstitial: UIViewController {
     
@@ -34,25 +38,27 @@ extension Interstitial: ISInterstitialDelegate {
     
     func interstitialDidFailToLoadWithError(_ error: Error!) {
         activityIndicator.stopAnimating()
+        print("Failed to load interstitial with error: \(error.localizedDescription)")
     }
     
     func interstitialDidOpen() {
-        
+        print("interstitialDidOpen")
     }
     
     func interstitialDidClose() {
         showAdButton.isHidden = true
+        print("interstitialDidClose")
     }
     
     func interstitialDidShow() {
-    
+        print("interstitialDidShow")
     }
     
     func interstitialDidFailToShowWithError(_ error: Error!) {
-    
+        print("Failed to show interstitial with error: \(error.localizedDescription)")
     }
     
     func didClickInterstitial() {
-        
+        print("didClickInterstitial")
     }
 }

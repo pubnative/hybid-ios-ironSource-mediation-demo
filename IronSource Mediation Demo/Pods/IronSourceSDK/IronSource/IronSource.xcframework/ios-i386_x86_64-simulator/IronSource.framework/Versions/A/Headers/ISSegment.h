@@ -21,4 +21,7 @@
 @property (nonatomic, strong, readonly) NSDictionary  *customKeys;
 
 - (void)setCustomValue:(NSString *)value forKey:(NSString *)key;
+
+- (NSDictionary*)getData;
+
 @end

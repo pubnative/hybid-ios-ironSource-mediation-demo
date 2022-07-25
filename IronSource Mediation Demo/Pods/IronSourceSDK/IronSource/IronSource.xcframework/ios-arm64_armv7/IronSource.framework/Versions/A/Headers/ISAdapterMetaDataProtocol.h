@@ -6,8 +6,6 @@
 //  Copyright © 2021 ironSource. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 #ifndef ISAdapterMetaDataProtocol_h
 #define ISAdapterMetaDataProtocol_h
 

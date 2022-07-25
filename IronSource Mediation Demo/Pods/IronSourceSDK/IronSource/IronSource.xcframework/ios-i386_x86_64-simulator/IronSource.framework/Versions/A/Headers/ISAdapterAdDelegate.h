@@ -12,16 +12,23 @@
 
 #import "ISAdapterErrorType.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol ISAdapterAdDelegate <NSObject>
 
 -(void)adDidLoad;
--(void)adDidFailToLoadWithErrorType:(ISAdapterErrorType)errorType errorCode:(int)errorCode errorMessage:(NSString*)errorMessage;
--(void)adDidOpen;
--(void)adDidClose;
--(void)adDidFailToShowWithErrorCode:(int)errorCode errorMessage:(NSString*)errorMessage;
--(void)adDidShowSucceed;
+
+/// @param errorType the load error type, including NO_FILL
+/// @param errorCode the error code if available, general ones in AdapterErrors
+/// @param errorMessage the error message if available
+-(void)adDidFailToLoadWithErrorType:(ISAdapterErrorType)errorType
+                          errorCode:(NSInteger)errorCode
+                       errorMessage:(nullable NSString*)errorMessage;
+
 -(void)adDidClick;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* ISAdapterAdDelegate_h */

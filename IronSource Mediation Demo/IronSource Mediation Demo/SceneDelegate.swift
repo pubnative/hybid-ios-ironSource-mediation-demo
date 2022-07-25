@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  IronSource Mediation Demo
-//
-//  Created by Can Soykarafakili on 10.01.22.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {

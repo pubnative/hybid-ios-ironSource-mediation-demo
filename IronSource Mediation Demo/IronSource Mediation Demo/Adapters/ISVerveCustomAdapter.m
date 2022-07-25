@@ -28,7 +28,8 @@
 - (void)init:(ISAdData *)adData delegate:(id<ISNetworkInitializationDelegate>)delegate {
        if (![ISVerveUtils isAppTokenValid:adData]) {
            if (delegate && [delegate respondsToSelector:@selector(onInitDidFailWithErrorCode:errorMessage:)]) {
-               [delegate onInitDidFailWithErrorCode:ISAdapterErrorMissingParams errorMessage:@"HyBid initialisation failed: Missing app token"];
+               [delegate onInitDidFailWithErrorCode:ISAdapterErrorMissingParams
+                                       errorMessage:@"HyBid initialisation failed: Missing app token"];
            }
        } else {
            [HyBid initWithAppToken:[ISVerveUtils appToken:adData] completion:^(BOOL success) {
@@ -40,11 +41,11 @@
 }
 
 - (NSString *)networkSDKVersion {
-    return @"2.9.0";
+    return @"2.14.0";
 }
 
 - (NSString *)adapterVersion {
-    return @"2.9.0.0";
+    return @"2.14.0.0";
 }
 
 @end
