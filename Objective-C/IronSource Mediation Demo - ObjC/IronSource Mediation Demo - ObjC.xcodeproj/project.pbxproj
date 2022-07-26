@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0118D2ACCBC7E8FBDB2F2188 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */; };
+		34A0F12F28905C8A001B79C0 /* ISVerveCustomAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A0F12728905C89001B79C0 /* ISVerveCustomAdapter.m */; };
+		34A0F13028905C8A001B79C0 /* ISVerveUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A0F12928905C8A001B79C0 /* ISVerveUtils.m */; };
+		34A0F13128905C8A001B79C0 /* ISVerveCustomInterstitial.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A0F12A28905C8A001B79C0 /* ISVerveCustomInterstitial.m */; };
+		34A0F13228905C8A001B79C0 /* ISVerveCustomRewardedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A0F12D28905C8A001B79C0 /* ISVerveCustomRewardedVideo.m */; };
 		34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E1288EE11F0028433E /* AppDelegate.m */; };
 		34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E4288EE11F0028433E /* SceneDelegate.m */; };
 		34B0B3ED288EE1200028433E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EC288EE1200028433E /* Assets.xcassets */; };
@@ -40,6 +44,14 @@
 
 /* Begin PBXFileReference section */
 		0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_IronSource_Mediation_Demo___ObjC.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		34A0F12728905C89001B79C0 /* ISVerveCustomAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISVerveCustomAdapter.m; sourceTree = "<group>"; };
+		34A0F12828905C8A001B79C0 /* ISVerveUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISVerveUtils.h; sourceTree = "<group>"; };
+		34A0F12928905C8A001B79C0 /* ISVerveUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISVerveUtils.m; sourceTree = "<group>"; };
+		34A0F12A28905C8A001B79C0 /* ISVerveCustomInterstitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISVerveCustomInterstitial.m; sourceTree = "<group>"; };
+		34A0F12B28905C8A001B79C0 /* ISVerveCustomInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISVerveCustomInterstitial.h; sourceTree = "<group>"; };
+		34A0F12C28905C8A001B79C0 /* ISVerveCustomRewardedVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISVerveCustomRewardedVideo.h; sourceTree = "<group>"; };
+		34A0F12D28905C8A001B79C0 /* ISVerveCustomRewardedVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISVerveCustomRewardedVideo.m; sourceTree = "<group>"; };
+		34A0F12E28905C8A001B79C0 /* ISVerveCustomAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISVerveCustomAdapter.h; sourceTree = "<group>"; };
 		34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IronSource Mediation Demo - ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34B0B3E0288EE11F0028433E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		34B0B3E1288EE11F0028433E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -84,6 +96,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		34A0F13328905C91001B79C0 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				34A0F12E28905C8A001B79C0 /* ISVerveCustomAdapter.h */,
+				34A0F12728905C89001B79C0 /* ISVerveCustomAdapter.m */,
+				34A0F12B28905C8A001B79C0 /* ISVerveCustomInterstitial.h */,
+				34A0F12A28905C8A001B79C0 /* ISVerveCustomInterstitial.m */,
+				34A0F12C28905C8A001B79C0 /* ISVerveCustomRewardedVideo.h */,
+				34A0F12D28905C8A001B79C0 /* ISVerveCustomRewardedVideo.m */,
+				34A0F12828905C8A001B79C0 /* ISVerveUtils.h */,
+				34A0F12928905C8A001B79C0 /* ISVerveUtils.m */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
 		34B0B3D4288EE11F0028433E = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +139,7 @@
 				34B0B3E4288EE11F0028433E /* SceneDelegate.m */,
 				34B0B404288EE4D50028433E /* Examples */,
 				34B0B40D288EED5E0028433E /* Storyboards */,
+				34A0F13328905C91001B79C0 /* Adapters */,
 				34B0B3EC288EE1200028433E /* Assets.xcassets */,
 				34B0B3EE288EE1200028433E /* LaunchScreen.storyboard */,
 				34B0B3F1288EE1200028433E /* Info.plist */,
@@ -256,10 +284,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */,
+				34A0F13228905C8A001B79C0 /* ISVerveCustomRewardedVideo.m in Sources */,
+				34A0F13128905C8A001B79C0 /* ISVerveCustomInterstitial.m in Sources */,
 				34B0B40A288EE5400028433E /* RewardedViewController.m in Sources */,
 				34B0B3F3288EE1200028433E /* main.m in Sources */,
 				34B0B407288EE4F30028433E /* InterstitialViewController.m in Sources */,
+				34A0F13028905C8A001B79C0 /* ISVerveUtils.m in Sources */,
 				34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */,
+				34A0F12F28905C8A001B79C0 /* ISVerveCustomAdapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

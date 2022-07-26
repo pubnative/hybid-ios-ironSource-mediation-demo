@@ -20,27 +20,14 @@
 //  THE SOFTWARE.
 //
 
-#import "ISVerveUtils.h"
+#import <Foundation/Foundation.h>
+#import "IronSource/ISAdData.h"
 
-NSString *const ISVerveAdapterKeyZoneID = @"zoneId";
-NSString *const ISVerveAdapterKeyAppToken = @"appToken";
+@interface ISVerveUtils : NSObject
 
-@implementation ISVerveUtils
-
-+ (BOOL)isAppTokenValid:(ISAdData *)adData {
-    return ([ISVerveUtils appToken:adData] && [ISVerveUtils appToken:adData].length != 0);
-}
-
-+ (BOOL)isZoneIDValid:(ISAdData *)adData {
-    return ([ISVerveUtils zoneID:adData] && [ISVerveUtils zoneID:adData].length != 0);
-}
-
-+ (NSString *)appToken:(ISAdData *)adData {
-    return [adData getString:ISVerveAdapterKeyAppToken];
-}
-
-+ (NSString *)zoneID:(ISAdData *)adData {
-    return [adData getString:ISVerveAdapterKeyZoneID];
-}
++ (BOOL)isAppTokenValid:(ISAdData *)adData;
++ (BOOL)isZoneIDValid:(ISAdData *)adData;
++ (NSString *)appToken:(ISAdData *)adData;
++ (NSString *)zoneID:(ISAdData *)adData;
 
 @end

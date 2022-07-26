@@ -20,27 +20,32 @@
 //  THE SOFTWARE.
 //
 
+#import "ISVerveCustomAdapter.h"
 #import "ISVerveUtils.h"
 
-NSString *const ISVerveAdapterKeyZoneID = @"zoneId";
-NSString *const ISVerveAdapterKeyAppToken = @"appToken";
+@implementation ISVerveCustomAdapter
 
-@implementation ISVerveUtils
-
-+ (BOOL)isAppTokenValid:(ISAdData *)adData {
-    return ([ISVerveUtils appToken:adData] && [ISVerveUtils appToken:adData].length != 0);
+- (void)init:(ISAdData *)adData delegate:(id<ISNetworkInitializationDelegate>)delegate {
+       if (![ISVerveUtils isAppTokenValid:adData]) {
+           if (delegate && [delegate respondsToSelector:@selector(onInitDidFailWithErrorCode:errorMessage:)]) {
+               [delegate onInitDidFailWithErrorCode:ISAdapterErrorMissingParams
+                                       errorMessage:@"HyBid initialisation failed: Missing app token"];
+           }
+       } else {
+           [HyBid initWithAppToken:[ISVerveUtils appToken:adData] completion:^(BOOL success) {
+               if (delegate && [delegate respondsToSelector:@selector(onInitDidSucceed)]) {
+                   [delegate onInitDidSucceed];
+               }
+           }];
+       }
 }
 
-+ (BOOL)isZoneIDValid:(ISAdData *)adData {
-    return ([ISVerveUtils zoneID:adData] && [ISVerveUtils zoneID:adData].length != 0);
+- (NSString *)networkSDKVersion {
+    return @"2.14.0";
 }
 
-+ (NSString *)appToken:(ISAdData *)adData {
-    return [adData getString:ISVerveAdapterKeyAppToken];
-}
-
-+ (NSString *)zoneID:(ISAdData *)adData {
-    return [adData getString:ISVerveAdapterKeyZoneID];
+- (NSString *)adapterVersion {
+    return @"2.14.0.0";
 }
 
 @end
