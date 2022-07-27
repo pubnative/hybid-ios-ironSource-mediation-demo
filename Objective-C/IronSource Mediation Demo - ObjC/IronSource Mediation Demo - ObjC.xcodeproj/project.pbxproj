@@ -1,0 +1,504 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0118D2ACCBC7E8FBDB2F2188 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */; };
+		34A0F12F28905C8A001B79C0 /* ISVerveCustomAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A0F12728905C89001B79C0 /* ISVerveCustomAdapter.m */; };
+		34A0F13028905C8A001B79C0 /* ISVerveUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A0F12928905C8A001B79C0 /* ISVerveUtils.m */; };
+		34A0F13128905C8A001B79C0 /* ISVerveCustomInterstitial.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A0F12A28905C8A001B79C0 /* ISVerveCustomInterstitial.m */; };
+		34A0F13228905C8A001B79C0 /* ISVerveCustomRewardedVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A0F12D28905C8A001B79C0 /* ISVerveCustomRewardedVideo.m */; };
+		34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E1288EE11F0028433E /* AppDelegate.m */; };
+		34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E4288EE11F0028433E /* SceneDelegate.m */; };
+		34B0B3ED288EE1200028433E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EC288EE1200028433E /* Assets.xcassets */; };
+		34B0B3F0288EE1200028433E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EE288EE1200028433E /* LaunchScreen.storyboard */; };
+		34B0B3F3288EE1200028433E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3F2288EE1200028433E /* main.m */; };
+		34B0B3FD288EE2770028433E /* HyBid.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B0B3F9288EE2660028433E /* HyBid.xcframework */; };
+		34B0B3FE288EE2770028433E /* HyBid.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34B0B3F9288EE2660028433E /* HyBid.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		34B0B400288EE2790028433E /* OMSDK_Pubnativenet.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B0B3FB288EE2700028433E /* OMSDK_Pubnativenet.xcframework */; };
+		34B0B401288EE2790028433E /* OMSDK_Pubnativenet.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34B0B3FB288EE2700028433E /* OMSDK_Pubnativenet.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		34B0B407288EE4F30028433E /* InterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B406288EE4F30028433E /* InterstitialViewController.m */; };
+		34B0B40A288EE5400028433E /* RewardedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B409288EE5400028433E /* RewardedViewController.m */; };
+		34B0B40C288EED590028433E /* IronSourceMediation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B40B288EED590028433E /* IronSourceMediation.storyboard */; };
+		34B0B40F288EEF620028433E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B40E288EEF620028433E /* Main.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		34B0B3FF288EE2770028433E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				34B0B3FE288EE2770028433E /* HyBid.xcframework in Embed Frameworks */,
+				34B0B401288EE2790028433E /* OMSDK_Pubnativenet.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_IronSource_Mediation_Demo___ObjC.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		34A0F12728905C89001B79C0 /* ISVerveCustomAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISVerveCustomAdapter.m; sourceTree = "<group>"; };
+		34A0F12828905C8A001B79C0 /* ISVerveUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISVerveUtils.h; sourceTree = "<group>"; };
+		34A0F12928905C8A001B79C0 /* ISVerveUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISVerveUtils.m; sourceTree = "<group>"; };
+		34A0F12A28905C8A001B79C0 /* ISVerveCustomInterstitial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISVerveCustomInterstitial.m; sourceTree = "<group>"; };
+		34A0F12B28905C8A001B79C0 /* ISVerveCustomInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISVerveCustomInterstitial.h; sourceTree = "<group>"; };
+		34A0F12C28905C8A001B79C0 /* ISVerveCustomRewardedVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISVerveCustomRewardedVideo.h; sourceTree = "<group>"; };
+		34A0F12D28905C8A001B79C0 /* ISVerveCustomRewardedVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISVerveCustomRewardedVideo.m; sourceTree = "<group>"; };
+		34A0F12E28905C8A001B79C0 /* ISVerveCustomAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISVerveCustomAdapter.h; sourceTree = "<group>"; };
+		34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IronSource Mediation Demo - ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		34B0B3E0288EE11F0028433E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		34B0B3E1288EE11F0028433E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		34B0B3E3288EE11F0028433E /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		34B0B3E4288EE11F0028433E /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		34B0B3EC288EE1200028433E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		34B0B3EF288EE1200028433E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		34B0B3F1288EE1200028433E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		34B0B3F2288EE1200028433E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		34B0B3F9288EE2660028433E /* HyBid.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = HyBid.xcframework; sourceTree = "<group>"; };
+		34B0B3FB288EE2700028433E /* OMSDK_Pubnativenet.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OMSDK_Pubnativenet.xcframework; sourceTree = "<group>"; };
+		34B0B405288EE4F30028433E /* InterstitialViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterstitialViewController.h; sourceTree = "<group>"; };
+		34B0B406288EE4F30028433E /* InterstitialViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterstitialViewController.m; sourceTree = "<group>"; };
+		34B0B408288EE5400028433E /* RewardedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RewardedViewController.h; sourceTree = "<group>"; };
+		34B0B409288EE5400028433E /* RewardedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RewardedViewController.m; sourceTree = "<group>"; };
+		34B0B40B288EED590028433E /* IronSourceMediation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IronSourceMediation.storyboard; sourceTree = "<group>"; };
+		34B0B40E288EEF620028433E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		F48E32021694D0FAA2828FD1 /* Pods-IronSource Mediation Demo - ObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IronSource Mediation Demo - ObjC.debug.xcconfig"; path = "Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC.debug.xcconfig"; sourceTree = "<group>"; };
+		F7B2D82A9DD9C6F0A72C667B /* Pods-IronSource Mediation Demo - ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IronSource Mediation Demo - ObjC.release.xcconfig"; path = "Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		34B0B3DA288EE11F0028433E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34B0B3FD288EE2770028433E /* HyBid.xcframework in Frameworks */,
+				34B0B400288EE2790028433E /* OMSDK_Pubnativenet.xcframework in Frameworks */,
+				0118D2ACCBC7E8FBDB2F2188 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0EAAC2738B77AEC13BDC4DAD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F48E32021694D0FAA2828FD1 /* Pods-IronSource Mediation Demo - ObjC.debug.xcconfig */,
+				F7B2D82A9DD9C6F0A72C667B /* Pods-IronSource Mediation Demo - ObjC.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		34A0F13328905C91001B79C0 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				34A0F12E28905C8A001B79C0 /* ISVerveCustomAdapter.h */,
+				34A0F12728905C89001B79C0 /* ISVerveCustomAdapter.m */,
+				34A0F12B28905C8A001B79C0 /* ISVerveCustomInterstitial.h */,
+				34A0F12A28905C8A001B79C0 /* ISVerveCustomInterstitial.m */,
+				34A0F12C28905C8A001B79C0 /* ISVerveCustomRewardedVideo.h */,
+				34A0F12D28905C8A001B79C0 /* ISVerveCustomRewardedVideo.m */,
+				34A0F12828905C8A001B79C0 /* ISVerveUtils.h */,
+				34A0F12928905C8A001B79C0 /* ISVerveUtils.m */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
+		34B0B3D4288EE11F0028433E = {
+			isa = PBXGroup;
+			children = (
+				34B0B3DF288EE11F0028433E /* IronSource Mediation Demo - ObjC */,
+				34B0B3DE288EE11F0028433E /* Products */,
+				0EAAC2738B77AEC13BDC4DAD /* Pods */,
+				E7A9A42EC5F30762EDF14F5B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		34B0B3DE288EE11F0028433E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		34B0B3DF288EE11F0028433E /* IronSource Mediation Demo - ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				34B0B403288EE2890028433E /* HyBid-2.14.0 */,
+				34B0B3E0288EE11F0028433E /* AppDelegate.h */,
+				34B0B3E1288EE11F0028433E /* AppDelegate.m */,
+				34B0B3E3288EE11F0028433E /* SceneDelegate.h */,
+				34B0B3E4288EE11F0028433E /* SceneDelegate.m */,
+				34B0B404288EE4D50028433E /* Examples */,
+				34B0B40D288EED5E0028433E /* Storyboards */,
+				34A0F13328905C91001B79C0 /* Adapters */,
+				34B0B3EC288EE1200028433E /* Assets.xcassets */,
+				34B0B3EE288EE1200028433E /* LaunchScreen.storyboard */,
+				34B0B3F1288EE1200028433E /* Info.plist */,
+				34B0B3F2288EE1200028433E /* main.m */,
+			);
+			path = "IronSource Mediation Demo - ObjC";
+			sourceTree = "<group>";
+		};
+		34B0B403288EE2890028433E /* HyBid-2.14.0 */ = {
+			isa = PBXGroup;
+			children = (
+				34B0B3F9288EE2660028433E /* HyBid.xcframework */,
+				34B0B3FB288EE2700028433E /* OMSDK_Pubnativenet.xcframework */,
+			);
+			path = "HyBid-2.14.0";
+			sourceTree = "<group>";
+		};
+		34B0B404288EE4D50028433E /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				34B0B405288EE4F30028433E /* InterstitialViewController.h */,
+				34B0B406288EE4F30028433E /* InterstitialViewController.m */,
+				34B0B408288EE5400028433E /* RewardedViewController.h */,
+				34B0B409288EE5400028433E /* RewardedViewController.m */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
+		34B0B40D288EED5E0028433E /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				34B0B40E288EEF620028433E /* Main.storyboard */,
+				34B0B40B288EED590028433E /* IronSourceMediation.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		E7A9A42EC5F30762EDF14F5B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		34B0B3DC288EE11F0028433E /* IronSource Mediation Demo - ObjC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 34B0B3F6288EE1200028433E /* Build configuration list for PBXNativeTarget "IronSource Mediation Demo - ObjC" */;
+			buildPhases = (
+				A3CCEE6E5B33842FBFEAF2EB /* [CP] Check Pods Manifest.lock */,
+				34B0B3D9288EE11F0028433E /* Sources */,
+				34B0B3DA288EE11F0028433E /* Frameworks */,
+				34B0B3DB288EE11F0028433E /* Resources */,
+				34B0B3FF288EE2770028433E /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "IronSource Mediation Demo - ObjC";
+			productName = "IronSource Mediation Demo - ObjC";
+			productReference = 34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		34B0B3D5288EE11F0028433E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1310;
+				TargetAttributes = {
+					34B0B3DC288EE11F0028433E = {
+						CreatedOnToolsVersion = 13.1;
+					};
+				};
+			};
+			buildConfigurationList = 34B0B3D8288EE11F0028433E /* Build configuration list for PBXProject "IronSource Mediation Demo - ObjC" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 34B0B3D4288EE11F0028433E;
+			productRefGroup = 34B0B3DE288EE11F0028433E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				34B0B3DC288EE11F0028433E /* IronSource Mediation Demo - ObjC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		34B0B3DB288EE11F0028433E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34B0B40C288EED590028433E /* IronSourceMediation.storyboard in Resources */,
+				34B0B3F0288EE1200028433E /* LaunchScreen.storyboard in Resources */,
+				34B0B3ED288EE1200028433E /* Assets.xcassets in Resources */,
+				34B0B40F288EEF620028433E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A3CCEE6E5B33842FBFEAF2EB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-IronSource Mediation Demo - ObjC-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		34B0B3D9288EE11F0028433E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */,
+				34A0F13228905C8A001B79C0 /* ISVerveCustomRewardedVideo.m in Sources */,
+				34A0F13128905C8A001B79C0 /* ISVerveCustomInterstitial.m in Sources */,
+				34B0B40A288EE5400028433E /* RewardedViewController.m in Sources */,
+				34B0B3F3288EE1200028433E /* main.m in Sources */,
+				34B0B407288EE4F30028433E /* InterstitialViewController.m in Sources */,
+				34A0F13028905C8A001B79C0 /* ISVerveUtils.m in Sources */,
+				34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */,
+				34A0F12F28905C8A001B79C0 /* ISVerveCustomAdapter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		34B0B3EE288EE1200028433E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				34B0B3EF288EE1200028433E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		34B0B3F4288EE1200028433E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		34B0B3F5288EE1200028433E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		34B0B3F7288EE1200028433E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F48E32021694D0FAA2828FD1 /* Pods-IronSource Mediation Demo - ObjC.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TL55SBB4FM;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "IronSource Mediation Demo - ObjC/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.pubnative.IronSource-Mediation-Demo-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		34B0B3F8288EE1200028433E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F7B2D82A9DD9C6F0A72C667B /* Pods-IronSource Mediation Demo - ObjC.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TL55SBB4FM;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "IronSource Mediation Demo - ObjC/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.pubnative.IronSource-Mediation-Demo-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		34B0B3D8288EE11F0028433E /* Build configuration list for PBXProject "IronSource Mediation Demo - ObjC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34B0B3F4288EE1200028433E /* Debug */,
+				34B0B3F5288EE1200028433E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		34B0B3F6288EE1200028433E /* Build configuration list for PBXNativeTarget "IronSource Mediation Demo - ObjC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34B0B3F7288EE1200028433E /* Debug */,
+				34B0B3F8288EE1200028433E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 34B0B3D5288EE11F0028433E /* Project object */;
+}

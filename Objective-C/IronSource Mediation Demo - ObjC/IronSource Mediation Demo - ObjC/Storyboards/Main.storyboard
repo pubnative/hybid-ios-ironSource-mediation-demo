@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZJj-zO-yU1">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Integration Demo-->
+        <scene sceneID="m7z-Z0-NEz">
+            <objects>
+                <viewController id="chR-Y0-fn8" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ech-6y-O0x">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjD-Fd-DGN" userLabel="GAM Header Bidding Button">
+                                <rect key="frame" x="16" y="125" width="382" height="33"/>
+                                <color key="backgroundColor" red="0.85098618270000004" green="0.85097014900000001" blue="0.85098105670000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <accessibility key="accessibilityConfiguration" identifier="ironSourceMediationButton" label="IronSource Mediation Button">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="qwT-8q-AVx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="IronSource Mediation">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.44761112330000002" green="0.097065538169999993" blue="0.48637124900000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="qwT-8q-AVx"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="aAH-cq-m6u" kind="show" id="8g2-4K-9er"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Integration" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qF8-gi-Uby" userLabel="Integration">
+                                <rect key="frame" x="16" y="96" width="67" height="21"/>
+                                <accessibility key="accessibilityConfiguration" identifier="integrationLabel" label="Integration Label"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="ADe-Tr-Y2Y"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="ADe-Tr-Y2Y"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Xf1-lo-NAW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qF8-gi-Uby" firstAttribute="leading" secondItem="Xf1-lo-NAW" secondAttribute="leading" constant="16" id="Ia5-zi-n1x"/>
+                            <constraint firstItem="Xf1-lo-NAW" firstAttribute="trailing" secondItem="fjD-Fd-DGN" secondAttribute="trailing" constant="16" id="KfY-4K-MZw"/>
+                            <constraint firstItem="fjD-Fd-DGN" firstAttribute="leading" secondItem="Xf1-lo-NAW" secondAttribute="leading" constant="16" id="pZM-Ff-8Uu"/>
+                            <constraint firstItem="qF8-gi-Uby" firstAttribute="top" secondItem="Xf1-lo-NAW" secondAttribute="top" constant="8" id="qbB-kp-4VJ"/>
+                            <constraint firstItem="fjD-Fd-DGN" firstAttribute="top" secondItem="qF8-gi-Uby" secondAttribute="bottom" constant="8" id="vIe-wE-1ol"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Integration Demo" id="iHJ-rm-a2S"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ege-dY-Aps" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1760.8695652173915" y="78.348214285714278"/>
+        </scene>
+        <!--IronSourceMediation-->
+        <scene sceneID="cJK-Ce-6aT">
+            <objects>
+                <viewControllerPlaceholder storyboardName="IronSourceMediation" id="aAH-cq-m6u" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="jha-TB-sZc"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vg7-Dg-3WK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2420" y="78"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Qp4-Mn-9JQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZJj-zO-yU1" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8j9-Og-DNf">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="chR-Y0-fn8" kind="relationship" relationship="rootViewController" id="pce-mS-MZv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="veW-Ca-Oaw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="850.72463768115949" y="78.348214285714278"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
