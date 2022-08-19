@@ -43,4 +43,8 @@ NSString *const ISVerveAdapterKeyAppToken = @"appToken";
     return [adData getString:ISVerveAdapterKeyZoneID];
 }
 
++ (NSString *)mediationVendor {
+    return @"lp";
+}
+
 @end

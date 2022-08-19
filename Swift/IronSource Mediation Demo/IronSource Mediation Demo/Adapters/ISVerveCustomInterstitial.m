@@ -42,6 +42,7 @@
             self.delegate = delegate;
             self.interstitialAd = [[HyBidInterstitialAd alloc] initWithZoneID:[ISVerveUtils zoneID:adData] andWithDelegate:self];
             self.interstitialAd.isMediation = YES;
+            [self.interstitialAd setMediationVendor:[ISVerveUtils mediationVendor]];
             [self.interstitialAd load];
         } else {
             NSString *errorMessage = @"The provided app token doesn't match the one used to initialise HyBid.";

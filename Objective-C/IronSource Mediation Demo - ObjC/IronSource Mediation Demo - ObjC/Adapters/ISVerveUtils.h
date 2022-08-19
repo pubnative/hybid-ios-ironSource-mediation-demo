@@ -29,5 +29,6 @@
 + (BOOL)isZoneIDValid:(ISAdData *)adData;
 + (NSString *)appToken:(ISAdData *)adData;
 + (NSString *)zoneID:(ISAdData *)adData;
++ (NSString *)mediationVendor;
 
 @end

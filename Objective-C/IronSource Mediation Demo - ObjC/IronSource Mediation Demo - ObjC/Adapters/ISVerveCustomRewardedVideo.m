@@ -42,6 +42,7 @@
             self.delegate = delegate;
             self.rewardedAd = [[HyBidRewardedAd alloc] initWithZoneID:[ISVerveUtils zoneID:adData] andWithDelegate:self];
             self.rewardedAd.isMediation = YES;
+            [self.rewardedAd setMediationVendor:[ISVerveUtils mediationVendor]];
             [self.rewardedAd load];
         } else {
             NSString *errorMessage = @"The provided app token doesn't match the one used to initialise HyBid.";
