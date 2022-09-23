@@ -17,14 +17,14 @@
 		34B0B3ED288EE1200028433E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EC288EE1200028433E /* Assets.xcassets */; };
 		34B0B3F0288EE1200028433E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EE288EE1200028433E /* LaunchScreen.storyboard */; };
 		34B0B3F3288EE1200028433E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3F2288EE1200028433E /* main.m */; };
-		34B0B3FD288EE2770028433E /* HyBid.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B0B3F9288EE2660028433E /* HyBid.xcframework */; };
-		34B0B3FE288EE2770028433E /* HyBid.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34B0B3F9288EE2660028433E /* HyBid.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		34B0B400288EE2790028433E /* OMSDK_Pubnativenet.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34B0B3FB288EE2700028433E /* OMSDK_Pubnativenet.xcframework */; };
-		34B0B401288EE2790028433E /* OMSDK_Pubnativenet.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34B0B3FB288EE2700028433E /* OMSDK_Pubnativenet.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		34B0B407288EE4F30028433E /* InterstitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B406288EE4F30028433E /* InterstitialViewController.m */; };
 		34B0B40A288EE5400028433E /* RewardedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B409288EE5400028433E /* RewardedViewController.m */; };
 		34B0B40C288EED590028433E /* IronSourceMediation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B40B288EED590028433E /* IronSourceMediation.storyboard */; };
 		34B0B40F288EEF620028433E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B40E288EEF620028433E /* Main.storyboard */; };
+		34BAB45F28DE585000868B64 /* HyBid.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BAB45B28DE57C000868B64 /* HyBid.xcframework */; };
+		34BAB46028DE585000868B64 /* HyBid.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34BAB45B28DE57C000868B64 /* HyBid.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		34BAB46128DE585100868B64 /* OMSDK_Pubnativenet.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BAB45D28DE57C800868B64 /* OMSDK_Pubnativenet.xcframework */; };
+		34BAB46228DE585100868B64 /* OMSDK_Pubnativenet.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34BAB45D28DE57C800868B64 /* OMSDK_Pubnativenet.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,8 +34,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				34B0B3FE288EE2770028433E /* HyBid.xcframework in Embed Frameworks */,
-				34B0B401288EE2790028433E /* OMSDK_Pubnativenet.xcframework in Embed Frameworks */,
+				34BAB46028DE585000868B64 /* HyBid.xcframework in Embed Frameworks */,
+				34BAB46228DE585100868B64 /* OMSDK_Pubnativenet.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,14 +61,14 @@
 		34B0B3EF288EE1200028433E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34B0B3F1288EE1200028433E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		34B0B3F2288EE1200028433E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		34B0B3F9288EE2660028433E /* HyBid.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = HyBid.xcframework; sourceTree = "<group>"; };
-		34B0B3FB288EE2700028433E /* OMSDK_Pubnativenet.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OMSDK_Pubnativenet.xcframework; sourceTree = "<group>"; };
 		34B0B405288EE4F30028433E /* InterstitialViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterstitialViewController.h; sourceTree = "<group>"; };
 		34B0B406288EE4F30028433E /* InterstitialViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterstitialViewController.m; sourceTree = "<group>"; };
 		34B0B408288EE5400028433E /* RewardedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RewardedViewController.h; sourceTree = "<group>"; };
 		34B0B409288EE5400028433E /* RewardedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RewardedViewController.m; sourceTree = "<group>"; };
 		34B0B40B288EED590028433E /* IronSourceMediation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IronSourceMediation.storyboard; sourceTree = "<group>"; };
 		34B0B40E288EEF620028433E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		34BAB45B28DE57C000868B64 /* HyBid.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = HyBid.xcframework; sourceTree = "<group>"; };
+		34BAB45D28DE57C800868B64 /* OMSDK_Pubnativenet.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OMSDK_Pubnativenet.xcframework; sourceTree = "<group>"; };
 		F48E32021694D0FAA2828FD1 /* Pods-IronSource Mediation Demo - ObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IronSource Mediation Demo - ObjC.debug.xcconfig"; path = "Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC.debug.xcconfig"; sourceTree = "<group>"; };
 		F7B2D82A9DD9C6F0A72C667B /* Pods-IronSource Mediation Demo - ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IronSource Mediation Demo - ObjC.release.xcconfig"; path = "Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,8 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34B0B3FD288EE2770028433E /* HyBid.xcframework in Frameworks */,
-				34B0B400288EE2790028433E /* OMSDK_Pubnativenet.xcframework in Frameworks */,
+				34BAB45F28DE585000868B64 /* HyBid.xcframework in Frameworks */,
+				34BAB46128DE585100868B64 /* OMSDK_Pubnativenet.xcframework in Frameworks */,
 				0118D2ACCBC7E8FBDB2F2188 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,7 +132,7 @@
 		34B0B3DF288EE11F0028433E /* IronSource Mediation Demo - ObjC */ = {
 			isa = PBXGroup;
 			children = (
-				34B0B403288EE2890028433E /* HyBid-2.14.0 */,
+				34B0B403288EE2890028433E /* HyBid-2.16.0 */,
 				34B0B3E0288EE11F0028433E /* AppDelegate.h */,
 				34B0B3E1288EE11F0028433E /* AppDelegate.m */,
 				34B0B3E3288EE11F0028433E /* SceneDelegate.h */,
@@ -148,13 +148,13 @@
 			path = "IronSource Mediation Demo - ObjC";
 			sourceTree = "<group>";
 		};
-		34B0B403288EE2890028433E /* HyBid-2.14.0 */ = {
+		34B0B403288EE2890028433E /* HyBid-2.16.0 */ = {
 			isa = PBXGroup;
 			children = (
-				34B0B3F9288EE2660028433E /* HyBid.xcframework */,
-				34B0B3FB288EE2700028433E /* OMSDK_Pubnativenet.xcframework */,
+				34BAB45B28DE57C000868B64 /* HyBid.xcframework */,
+				34BAB45D28DE57C800868B64 /* OMSDK_Pubnativenet.xcframework */,
 			);
-			path = "HyBid-2.14.0";
+			path = "HyBid-2.16.0";
 			sourceTree = "<group>";
 		};
 		34B0B404288EE4D50028433E /* Examples */ = {
