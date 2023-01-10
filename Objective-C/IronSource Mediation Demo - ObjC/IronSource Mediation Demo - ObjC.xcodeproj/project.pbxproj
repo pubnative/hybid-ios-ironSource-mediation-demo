@@ -128,7 +128,7 @@
 		34B0B3DF288EE11F0028433E /* IronSource Mediation Demo - ObjC */ = {
 			isa = PBXGroup;
 			children = (
-				7E3405A72965F541009378C6 /* HyBid-2.16.2 */,
+				7E3405A72965F541009378C6 /* HyBid-2.17.0 */,
 				34B0B3E0288EE11F0028433E /* AppDelegate.h */,
 				34B0B3E1288EE11F0028433E /* AppDelegate.m */,
 				34B0B3E3288EE11F0028433E /* SceneDelegate.h */,
@@ -164,13 +164,13 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
-		7E3405A72965F541009378C6 /* HyBid-2.16.2 */ = {
+		7E3405A72965F541009378C6 /* HyBid-2.17.0 */ = {
 			isa = PBXGroup;
 			children = (
 				7E3405A82965F541009378C6 /* HyBid.xcframework */,
 				7E3405A92965F541009378C6 /* OMSDK_Pubnativenet.xcframework */,
 			);
-			path = "HyBid-2.16.2";
+			path = "HyBid-2.17.0";
 			sourceTree = "<group>";
 		};
 		E7A9A42EC5F30762EDF14F5B /* Frameworks */ = {

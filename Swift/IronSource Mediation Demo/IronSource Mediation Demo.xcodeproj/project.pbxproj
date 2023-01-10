@@ -104,7 +104,7 @@
 		341ACED8278C7C7200823EA5 /* IronSource Mediation Demo */ = {
 			isa = PBXGroup;
 			children = (
-				34B0B3D3288EDBFC0028433E /* HyBid-2.16.1 */,
+				34B0B3D3288EDBFC0028433E /* HyBid-2.17.0 */,
 				341ACED9278C7C7200823EA5 /* AppDelegate.swift */,
 				341ACEDB278C7C7200823EA5 /* SceneDelegate.swift */,
 				3498DD6C278C8D920083BA85 /* Examples */,
@@ -151,13 +151,13 @@
 			path = Adapters;
 			sourceTree = "<group>";
 		};
-		34B0B3D3288EDBFC0028433E /* HyBid-2.16.1 */ = {
+		34B0B3D3288EDBFC0028433E /* HyBid-2.17.0 */ = {
 			isa = PBXGroup;
 			children = (
 				340B621A2915FE9700514233 /* HyBid.xcframework */,
 				340B621C2915FEA100514233 /* OMSDK_Pubnativenet.xcframework */,
 			);
-			path = "HyBid-2.16.1";
+			path = "HyBid-2.17.0";
 			sourceTree = "<group>";
 		};
 		F4173E68732C5357F35B5598 /* Pods */ = {
