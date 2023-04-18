@@ -5,7 +5,7 @@
 #import "InterstitialViewController.h"
 #import "IronSource/IronSource.h"
 
-@interface InterstitialViewController () <ISInterstitialDelegate>
+@interface InterstitialViewController () <LevelPlayInterstitialDelegate>
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *showAdButton;
@@ -22,7 +22,7 @@
 - (IBAction)loadAdTouchUpInside:(id)sender {
     [self.activityIndicator startAnimating];
     self.showAdButton.hidden = YES;
-    [IronSource setInterstitialDelegate:self];
+    [IronSource setLevelPlayInterstitialDelegate:self];
     [IronSource loadInterstitial];
 }
 
@@ -34,36 +34,36 @@
     }
 }
 
-#pragma mark - ISInterstitialDelegate
+#pragma mark - LevelPlayInterstitialDelegate
 
-- (void)interstitialDidLoad {
+- (void)didLoadWithAdInfo:(ISAdInfo *)adInfo {
     [self.activityIndicator stopAnimating];
     self.showAdButton.hidden = NO;
 }
 
-- (void)interstitialDidFailToLoadWithError:(NSError *)error {
+- (void)didFailToLoadWithError:(NSError *)error {
     [self.activityIndicator stopAnimating];
     NSLog(@"Failed to load interstitial ad with error: %@", [error localizedDescription]);
 }
 
-- (void)interstitialDidFailToShowWithError:(NSError *)error {
+- (void)didFailToShowWithError:(NSError *)error andAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"Failed to show interstitial ad with error: %@", [error localizedDescription]);
 }
 
-- (void)didClickInterstitial {
+-(void)didClickWithAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"didClickInterstitial");
 }
 
-- (void)interstitialDidOpen {
+- (void)didOpenWithAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"interstitialDidOpen");
 }
 
--(void)interstitialDidClose {
+-(void)didCloseWithAdInfo:(ISAdInfo *)adInfo {
     self.showAdButton.hidden = YES;
     NSLog(@"interstitialDidClose");
 }
 
-- (void)interstitialDidShow {
+- (void)didShowWithAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"interstitialDidShow");
 }
 

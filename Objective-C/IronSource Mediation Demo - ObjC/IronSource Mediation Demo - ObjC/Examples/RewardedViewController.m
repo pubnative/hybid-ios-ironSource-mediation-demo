@@ -5,7 +5,7 @@
 #import "RewardedViewController.h"
 #import "IronSource/IronSource.h"
 
-@interface RewardedViewController () <ISRewardedVideoDelegate>
+@interface RewardedViewController () <LevelPlayRewardedVideoDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *showAdButton;
 
@@ -16,7 +16,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"IronSource Mediation Rewarded";
-    [IronSource setRewardedVideoDelegate:self];
+    [IronSource setLevelPlayRewardedVideoDelegate:self];
     self.showAdButton.enabled = [IronSource hasRewardedVideo];
 }
 
@@ -28,43 +28,35 @@
     }
 }
 
-#pragma mark - ISRewardedVideoDelegate
+#pragma mark - LevelPlayRewardedVideoDelegate
 
-- (void)rewardedVideoHasChangedAvailability:(BOOL)available {
-    if (available) {
-        self.showAdButton.enabled = YES;
-        NSLog(@"rewardedVideoHasChangedAvailability: YES");
-    } else {
-        self.showAdButton.enabled = NO;
-        NSLog(@"rewardedVideoHasChangedAvailability: NO");
-    }
+- (void)hasAvailableAdWithAdInfo:(ISAdInfo *)adInfo {
+    self.showAdButton.enabled = YES;
+    NSLog(@"hasAvailableAd");
 }
 
-- (void)didReceiveRewardForPlacement:(ISPlacementInfo *)placementInfo {
+- (void)hasNoAvailableAd {
+    self.showAdButton.enabled = NO;
+    NSLog(@"hasNoAvailableAd");
+}
+
+- (void)didReceiveRewardForPlacement:(ISPlacementInfo *)placementInfo withAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"User did receive reward: %@ with amount: %@", placementInfo.rewardName, placementInfo.rewardAmount);
 }
 
-- (void)rewardedVideoDidFailToShowWithError:(NSError *)error {
+- (void)didFailToShowWithError:(NSError *)error andAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"Failed to show rewarded ad with error: %@", [error localizedDescription]);
 }
 
-- (void)rewardedVideoDidOpen {
+- (void)didOpenWithAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"rewardedVideoDidOpen");
 }
 
-- (void)rewardedVideoDidClose {
+- (void)didCloseWithAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"rewardedVideoDidClose");
 }
 
-- (void)rewardedVideoDidStart {
-    NSLog(@"rewardedVideoDidStart");
-}
-
-- (void)rewardedVideoDidEnd {
-    NSLog(@"rewardedVideoDidEnd");
-}
-
-- (void)didClickRewardedVideo:(ISPlacementInfo *)placementInfo{
+- (void)didClick:(ISPlacementInfo *)placementInfo withAdInfo:(ISAdInfo *)adInfo {
     NSLog(@"didClickRewardedVideo");
 }
 

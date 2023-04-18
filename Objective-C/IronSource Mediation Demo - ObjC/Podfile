@@ -6,5 +6,5 @@ target 'IronSource Mediation Demo - ObjC' do
   use_frameworks!
 
   # Pods for IronSource Mediation Demo - ObjC
-	pod 'IronSourceSDK','7.2.0'
+  pod 'IronSourceSDK','7.3.0.0'
 end
