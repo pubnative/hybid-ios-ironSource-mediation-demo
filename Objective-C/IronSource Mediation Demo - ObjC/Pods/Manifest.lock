@@ -1,16 +1,38 @@
 PODS:
+  - HyBid (2.18.0):
+    - HyBid/Banner (= 2.18.0)
+    - HyBid/Core (= 2.18.0)
+    - HyBid/FullScreen (= 2.18.0)
+    - HyBid/Native (= 2.18.0)
+    - HyBid/RewardedVideo (= 2.18.0)
+  - HyBid/Banner (2.18.0):
+    - HyBid/Core
+  - HyBid/Core (2.18.0)
+  - HyBid/FullScreen (2.18.0):
+    - HyBid/Core
+  - HyBid/Native (2.18.0):
+    - HyBid/Core
+  - HyBid/RewardedVideo (2.18.0):
+    - HyBid/Core
+  - ironSource-HyBid-Adapters (2.18.0.1):
+    - HyBid (= 2.18.0)
+    - IronSourceSDK (= 7.3.0.0)
   - IronSourceSDK (7.3.0.0)
 
 DEPENDENCIES:
-  - IronSourceSDK (= 7.3.0.0)
+  - ironSource-HyBid-Adapters (= 2.18.0.1)
 
 SPEC REPOS:
   trunk:
+    - HyBid
+    - ironSource-HyBid-Adapters
     - IronSourceSDK
 
 SPEC CHECKSUMS:
+  HyBid: 641f75cfabb4d01c5a859693ba1de2baa70418b4
+  ironSource-HyBid-Adapters: 5cf34ea124c6b3eff9b494e387c931156f1f6dbb
   IronSourceSDK: 70d098472ea63fa8d58e47ad79ad761ad256ce15
 
-PODFILE CHECKSUM: 0c48bd42215c49728ce9d2b367c9100cfdd2c9bb
+PODFILE CHECKSUM: 51fc7067fa8fbefaf236604ce66716ba53aa9853
 
 COCOAPODS: 1.11.3

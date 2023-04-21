@@ -2,6 +2,11 @@
 
 // Step 1: Import HyBid into your class
 #import <HyBid/HyBid.h>
+#if __has_include(<HyBid/HyBid-Swift.h>)
+    #import <HyBid/HyBid-Swift.h>
+#else
+    #import "HyBid-Swift.h"
+#endif
 
 #define APP_TOKEN @"543027b8e954474cbcd9a98481622a3b"
 #define APP_KEY @"1224c378d"

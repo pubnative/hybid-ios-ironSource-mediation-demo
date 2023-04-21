@@ -3,6 +3,7 @@
 // You don't have to write any HyBid related code for this integration.
 
 import UIKit
+import IronSource
 
 class Interstitial: UIViewController {
     
@@ -17,7 +18,7 @@ class Interstitial: UIViewController {
     @IBAction func loadAdTouchUpInside(_ sender: UIButton) {
         activityIndicator.startAnimating()
         showAdButton.isHidden = true
-        IronSource.setInterstitialDelegate(self)
+        IronSource.setLevelPlayInterstitialDelegate(self)
         IronSource.loadInterstitial()
     }
     
@@ -30,35 +31,36 @@ class Interstitial: UIViewController {
     }
 }
 
-extension Interstitial: ISInterstitialDelegate {
-    func interstitialDidLoad() {
+extension Interstitial: LevelPlayInterstitialDelegate {
+    
+    func didLoad(with adInfo: ISAdInfo!) {
         activityIndicator.stopAnimating()
         showAdButton.isHidden = false
     }
     
-    func interstitialDidFailToLoadWithError(_ error: Error!) {
+    func didFailToLoadWithError(_ error: Error!) {
         activityIndicator.stopAnimating()
         print("Failed to load interstitial with error: \(error.localizedDescription)")
     }
     
-    func interstitialDidFailToShowWithError(_ error: Error!) {
+    func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) {
         print("Failed to show interstitial with error: \(error.localizedDescription)")
     }
     
-    func didClickInterstitial() {
+    func didClick(with adInfo: ISAdInfo!) {
         print("didClickInterstitial")
     }
     
-    func interstitialDidOpen() {
+    func didOpen(with adInfo: ISAdInfo!) {
         print("interstitialDidOpen")
     }
     
-    func interstitialDidClose() {
+    func didClose(with adInfo: ISAdInfo!) {
         showAdButton.isHidden = true
         print("interstitialDidClose")
     }
     
-    func interstitialDidShow() {
+    func didShow(with adInfo: ISAdInfo!) {
         print("interstitialDidShow")
     }
     

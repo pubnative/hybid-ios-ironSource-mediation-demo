@@ -3,6 +3,7 @@
 // You don't have to write any HyBid related code for this integration.
 
 import UIKit
+import IronSource
 
 class Rewarded: UIViewController {
     
@@ -11,7 +12,7 @@ class Rewarded: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "IronSource Mediation Rewarded"
-        IronSource.setRewardedVideoDelegate(self)
+        IronSource.setLevelPlayRewardedVideoDelegate(self)
         showAdButton.isEnabled = IronSource.hasRewardedVideo()
     }
     
@@ -24,42 +25,35 @@ class Rewarded: UIViewController {
     }
 }
 
-extension Rewarded: ISRewardedVideoDelegate {
-    func rewardedVideoHasChangedAvailability(_ available: Bool) {
-        if available {
-            showAdButton.isEnabled = true
-            print("rewardedVideoHasChangedAvailability: true")
-        } else {
-            showAdButton.isEnabled = false
-            print("rewardedVideoHasChangedAvailability: false")
-        }
+extension Rewarded: LevelPlayRewardedVideoDelegate {
+    
+    func hasAvailableAd(with adInfo: ISAdInfo!) {
+        showAdButton.isEnabled = true
+        print("rewardedVideoHasChangedAvailability: true")
     }
     
-    func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!) {
+    func hasNoAvailableAd() {
+        showAdButton.isEnabled = false
+        print("rewardedVideoHasChangedAvailability: false")
+    }
+    
+    func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
         print("User did receive reward: \(String(describing: placementInfo.rewardName)) with amount: \(String(describing: placementInfo.rewardAmount))")
     }
     
-    func rewardedVideoDidFailToShowWithError(_ error: Error!) {
+    func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) {
         print("Failed to show rewarded ad with error: \(error.localizedDescription)")
     }
     
-    func rewardedVideoDidOpen() {
+    func didOpen(with adInfo: ISAdInfo!) {
         print("rewardedVideoDidOpen")
     }
     
-    func rewardedVideoDidClose() {
+    func didClose(with adInfo: ISAdInfo!) {
         print("rewardedVideoDidClose")
     }
     
-    func rewardedVideoDidStart() {
-        print("rewardedVideoDidStart")
-    }
-    
-    func rewardedVideoDidEnd() {
-        print("rewardedVideoDidEnd")
-    }
-    
-    func didClickRewardedVideo(_ placementInfo: ISPlacementInfo!) {
+    func didClick(_ placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
         print("didClickRewardedVideo")
     }
     

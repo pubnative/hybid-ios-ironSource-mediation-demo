@@ -1,0 +1,6 @@
+framework module ironSource_HyBid_Adapters {
+  umbrella header "ironSource-HyBid-Adapters-umbrella.h"
+
+  export *
+  module * { export * }
+}

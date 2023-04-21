@@ -1,6 +1,8 @@
 import UIKit
 // Step 1: Import HyBid into your class
 import HyBid
+// Step 2: Import IronSource into your class
+import IronSource
 
 @main
 
@@ -11,35 +13,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let appKey = "1224c378d"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-// Step 2: Setup & Initialize HyBid SDK
+// Step 3: Setup & Initialize HyBid SDK
         HyBid.initWithAppToken(appToken, completion: nil)
-// Step 3: Setup & Initialize IronSource SDK
+// Step 4: Setup & Initialize IronSource SDK
         IronSource.initWithAppKey(appKey)
-// Step 4: Set COPPA (Optional)
+// Step 5: Set COPPA (Optional)
         HyBid.setCoppa(false)
-// Step 5: Set Test Mode (Optional)
+// Step 6: Set Test Mode (Optional)
         HyBid.setTestMode(true)
-// Step 6: Set Location Tracking (Optional)
+// Step 7: Set Location Tracking (Optional)
         HyBid.setLocationTracking(true)
-// Step 7: Set HTML Interstitial skipOffset (Optional)
+// Step 8: Set HTML Interstitial skipOffset (Optional)
         HyBid.setHTMLInterstitialSkipOffset(2)
-// Step 8: Set Video Interstitial skipOffset (Optional)
+// Step 9: Set Video Interstitial skipOffset (Optional)
         HyBid.setVideoInterstitialSkipOffset(5)
-// Step 9: Set Custom Click Behavior (Optional)
+// Step 10: Set Custom Click Behavior (Optional)
         HyBid.setInterstitialActionBehaviour(HB_CREATIVE)
-// Step 10: Set Targeting (Optional)
+// Step 11: Set Targeting (Optional)
         let targeting = HyBidTargetingModel()
         targeting.age = 28
         targeting.interests = ["music"]
         targeting.gender = "f"     // "f" for female, "m" for male
         HyBid.setTargeting(targeting)
-// Step 11: Set SKOverlay for Interstitial (Optional)
+// Step 12: Set SKOverlay for Interstitial (Optional)
         HyBid.setInterstitialSKOverlay(false)
-// Step 12: Set SKOverlay for Rewarded (Optional)
+// Step 13: Set SKOverlay for Rewarded (Optional)
         HyBid.setRewardedSKOverlay(false)
-// Step 13: Set HyBid log level (Optional)
+// Step 14: Set HyBid log level (Optional)
         HyBidLogger.setLogLevel(HyBidLogLevelDebug)
-// Step 14: Validate IronSource SDK integration (Optional)
+// Step 15: Validate IronSource SDK integration (Optional)
         ISIntegrationHelper.validateIntegration()
         
         return true
