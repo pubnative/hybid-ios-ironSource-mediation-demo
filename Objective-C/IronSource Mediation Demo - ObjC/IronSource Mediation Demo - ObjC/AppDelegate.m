@@ -45,13 +45,9 @@
         targeting.interests = @[@"music"];
         targeting.gender = @"f";     // "f" for female, "m" for male
         [HyBid setTargeting:targeting];
-    // Step 12: Set SKOverlay for Interstitial (Optional)
-        [HyBid setInterstitialSKOverlay:NO];
-    // Step 13: Set SKOverlay for Rewarded (Optional)
-        [HyBid setRewardedSKOverlay:NO];
-    // Step 14: Set HyBid log level (Optional)
+    // Step 12: Set HyBid log level (Optional)
         [HyBidLogger setLogLevel:HyBidLogLevelDebug];
-    // Step 15: Validate IronSource SDK integration (Optional)
+    // Step 13: Validate IronSource SDK integration (Optional)
         [ISIntegrationHelper validateIntegration];
     return YES;
 }
