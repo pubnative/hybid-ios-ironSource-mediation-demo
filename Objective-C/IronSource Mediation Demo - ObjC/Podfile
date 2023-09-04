@@ -6,5 +6,5 @@ target 'IronSource Mediation Demo - ObjC' do
   use_frameworks!
 
   # Pods for IronSource Mediation Demo - ObjC
-  pod 'ironSource-HyBid-Adapters', '2.20.0-beta3.0'
+  pod 'ironSource-HyBid-Adapters', '2.20.0-beta3.1'
 end
