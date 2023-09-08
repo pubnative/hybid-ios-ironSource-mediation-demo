@@ -115,12 +115,12 @@
 		34B0B404288EE4D50028433E /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				3403E13C2AAA7476000ED199 /* BannerViewController.h */,
+				3403E13D2AAA7476000ED199 /* BannerViewController.m */,
 				34B0B405288EE4F30028433E /* InterstitialViewController.h */,
 				34B0B406288EE4F30028433E /* InterstitialViewController.m */,
 				34B0B408288EE5400028433E /* RewardedViewController.h */,
 				34B0B409288EE5400028433E /* RewardedViewController.m */,
-				3403E13C2AAA7476000ED199 /* BannerViewController.h */,
-				3403E13D2AAA7476000ED199 /* BannerViewController.m */,
 			);
 			path = Examples;
 			sourceTree = "<group>";

@@ -30,10 +30,13 @@
 }
 
 - (IBAction)loadAdTouchUpInside:(id)sender {
+    [self.activityIndicator startAnimating];
+    self.bannerAdContainer.hidden = YES;
     if (self.bannerView) {
         [self destroyBanner];
     }
-    [self requestAd];
+    [IronSource setLevelPlayBannerDelegate:self];
+    [IronSource loadBannerWithViewController:self size:ISBannerSize_BANNER];
 }
 
 - (void)destroyBanner {
@@ -43,13 +46,6 @@
             self.bannerView = nil;
         }
     });
-}
-
-- (void)requestAd {
-    self.bannerAdContainer.hidden = YES;
-    [self.activityIndicator startAnimating];
-    [IronSource setLevelPlayBannerDelegate:self];
-    [IronSource loadBannerWithViewController:self size:ISBannerSize_BANNER];
 }
 
 #pragma mark - LevelPlayBannerDelegate
