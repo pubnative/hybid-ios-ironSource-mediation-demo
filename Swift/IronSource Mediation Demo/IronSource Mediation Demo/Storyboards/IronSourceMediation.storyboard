@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eZ3-HG-zEY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eZ3-HG-zEY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Format" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9a-ih-irl" userLabel="Format">
-                                <rect key="frame" x="16" y="52" width="42.5" height="21"/>
+                                <rect key="frame" x="16" y="56" width="42.5" height="21"/>
                                 <accessibility key="accessibilityConfiguration" identifier="formatLabel" label="Format Label"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Q6K-Mm-M55"/>
@@ -34,32 +35,8 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nO-c0-RDO" userLabel="Interstitial Button">
-                                <rect key="frame" x="16" y="81" width="382" height="33"/>
-                                <color key="backgroundColor" red="0.85098618270000004" green="0.85097014900000001" blue="0.85098105670000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <accessibility key="accessibilityConfiguration" identifier="interstitialButton" label="Interstitial Button"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="hSR-9P-yEE"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Interstitial">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <state key="selected">
-                                    <color key="titleColor" red="0.44761112330000002" green="0.097065538169999993" blue="0.48637124900000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </state>
-                                <variation key="heightClass=compact">
-                                    <mask key="constraints">
-                                        <exclude reference="hSR-9P-yEE"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <segue destination="wFR-yT-mP9" kind="show" id="wdU-Lh-LtE"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tn3-ZR-yVh" userLabel="Rewarded Button">
-                                <rect key="frame" x="16" y="122" width="382" height="33"/>
+                                <rect key="frame" x="16" y="167" width="382" height="33"/>
                                 <color key="backgroundColor" red="0.85098618270000004" green="0.85097014900000001" blue="0.85098105670000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <accessibility key="accessibilityConfiguration" identifier="rewardedButton" label="Rewarded Button"/>
                                 <constraints>
@@ -82,15 +59,66 @@
                                     <segue destination="bzt-Gj-NW6" kind="show" id="X0B-Jx-2yI"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AgW-0z-5o3" userLabel="Banner Button">
+                                <rect key="frame" x="16" y="85" width="382" height="33"/>
+                                <color key="backgroundColor" red="0.85098618270000004" green="0.85097014900000001" blue="0.85098105670000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <accessibility key="accessibilityConfiguration" identifier="bannerButton" label="Banner Button"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="8jC-cb-gPd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Banner">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.44761112330000002" green="0.097065538169999993" blue="0.48637124900000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="8jC-cb-gPd"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="icd-t2-qqd" kind="show" id="fLr-yG-IU1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nO-c0-RDO" userLabel="Interstitial Button">
+                                <rect key="frame" x="16" y="126" width="382" height="33"/>
+                                <color key="backgroundColor" red="0.85098618270000004" green="0.85097014900000001" blue="0.85098105670000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <accessibility key="accessibilityConfiguration" identifier="interstitialButton" label="Interstitial Button"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="hSR-9P-yEE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Interstitial">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.44761112330000002" green="0.097065538169999993" blue="0.48637124900000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="hSR-9P-yEE"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="wFR-yT-mP9" kind="show" id="wdU-Lh-LtE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JZw-Ow-Cpk"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="5nO-c0-RDO" firstAttribute="top" secondItem="AgW-0z-5o3" secondAttribute="bottom" constant="8" id="1vS-Um-cO2"/>
                             <constraint firstItem="JZw-Ow-Cpk" firstAttribute="trailing" secondItem="Tn3-ZR-yVh" secondAttribute="trailing" constant="16" id="9ha-rl-brA"/>
                             <constraint firstItem="W9a-ih-irl" firstAttribute="leading" secondItem="JZw-Ow-Cpk" secondAttribute="leading" constant="16" id="BJZ-KG-RBQ"/>
                             <constraint firstItem="JZw-Ow-Cpk" firstAttribute="trailing" secondItem="5nO-c0-RDO" secondAttribute="trailing" constant="16" id="GTd-uh-gvq"/>
+                            <constraint firstItem="AgW-0z-5o3" firstAttribute="top" secondItem="W9a-ih-irl" secondAttribute="bottom" constant="8" id="NKQ-Pd-s8p"/>
                             <constraint firstItem="W9a-ih-irl" firstAttribute="top" secondItem="JZw-Ow-Cpk" secondAttribute="top" constant="8" id="c44-dU-XWu"/>
-                            <constraint firstItem="5nO-c0-RDO" firstAttribute="top" secondItem="W9a-ih-irl" secondAttribute="bottom" constant="8" id="gpZ-pN-GJo"/>
+                            <constraint firstItem="JZw-Ow-Cpk" firstAttribute="trailing" secondItem="AgW-0z-5o3" secondAttribute="trailing" constant="16" id="er1-2j-ZzK"/>
+                            <constraint firstItem="AgW-0z-5o3" firstAttribute="leading" secondItem="JZw-Ow-Cpk" secondAttribute="leading" constant="16" id="iMz-46-gxd"/>
                             <constraint firstItem="Tn3-ZR-yVh" firstAttribute="leading" secondItem="JZw-Ow-Cpk" secondAttribute="leading" constant="16" id="kpb-tY-z92"/>
                             <constraint firstItem="Tn3-ZR-yVh" firstAttribute="top" secondItem="5nO-c0-RDO" secondAttribute="bottom" constant="8" symbolic="YES" id="oLy-4S-jgD"/>
                             <constraint firstItem="5nO-c0-RDO" firstAttribute="leading" secondItem="JZw-Ow-Cpk" secondAttribute="leading" constant="16" id="y4e-UM-SXU"/>
@@ -113,7 +141,7 @@
                         <viewControllerLayoutGuide type="bottom" id="W1k-Tt-xlE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="XEj-5L-vg6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ywl-4U-ih5">
@@ -131,7 +159,7 @@
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dYd-xN-8Ra">
-                                <rect key="frame" x="188.5" y="402.5" width="37" height="37"/>
+                                <rect key="frame" x="188.5" y="424.5" width="37" height="37"/>
                                 <color key="color" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QH9-vz-pgm">
@@ -170,7 +198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="njl-0Z-6rF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5655" y="991"/>
+            <point key="canvasLocation" x="-5152" y="990"/>
         </scene>
         <!--IronSource Mediation Rewarded-->
         <scene sceneID="bP1-y9-reo">
@@ -181,7 +209,7 @@
                         <viewControllerLayoutGuide type="bottom" id="a47-ic-CGD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lpX-A2-9os">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9M-QA-PXy">
@@ -214,7 +242,71 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bVu-fr-2Zk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4877" y="990"/>
+            <point key="canvasLocation" x="-4391" y="990"/>
+        </scene>
+        <!--IronSource Mediation Banner-->
+        <scene sceneID="xq3-sC-OOv">
+            <objects>
+                <viewController title="GAD Mediation Banner" id="icd-t2-qqd" userLabel="IronSource Mediation Banner" customClass="Banner" customModule="IronSource_Mediation_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="roC-Ux-F0d"/>
+                        <viewControllerLayoutGuide type="bottom" id="16d-hV-e5x"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0e2-ln-xAC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnV-sc-ZQO">
+                                <rect key="frame" x="16" y="8" width="382" height="33"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="loadAdButton" label="Load Ad Button"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="p0p-C3-rja"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Load Ad"/>
+                                <connections>
+                                    <action selector="loadAdTouchUpInside:" destination="icd-t2-qqd" eventType="touchUpInside" id="SL4-QR-fxh"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VGE-JQ-vUy">
+                                <rect key="frame" x="0.0" y="49" width="414" height="50"/>
+                                <accessibility key="accessibilityConfiguration" identifier="bannerContainerView" label="Banner Container View">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="voC-ir-MoC"/>
+                                </constraints>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="O1L-Ac-nCD">
+                                <rect key="frame" x="188.5" y="55.5" width="37" height="37"/>
+                                <color key="color" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9Qg-OW-HMQ"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="O1L-Ac-nCD" firstAttribute="centerX" secondItem="VGE-JQ-vUy" secondAttribute="centerX" id="4gs-ef-zJi"/>
+                            <constraint firstItem="VnV-sc-ZQO" firstAttribute="leading" secondItem="9Qg-OW-HMQ" secondAttribute="leading" constant="16" id="66K-6a-6Dv"/>
+                            <constraint firstItem="VnV-sc-ZQO" firstAttribute="top" secondItem="9Qg-OW-HMQ" secondAttribute="top" constant="8" id="99c-YO-OTg"/>
+                            <constraint firstItem="9Qg-OW-HMQ" firstAttribute="trailing" secondItem="VnV-sc-ZQO" secondAttribute="trailing" constant="16" id="DXD-2e-R4n"/>
+                            <constraint firstItem="VGE-JQ-vUy" firstAttribute="leading" secondItem="9Qg-OW-HMQ" secondAttribute="leading" id="KsI-wv-Ylb"/>
+                            <constraint firstItem="9Qg-OW-HMQ" firstAttribute="trailing" secondItem="VGE-JQ-vUy" secondAttribute="trailing" id="N2b-Xg-lvA"/>
+                            <constraint firstItem="VGE-JQ-vUy" firstAttribute="top" secondItem="VnV-sc-ZQO" secondAttribute="bottom" constant="8" id="WNQ-O4-QPs"/>
+                            <constraint firstItem="O1L-Ac-nCD" firstAttribute="centerY" secondItem="VGE-JQ-vUy" secondAttribute="centerY" id="rHb-vr-ZOZ"/>
+                            <constraint firstItem="VGE-JQ-vUy" firstAttribute="centerX" secondItem="0e2-ln-xAC" secondAttribute="centerX" id="szQ-Dz-XQ6"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ol9-Yv-MYz"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="O1L-Ac-nCD" id="7qf-dj-t52"/>
+                        <outlet property="bannerAdContainer" destination="VGE-JQ-vUy" id="zgi-VY-Te0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tRy-HZ-7cM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5899" y="990"/>
         </scene>
     </scenes>
 </document>

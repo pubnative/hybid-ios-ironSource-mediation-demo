@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3403E13B2AAA5019000ED199 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3403E13A2AAA5019000ED199 /* Banner.swift */; };
 		341ACEDA278C7C7200823EA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341ACED9278C7C7200823EA5 /* AppDelegate.swift */; };
 		341ACEDC278C7C7200823EA5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341ACEDB278C7C7200823EA5 /* SceneDelegate.swift */; };
 		341ACEE3278C7C7300823EA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 341ACEE2278C7C7300823EA5 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		2A536FEB669ECAAFB5BDDB2E /* Pods-IronSource Mediation Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IronSource Mediation Demo.debug.xcconfig"; path = "Target Support Files/Pods-IronSource Mediation Demo/Pods-IronSource Mediation Demo.debug.xcconfig"; sourceTree = "<group>"; };
+		3403E13A2AAA5019000ED199 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		341ACED6278C7C7200823EA5 /* IronSource Mediation Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IronSource Mediation Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		341ACED9278C7C7200823EA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		341ACEDB278C7C7200823EA5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		3498DD6C278C8D920083BA85 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				3403E13A2AAA5019000ED199 /* Banner.swift */,
 				3498DD6A278C8D890083BA85 /* Interstitial.swift */,
 				34B0B3C9288ECA1F0028433E /* Rewarded.swift */,
 			);
@@ -247,6 +250,7 @@
 			files = (
 				341ACEDA278C7C7200823EA5 /* AppDelegate.swift in Sources */,
 				341ACEDC278C7C7200823EA5 /* SceneDelegate.swift in Sources */,
+				3403E13B2AAA5019000ED199 /* Banner.swift in Sources */,
 				3498DD6B278C8D890083BA85 /* Interstitial.swift in Sources */,
 				34B0B3CA288ECA1F0028433E /* Rewarded.swift in Sources */,
 			);

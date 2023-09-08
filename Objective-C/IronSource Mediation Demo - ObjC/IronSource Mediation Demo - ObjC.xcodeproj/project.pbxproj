@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0118D2ACCBC7E8FBDB2F2188 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */; };
+		3403E13E2AAA7476000ED199 /* BannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3403E13D2AAA7476000ED199 /* BannerViewController.m */; };
 		34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E1288EE11F0028433E /* AppDelegate.m */; };
 		34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E4288EE11F0028433E /* SceneDelegate.m */; };
 		34B0B3ED288EE1200028433E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EC288EE1200028433E /* Assets.xcassets */; };
@@ -33,7 +34,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IronSource_Mediation_Demo___ObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_IronSource_Mediation_Demo___ObjC.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3403E13C2AAA7476000ED199 /* BannerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BannerViewController.h; sourceTree = "<group>"; };
+		3403E13D2AAA7476000ED199 /* BannerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BannerViewController.m; sourceTree = "<group>"; };
 		34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IronSource Mediation Demo - ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34B0B3E0288EE11F0028433E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		34B0B3E1288EE11F0028433E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -116,6 +119,8 @@
 				34B0B406288EE4F30028433E /* InterstitialViewController.m */,
 				34B0B408288EE5400028433E /* RewardedViewController.h */,
 				34B0B409288EE5400028433E /* RewardedViewController.m */,
+				3403E13C2AAA7476000ED199 /* BannerViewController.h */,
+				3403E13D2AAA7476000ED199 /* BannerViewController.m */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 			files = (
 				34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */,
 				34B0B40A288EE5400028433E /* RewardedViewController.m in Sources */,
+				3403E13E2AAA7476000ED199 /* BannerViewController.m in Sources */,
 				34B0B3F3288EE1200028433E /* main.m in Sources */,
 				34B0B407288EE4F30028433E /* InterstitialViewController.m in Sources */,
 				34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */,
