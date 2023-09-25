@@ -11,6 +11,7 @@
 #endif
 
 #import "ISVerveCustomAdapter.h"
+#import "ISVerveCustomBanner.h"
 #import "ISVerveCustomInterstitial.h"
 #import "ISVerveCustomRewardedVideo.h"
 #import "ISVerveUtils.h"
