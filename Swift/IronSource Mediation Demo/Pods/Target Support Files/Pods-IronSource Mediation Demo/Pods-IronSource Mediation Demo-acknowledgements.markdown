@@ -34,7 +34,7 @@ https://platform.ironsrc.com/partners/terms-and-conditions-new-user
 
 MIT License
 
-Copyright (c) 2021 PubNative GmbH
+Copyright (c) 2023 PubNative GmbH
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
