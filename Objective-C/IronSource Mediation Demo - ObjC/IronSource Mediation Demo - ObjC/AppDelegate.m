@@ -33,21 +33,15 @@
         [HyBid setTestMode:YES];
     // Step 7: Set Location Tracking (Optional)
         [HyBid setLocationTracking:YES];
-    // Step 8: Set HTML Interstitial skipOffset (Optional)
-        [HyBid setHTMLInterstitialSkipOffset:2];
-    // Step 9: Set Video Interstitial skipOffset (Optional)
-        [HyBid setVideoInterstitialSkipOffset:5];
-    // Step 10: Set Custom Click Behavior (Optional)
-        [HyBid setInterstitialActionBehaviour:HB_CREATIVE];
-    // Step 11: Set Targeting (Optional)
+    // Step 8: Set Targeting (Optional)
         HyBidTargetingModel *targeting = [[HyBidTargetingModel alloc] init];
         targeting.age = [NSNumber numberWithInt:28];
         targeting.interests = @[@"music"];
         targeting.gender = @"f";     // "f" for female, "m" for male
         [HyBid setTargeting:targeting];
-    // Step 12: Set HyBid log level (Optional)
+    // Step 9: Set HyBid log level (Optional)
         [HyBidLogger setLogLevel:HyBidLogLevelDebug];
-    // Step 13: Validate IronSource SDK integration (Optional)
+    // Step 10: Validate IronSource SDK integration (Optional)
         [ISIntegrationHelper validateIntegration];
     return YES;
 }

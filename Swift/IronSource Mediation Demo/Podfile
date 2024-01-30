@@ -6,5 +6,5 @@ target 'IronSource Mediation Demo' do
   use_frameworks!
 
   # Pods for IronSource Mediation Demo
-  pod 'ironSource-HyBid-Adapters', '2.20.0.0'
+  pod 'ironSource-HyBid-Adapters', '2.21.0.0'
 end
