@@ -17,7 +17,7 @@ PODS:
   - ironSource-HyBid-Adapters (2.21.1.0):
     - HyBid (= 2.21.1)
     - IronSourceSDK (~> 7.5)
-  - IronSourceSDK (7.8.0.0)
+  - IronSourceSDK (7.9.0.0)
 
 DEPENDENCIES:
   - ironSource-HyBid-Adapters (= 2.21.1.0)
@@ -31,7 +31,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   HyBid: 4522aa66455212ad4df4e37538cdf6f253d518be
   ironSource-HyBid-Adapters: 9fbd91091abbe83d76473759cd7aa1fe5f8f009b
-  IronSourceSDK: ef878d01ce69a68633c7a27c89cabe0e41fcc49a
+  IronSourceSDK: 3fb6845fabf7b6e84e73fff61fe7a4d75691e4ac
 
 PODFILE CHECKSUM: a0edc2c525d14180a91d22becc1c650b09648715
 
