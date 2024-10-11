@@ -34,7 +34,7 @@
 		</data>
 		<key>Headers/ISABannerAdView.h</key>
 		<data>
-		qiik4m2gPDaujqBiBhJoBqEiBPg=
+		snPTLJEUpNHCq0MgYux/lxaY8OQ=
 		</data>
 		<key>Headers/ISABannerAdViewDelegate.h</key>
 		<data>
@@ -144,6 +144,10 @@
 		<data>
 		JxcGVaT80yMdr8HjMnMIEF2eVpo=
 		</data>
+		<key>Headers/ISAdapterAdaptiveProtocol.h</key>
+		<data>
+		iwRqTEKs6cxEFFF79syw5RksDDw=
+		</data>
 		<key>Headers/ISAdapterBannerProtocol.h</key>
 		<data>
 		kHasNWQaSZOeesziOpm+g+62Vqg=
@@ -187,6 +191,14 @@
 		<key>Headers/ISAdapterNativeAdViewBinderProtocol.h</key>
 		<data>
 		M+sNIHC7rpjNZyZPquZcRFc8j0U=
+		</data>
+		<key>Headers/ISAdapterNetworkData.h</key>
+		<data>
+		sbxT4Y4GUaJ649e3pzXXM1WELOg=
+		</data>
+		<key>Headers/ISAdapterNetworkDataProtocol.h</key>
+		<data>
+		+5ZuBFuBZTJJOc+GxdKvbgjeYIo=
 		</data>
 		<key>Headers/ISAdapterSettingsProtocol.h</key>
 		<data>
@@ -234,11 +246,11 @@
 		</data>
 		<key>Headers/ISBaseAdapter.h</key>
 		<data>
-		2CaBwHnIkz6yGNACbaGJ5soy+eM=
+		f0sOrNi0fhHuVtRXReKuw0HTVA4=
 		</data>
 		<key>Headers/ISBaseBanner.h</key>
 		<data>
-		hhnC7g/gBslZhCNXlIwZvaok1Ts=
+		FvgJt3X4ErVOnIQE36KmEltkDcs=
 		</data>
 		<key>Headers/ISBaseBannerAdapter.h</key>
 		<data>
@@ -258,7 +270,7 @@
 		</data>
 		<key>Headers/ISBaseNetworkAdapter.h</key>
 		<data>
-		KgSRp9VjMmDI0c6RbowadCO2O1I=
+		BpcpJvfhETeRW1KA7UbswKspVhU=
 		</data>
 		<key>Headers/ISBaseRewardedVideo.h</key>
 		<data>
@@ -267,10 +279,6 @@
 		<key>Headers/ISBaseRewardedVideoAdapter.h</key>
 		<data>
 		sns2v9SrW9IkIG+oEjdcnQOC2C8=
-		</data>
-		<key>Headers/ISBiddingDataAdapterProtocol.h</key>
-		<data>
-		9kDhMYU2ZIObT1DanTSVg9eqUHU=
 		</data>
 		<key>Headers/ISBiddingDataDelegate.h</key>
 		<data>
@@ -298,7 +306,7 @@
 		</data>
 		<key>Headers/ISDataKeys.h</key>
 		<data>
-		88/ll7Z4egpEFCRcOEupUulEkgc=
+		socCh2ZeGuWpmK90e+2mJBDxPTE=
 		</data>
 		<key>Headers/ISDemandOnlyBannerDelegate.h</key>
 		<data>
@@ -318,7 +326,7 @@
 		</data>
 		<key>Headers/ISError.h</key>
 		<data>
-		k2EkRq5kx74Sn4IF+HJ4IhYtZlY=
+		FImhr1RzIaUGL82p0Uc+PfajbRw=
 		</data>
 		<key>Headers/ISEventsReporting.h</key>
 		<data>
@@ -330,7 +338,7 @@
 		</data>
 		<key>Headers/ISImpressionData.h</key>
 		<data>
-		OEDmhiP8kCt6GJJD8s0eluNVVOk=
+		nqz9ZfEVru567LRZyUaw5VDcIyY=
 		</data>
 		<key>Headers/ISImpressionDataDelegate.h</key>
 		<data>
@@ -370,7 +378,7 @@
 		</data>
 		<key>Headers/ISLoggerManager.h</key>
 		<data>
-		Q+EWZFIOuB/xc/uxWVgLZILBkwc=
+		Sdt1+/lG0+Fla4Vw1xskJtHvE2k=
 		</data>
 		<key>Headers/ISMediationGlobalDataWriterFacade.h</key>
 		<data>
@@ -502,7 +510,7 @@
 		</data>
 		<key>Headers/ISSupersonicAdsConfiguration.h</key>
 		<data>
-		+h70hsJenig+W/zt3AWgm8O8iBo=
+		0BfIx2AqK1FkUHAsoBuroYR0TL4=
 		</data>
 		<key>Headers/ISWaterfallConfiguration.h</key>
 		<data>
@@ -510,7 +518,7 @@
 		</data>
 		<key>Headers/IronSource.h</key>
 		<data>
-		XowUHk+yhPO/FNF+Tmr3QYB/I3M=
+		EqPA0NMimKZ8ldmNLpQgBrM0Wuw=
 		</data>
 		<key>Headers/IronSourceAds.h</key>
 		<data>
@@ -522,11 +530,11 @@
 		</data>
 		<key>Headers/LPMAdInfo.h</key>
 		<data>
-		jTbVHjN3qbmi1nQzBfLuWL1Irto=
+		JnZZiXDuj5NKt0eW/Jwzsptks0s=
 		</data>
 		<key>Headers/LPMAdSize.h</key>
 		<data>
-		H1KYj2K7HuIaB5vOxq9wvAF/T68=
+		eqTyHmpFWoBcxg5djyaEFxQqtfY=
 		</data>
 		<key>Headers/LPMBannerAdView.h</key>
 		<data>
@@ -535,6 +543,10 @@
 		<key>Headers/LPMBannerAdViewDelegate.h</key>
 		<data>
 		BiMNQ1bjLRKiu78oQFaMuKN3gqg=
+		</data>
+		<key>Headers/LPMConfigServiceEventSender.h</key>
+		<data>
+		ZjVzAggedurAeIXHXMMuZbisSFE=
 		</data>
 		<key>Headers/LPMConfiguration.h</key>
 		<data>
@@ -548,13 +560,21 @@
 		<data>
 		rXzEzZF0w5dKV1ZW8ZCMrkGrClg=
 		</data>
+		<key>Headers/LPMInterstitialAd.h</key>
+		<data>
+		9mlUf84M6MR7c3qOCTvEF1kdlVM=
+		</data>
+		<key>Headers/LPMInterstitialAdDelegate.h</key>
+		<data>
+		V3Bj1CSxweu/TnLOet5273QOlX4=
+		</data>
 		<key>Headers/LevelPlay.h</key>
 		<data>
 		mb1ro++biG/vvK+LYdx1DL/hSHs=
 		</data>
 		<key>Headers/LevelPlayBannerDelegate.h</key>
 		<data>
-		b9TFXZro2t57rpwVj4Ev16HAbEA=
+		AcsAgYlKfFdTSVM7j+TwbdSedWQ=
 		</data>
 		<key>Headers/LevelPlayInterstitialDelegate.h</key>
 		<data>
@@ -598,7 +618,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		UKGBKXOQsZlf0rAlDdwq5LOT38E=
+		phnpEpxt13vXzsDHaq9mYvdchMM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -692,11 +712,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qiik4m2gPDaujqBiBhJoBqEiBPg=
+			snPTLJEUpNHCq0MgYux/lxaY8OQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			0BSDKLYwf9PPHaWY/kWlnCtgfB5ljulYNm9NpuwXFWw=
+			AFTfcEZjjvQmFHLPcrRI94d0aPSwrth1gA9DmaPdHdo=
 			</data>
 		</dict>
 		<key>Headers/ISABannerAdViewDelegate.h</key>
@@ -996,6 +1016,17 @@
 			ndVoCnQZ0vKkb1qxrM7cUtGDVu6/Qm3zXKHlWESnANU=
 			</data>
 		</dict>
+		<key>Headers/ISAdapterAdaptiveProtocol.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			iwRqTEKs6cxEFFF79syw5RksDDw=
+			</data>
+			<key>hash2</key>
+			<data>
+			1usYE7tJpePxHF6rGbhVQGPAhm6KPijADGV4o2J5a/4=
+			</data>
+		</dict>
 		<key>Headers/ISAdapterBannerProtocol.h</key>
 		<dict>
 			<key>hash</key>
@@ -1115,6 +1146,28 @@
 			<key>hash2</key>
 			<data>
 			qViJ6pDaNOXbpgczMq1922nCJzojnXOB94mxSCIXyQU=
+			</data>
+		</dict>
+		<key>Headers/ISAdapterNetworkData.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			sbxT4Y4GUaJ649e3pzXXM1WELOg=
+			</data>
+			<key>hash2</key>
+			<data>
+			mmuvzqA7WExg6IIPBTYPfHIzjgENtwZoT40KHHF2qP4=
+			</data>
+		</dict>
+		<key>Headers/ISAdapterNetworkDataProtocol.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			+5ZuBFuBZTJJOc+GxdKvbgjeYIo=
+			</data>
+			<key>hash2</key>
+			<data>
+			6WxA9hQ7vy7/xJ1tzogLLh15J4lTAf1K4D0jEmKusOE=
 			</data>
 		</dict>
 		<key>Headers/ISAdapterSettingsProtocol.h</key>
@@ -1242,22 +1295,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			2CaBwHnIkz6yGNACbaGJ5soy+eM=
+			f0sOrNi0fhHuVtRXReKuw0HTVA4=
 			</data>
 			<key>hash2</key>
 			<data>
-			FIOxHhrj5ygxfgYwC1GDXrGVzzkGMB5SY7L6PXb9b0s=
+			g1+GmOSJaZDGc4tb/D6/THygbel8kiexpzsm4CxROVw=
 			</data>
 		</dict>
 		<key>Headers/ISBaseBanner.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hhnC7g/gBslZhCNXlIwZvaok1Ts=
+			FvgJt3X4ErVOnIQE36KmEltkDcs=
 			</data>
 			<key>hash2</key>
 			<data>
-			cBLGYolyTOJ/2wqLiWOzxubw9BO5srsuubLJAVCXeW4=
+			T8yNJKULv+mUeFdw2CKpyTaHlNTqzfZUvi4xD27EJ3Q=
 			</data>
 		</dict>
 		<key>Headers/ISBaseBannerAdapter.h</key>
@@ -1308,11 +1361,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KgSRp9VjMmDI0c6RbowadCO2O1I=
+			BpcpJvfhETeRW1KA7UbswKspVhU=
 			</data>
 			<key>hash2</key>
 			<data>
-			gsHRjIjNAd1dZ6fk67+Jpl5oLLP+9E+gvQRyPrdjOPw=
+			1JCY07b3QLUIXKFZ001qPGM8iOI3fApLOuT2AArKXv8=
 			</data>
 		</dict>
 		<key>Headers/ISBaseRewardedVideo.h</key>
@@ -1335,17 +1388,6 @@
 			<key>hash2</key>
 			<data>
 			s+LyS4RpSb19eq9ZX87gMSHhzpcx2QMAJxiozOrPiHc=
-			</data>
-		</dict>
-		<key>Headers/ISBiddingDataAdapterProtocol.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9kDhMYU2ZIObT1DanTSVg9eqUHU=
-			</data>
-			<key>hash2</key>
-			<data>
-			+8gN+P4wigSNUGbleOsp1ZSttnGSeakmMpZKtcPqORM=
 			</data>
 		</dict>
 		<key>Headers/ISBiddingDataDelegate.h</key>
@@ -1418,11 +1460,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			88/ll7Z4egpEFCRcOEupUulEkgc=
+			socCh2ZeGuWpmK90e+2mJBDxPTE=
 			</data>
 			<key>hash2</key>
 			<data>
-			QALH5McKkUl2MFR80H1BKpwiomImL9/s5ZKn21kqyT4=
+			8MAFZIu+mfB3b/KeIh75BrNFExoV7a9PNFq6WN+M4tE=
 			</data>
 		</dict>
 		<key>Headers/ISDemandOnlyBannerDelegate.h</key>
@@ -1473,11 +1515,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			k2EkRq5kx74Sn4IF+HJ4IhYtZlY=
+			FImhr1RzIaUGL82p0Uc+PfajbRw=
 			</data>
 			<key>hash2</key>
 			<data>
-			2I8ei1m5Co4IW0c6syikNi5KMaMqzUBkbVJPT0UFXck=
+			RXa3hNuVWIcIFezVnkAdHd0RaE8sc3OWYaAVi8nkDlA=
 			</data>
 		</dict>
 		<key>Headers/ISEventsReporting.h</key>
@@ -1506,11 +1548,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			OEDmhiP8kCt6GJJD8s0eluNVVOk=
+			nqz9ZfEVru567LRZyUaw5VDcIyY=
 			</data>
 			<key>hash2</key>
 			<data>
-			5cp39yoSjo6Cy5q4HnycQSSf2betIRxU2Fvyhlc6caU=
+			ECORPVOM4QKv5PoU1WmMYH8+2Wbdj9+DNkVTLCk5GUQ=
 			</data>
 		</dict>
 		<key>Headers/ISImpressionDataDelegate.h</key>
@@ -1616,11 +1658,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Q+EWZFIOuB/xc/uxWVgLZILBkwc=
+			Sdt1+/lG0+Fla4Vw1xskJtHvE2k=
 			</data>
 			<key>hash2</key>
 			<data>
-			WvVMT0TUGzzHr3NxHvGogPi2GqDJxmhlkfru3Kkm2Dk=
+			JtkpX88/DEE7UeK43aslMQS2GmfRm/NblRaNZaTEJKM=
 			</data>
 		</dict>
 		<key>Headers/ISMediationGlobalDataWriterFacade.h</key>
@@ -1979,11 +2021,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+h70hsJenig+W/zt3AWgm8O8iBo=
+			0BfIx2AqK1FkUHAsoBuroYR0TL4=
 			</data>
 			<key>hash2</key>
 			<data>
-			p3h5E9cpaxq9d6/wwo7q102spqXynN2ykY1QGJpCI4s=
+			8bY4u/02Jgws/V1lRa5VgNScT6Z8FYBeYsOYVOykmRw=
 			</data>
 		</dict>
 		<key>Headers/ISWaterfallConfiguration.h</key>
@@ -2001,11 +2043,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			XowUHk+yhPO/FNF+Tmr3QYB/I3M=
+			EqPA0NMimKZ8ldmNLpQgBrM0Wuw=
 			</data>
 			<key>hash2</key>
 			<data>
-			UTYbNgFMm6/dlOUM/RI5ddHoi10tXruwuk8CP/cZKtI=
+			Ucj6dn8CjqqjE1WuLsfun2Ss6+HQlbFm0qn13acfE64=
 			</data>
 		</dict>
 		<key>Headers/IronSourceAds.h</key>
@@ -2034,22 +2076,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			jTbVHjN3qbmi1nQzBfLuWL1Irto=
+			JnZZiXDuj5NKt0eW/Jwzsptks0s=
 			</data>
 			<key>hash2</key>
 			<data>
-			0A41Ykvo+PIgwfhfGIwjfwLjPuR5CicyZpXURO+KGVs=
+			DB+vvGb/oKOTZVdkmgIs6vw2DnOu3aYVR1vBoE2b1qo=
 			</data>
 		</dict>
 		<key>Headers/LPMAdSize.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			H1KYj2K7HuIaB5vOxq9wvAF/T68=
+			eqTyHmpFWoBcxg5djyaEFxQqtfY=
 			</data>
 			<key>hash2</key>
 			<data>
-			bOP/wF0CFWyKA+weOE3Wxgk/Y4cTyegJ6TlwL+53m/c=
+			mLcGivusio7pqi5fOfkB0EiYsBiIhcDPH0YXNj4SLSo=
 			</data>
 		</dict>
 		<key>Headers/LPMBannerAdView.h</key>
@@ -2072,6 +2114,17 @@
 			<key>hash2</key>
 			<data>
 			V+989W2EtIovH/xSeq1O2V4PZWa/WoKvN1wwH5Km8Js=
+			</data>
+		</dict>
+		<key>Headers/LPMConfigServiceEventSender.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ZjVzAggedurAeIXHXMMuZbisSFE=
+			</data>
+			<key>hash2</key>
+			<data>
+			OIJ41MemQZ9ToTr0lW5ejy2pRcHn8tBTI4Ugn0uESc4=
 			</data>
 		</dict>
 		<key>Headers/LPMConfiguration.h</key>
@@ -2107,6 +2160,28 @@
 			Y+aDd6lat4vEGzQfqfudgt2BBdHeVkoWvieBAedzIHY=
 			</data>
 		</dict>
+		<key>Headers/LPMInterstitialAd.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			9mlUf84M6MR7c3qOCTvEF1kdlVM=
+			</data>
+			<key>hash2</key>
+			<data>
+			QsWK99AF3D0NYlgIkFv1TQp6ZJ00ViuROXBrjo3rkFk=
+			</data>
+		</dict>
+		<key>Headers/LPMInterstitialAdDelegate.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			V3Bj1CSxweu/TnLOet5273QOlX4=
+			</data>
+			<key>hash2</key>
+			<data>
+			HBm0XTQkA0Pct7pF7nyCzCDGupf7O3cOUMWCUQxeuYg=
+			</data>
+		</dict>
 		<key>Headers/LevelPlay.h</key>
 		<dict>
 			<key>hash</key>
@@ -2122,11 +2197,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			b9TFXZro2t57rpwVj4Ev16HAbEA=
+			AcsAgYlKfFdTSVM7j+TwbdSedWQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			5ryJgvUkZG7nRcbAhGuL+7CC58Hzp0RMFm6ml0g/Hx0=
+			Ev980gxkIhFLBNQPmEqouAi63kWfEHsuM1oPAbXiK2g=
 			</data>
 		</dict>
 		<key>Headers/LevelPlayInterstitialDelegate.h</key>

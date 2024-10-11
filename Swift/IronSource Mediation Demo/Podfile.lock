@@ -1,38 +1,45 @@
 PODS:
-  - HyBid (3.0.3):
-    - HyBid/Banner (= 3.0.3)
-    - HyBid/Core (= 3.0.3)
-    - HyBid/FullScreen (= 3.0.3)
-    - HyBid/Native (= 3.0.3)
-    - HyBid/RewardedVideo (= 3.0.3)
-  - HyBid/Banner (3.0.3):
+  - ATOM-Standalone (3.3.0)
+  - HyBid (3.1.1):
+    - HyBid/ATOM (= 3.1.1)
+    - HyBid/Banner (= 3.1.1)
+    - HyBid/Core (= 3.1.1)
+    - HyBid/FullScreen (= 3.1.1)
+    - HyBid/Native (= 3.1.1)
+    - HyBid/RewardedVideo (= 3.1.1)
+  - HyBid/ATOM (3.1.1):
+    - ATOM-Standalone (~> 3.3.0)
     - HyBid/Core
-  - HyBid/Core (3.0.3)
-  - HyBid/FullScreen (3.0.3):
+  - HyBid/Banner (3.1.1):
     - HyBid/Core
-  - HyBid/Native (3.0.3):
+  - HyBid/Core (3.1.1)
+  - HyBid/FullScreen (3.1.1):
     - HyBid/Core
-  - HyBid/RewardedVideo (3.0.3):
+  - HyBid/Native (3.1.1):
     - HyBid/Core
-  - ironSource-HyBid-Adapters (3.0.3.0):
-    - HyBid (= 3.0.3)
+  - HyBid/RewardedVideo (3.1.1):
+    - HyBid/Core
+  - ironSource-HyBid-Adapters (3.1.1.0):
+    - HyBid (= 3.1.1)
     - IronSourceSDK (~> 8.0)
-  - IronSourceSDK (8.1.1.0)
+  - IronSourceSDK (8.4.0.0)
 
 DEPENDENCIES:
-  - ironSource-HyBid-Adapters (= 3.0.3.0)
+  - ironSource-HyBid-Adapters (= 3.1.1.0)
 
 SPEC REPOS:
   trunk:
+    - ATOM-Standalone
     - HyBid
     - ironSource-HyBid-Adapters
     - IronSourceSDK
 
 SPEC CHECKSUMS:
-  HyBid: 919c190836d93f411370df8b90ee58a8aaf8b709
-  ironSource-HyBid-Adapters: af9fc80f27d07d43dfee0583e8c147f30fa7e5ce
-  IronSourceSDK: f44778e8b9b76b33130b4cbc11e722ff1c7d1813
+  ATOM-Standalone: e2f8efa4fc237d001cdc91a7c217124c20455ee7
+  HyBid: 85eb7cc73f6168516087496c083c7d6904e4fd2a
+  ironSource-HyBid-Adapters: cb25378a9f2659074618cb734a5e142f0c343459
+  IronSourceSDK: 557a0edad39c2a48a225af07b491c672ca5acd36
 
-PODFILE CHECKSUM: fea90573f561ab82a00f0be480d0fa32cee47d87
+PODFILE CHECKSUM: ba0f315fcc090edfe997ebe6a927b23d9822f2c5
 
 COCOAPODS: 1.15.2
