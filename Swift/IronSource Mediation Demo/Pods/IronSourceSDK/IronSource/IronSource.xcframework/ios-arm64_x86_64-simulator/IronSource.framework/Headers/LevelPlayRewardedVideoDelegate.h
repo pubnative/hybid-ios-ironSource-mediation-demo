@@ -4,11 +4,11 @@
 //
 //  Copyright © 2022 IronSource. All rights reserved.
 //
+#import "ISAdInfo.h"
+#import "LevelPlayRewardedVideoBaseDelegate.h"
 
 #ifndef LevelPlayRewardedVideoDelegate_h
 #define LevelPlayRewardedVideoDelegate_h
-
-#import "ISAdInfo.h"
 
 @protocol LevelPlayRewardedVideoDelegate <LevelPlayRewardedVideoBaseDelegate>
 
@@ -28,4 +28,3 @@
 @end
 
 #endif /* LevelPlayRewardedVideoDelegate_h */
-

@@ -8,25 +8,30 @@
 #import <Foundation/Foundation.h>
 
 #import "ISBannerAdapterProtocol.h"
-#import "ISRewardedVideoAdapterProtocol.h"
-#import "ISInterstitialAdapterProtocol.h"
-#import "ISOfferwallAdapterProtocol.h"
 #import "ISBiddingDataAdapterProtocol.h"
-#import "ISAdUnitAdapterProtocol.h"
+#import "ISInterstitialAdapterProtocol.h"
+#import "ISNativeAdAdapterProtocol.h"
+#import "ISOfferwallAdapterProtocol.h"
+#import "ISRewardedVideoAdapterProtocol.h"
 
 #import "ISAdapterConfig.h"
+#import "ISConcurrentMutableDictionary.h"
 #import "ISLoadWhileShowSupportState.h"
-#import "Environment/ISConcurrentMutableDictionary.h"
 
-@interface ISBaseAdapter : NSObject <ISInterstitialAdapterProtocol, ISRewardedVideoAdapterProtocol, ISBannerAdapterProtocol, ISOfferwallAdapterProtocol, ISBiddingDataAdapterProtocol, ISAdUnitAdapterProtocol>
-{
-    @protected ISLoadWhileShowSupportState LWSState;
+@interface ISBaseAdapter : NSObject <ISInterstitialAdapterProtocol,
+                                     ISRewardedVideoAdapterProtocol,
+                                     ISBannerAdapterProtocol,
+                                     ISOfferwallAdapterProtocol,
+                                     ISBiddingDataAdapterProtocol,
+                                     ISNativeAdAdapterProtocol> {
+ @protected
+  ISLoadWhileShowSupportState LWSState;
 }
 
-@property (nonatomic, strong) NSString                       *adapterName;
-@property (strong, nonatomic) NSString                       *pluginType;
-@property (strong, nonatomic) NSString                       *userId;
-@property (strong, nonatomic) ISConcurrentMutableDictionary  *adUnitAdapters;
+@property(nonatomic, strong) NSString *adapterName;
+@property(strong, nonatomic) NSString *pluginType;
+@property(strong, nonatomic) NSString *userId;
+@property(strong, nonatomic) ISConcurrentMutableDictionary *adUnitAdapters;
 
 - (instancetype)initAdapter:(NSString *)name;
 - (void)earlyInitWithAdapterConfig:(ISAdapterConfig *)adapterConfig;
@@ -41,12 +46,14 @@
 - (void)setRewardedVideoAdapter:(id<ISRewardedVideoAdapterProtocol>)rewardedVideoAdapter;
 - (void)setInterstitialAdapter:(id<ISInterstitialAdapterProtocol>)interstitialAdapter;
 - (void)setBannerAdapter:(id<ISBannerAdapterProtocol>)bannerAdapter;
+- (void)setNativeAdAdapter:(id<ISNativeAdAdapterProtocol>)nativeAdAdapter;
+- (void)setConsent:(BOOL)consent;
 
 - (id<ISRewardedVideoAdapterProtocol>)getRewardedVideoAdapter;
 - (id<ISInterstitialAdapterProtocol>)getInterstitialAdapter;
 - (id<ISBannerAdapterProtocol>)getBannerAdapter;
+- (id<ISNativeAdAdapterProtocol>)getNativeAdAdapter;
 
-// check if the network supports adaptive banners
-- (BOOL)getAdaptiveBannerSupport;
+- (CGFloat)getAdaptiveHeightWithWidth:(CGFloat)width;
 
 @end

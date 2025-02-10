@@ -144,6 +144,7 @@
 				341ACED4278C7C7200823EA5 /* Resources */,
 				3498DD71278C90630083BA85 /* Embed Frameworks */,
 				57FB7AC608461336F0A772D1 /* [CP] Embed Pods Frameworks */,
+				F20288F0A88974DD3032C4BB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -239,6 +240,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IronSource Mediation Demo/Pods-IronSource Mediation Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F20288F0A88974DD3032C4BB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IronSource Mediation Demo/Pods-IronSource Mediation Demo-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-IronSource Mediation Demo/Pods-IronSource Mediation Demo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IronSource Mediation Demo/Pods-IronSource Mediation Demo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

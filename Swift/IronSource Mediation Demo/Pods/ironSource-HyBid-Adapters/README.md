@@ -23,8 +23,8 @@ It will install HyBid Adapters, as well as HyBid iOS SDK and ironSource iOS SDK 
 1. Add pod named `ironSource-HyBid-Adapters` in your Podfile:
 
 ```ruby
-platform :ios, '10.0'
-pod 'ironSource-HyBid-Adapters', '3.0.0-beta1.0'
+platform :ios, '12.0'
+pod 'ironSource-HyBid-Adapters', '3.2.0-beta5.0'
 ```
 
 2. Run `pod install --repo-update` to install the pod in your project.
