@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2018 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "HyBidAd.h"
@@ -50,6 +34,7 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
 @property (nonatomic, strong)HyBidOpenRTBAdModel *openRTBData;
 @property (nonatomic, strong)HyBidContentInfoView *contentInfoView;
 @property (nonatomic, strong)NSString *_zoneID;
+@property (nonatomic, readwrite)NSString *adFormat;
 
 #if __has_include(<ATOM/ATOM-Swift.h>)
 @property (nonatomic, strong)NSArray<NSString *> *_cohorts;
@@ -77,11 +62,25 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
     if (self) {
         self.data = data;
         self._zoneID = zoneID;
-        [HyBidATOMFlow setAtomEnabled:self.atomEnabled];
+        [self saveAdFormat:data];
     }
     return self;
 }
 
+- (void)saveAdFormat:(id)data {
+    if ([data respondsToSelector:@selector(assets)]) {
+        NSArray *assets = [data valueForKey:@"assets"];
+        if ([assets isKindOfClass:[NSArray class]] && assets.count > 0) {
+            id firstAsset = assets.firstObject;
+            if ([firstAsset respondsToSelector:@selector(type)]) {
+                id typeValue = [firstAsset valueForKey:@"type"];
+                if (typeValue) {
+                    self.adFormat = typeValue;
+                }
+            }
+        }
+    }
+}
 
 #if __has_include(<ATOM/ATOM-Swift.h>)
 - (instancetype)initWithData:(HyBidAdModel *)data withZoneID:(NSString *)zoneID withCohorts:(NSArray<NSString *> *)cohorts
@@ -91,7 +90,7 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
         self.data = data;
         self._zoneID = zoneID;
         self._cohorts = cohorts;
-        [HyBidATOMFlow setAtomEnabled:self.atomEnabled];
+        [self saveAdFormat:data];
     }
     return self;
 }
@@ -102,6 +101,7 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
         self.openRTBData = data;
         self._zoneID = zoneID;
         self._cohorts = cohorts;
+        [self saveAdFormat:data];
     }
     return self;
 }
@@ -112,6 +112,7 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
     if (self) {
         self.openRTBData = data;
         self._zoneID = zoneID;
+        [self saveAdFormat:data];
     }
     return self;
 }
@@ -127,10 +128,12 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
             apiAsset = PNLiteAsset.vast;
             data = [[HyBidOpenRTBDataModel alloc] initWithVASTAsset:apiAsset withValue:adContent];
             self.adType = kHyBidAdTypeVideo;
+            self.adFormat = @"VAST";
         } else {
             apiAsset = PNLiteAsset.htmlBanner;
             data = [[HyBidOpenRTBDataModel alloc] initWithHTMLAsset:apiAsset withValue:adContent];
             self.adType = kHyBidAdTypeHTML;
+            self.adFormat = @"htmlBanner";
         }
         [assets addObject:data];
         
@@ -152,17 +155,18 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
             apiAsset = PNLiteAsset.vast;
             data = [[HyBidDataModel alloc] initWithVASTAsset:apiAsset withValue:adContent];
             self.adType = kHyBidAdTypeVideo;
+            self.adFormat = @"VAST";
         } else {
             apiAsset = PNLiteAsset.htmlBanner;
             data = [[HyBidDataModel alloc] initWithHTMLAsset:apiAsset withValue:adContent];
             self.adType = kHyBidAdTypeHTML;
+            self.adFormat = @"htmlBanner";
         }
         [assets addObject:data];
         
         model.assets = assets;
         model.assetgroupid = [NSNumber numberWithInteger: assetGroup];
         self.data = model;
-        [HyBidATOMFlow setAtomEnabled:self.atomEnabled];
     }
     return self;
 }
@@ -511,17 +515,6 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
     if (jsonDictionary) {
         if ([jsonDictionary objectForKey:PNLiteData.creativeAutoStorekitEnabled] != (id)[NSNull null]) {
             result = [jsonDictionary objectForKey:PNLiteData.creativeAutoStorekitEnabled];
-        }
-    }
-    return result;
-}
-
-- (NSNumber *)atomEnabled {
-    NSNumber *result = nil;
-    NSDictionary *jsonDictionary = [self jsonData];
-    if (jsonDictionary) {
-        if ([jsonDictionary objectForKey:PNLiteData.atomEnabled] != (id)[NSNull null]) {
-            result = [jsonDictionary objectForKey:PNLiteData.atomEnabled];
         }
     }
     return result;
@@ -965,6 +958,94 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
     return result;
 }
 
+- (NSString *)navigationModeInputValue {
+    NSString *result = nil;
+    NSDictionary *jsonDictionary = [self jsonData];
+    if (jsonDictionary) {
+        if ([jsonDictionary objectForKey:PNLiteData.navigationModeInputValue] != (id)[NSNull null]) {
+            result = [jsonDictionary objectForKey:PNLiteData.navigationModeInputValue];
+        }
+    }
+    return result;
+}
+
+- (NSString *)navigationMode {
+    NSString *navigationModeInputValue = [self navigationModeInputValue];
+    if (navigationModeInputValue) { return navigationModeInputValue; }
+    
+    NSString *result = nil;
+    NSDictionary *jsonDictionary = [self jsonData];
+    if (jsonDictionary) {
+        if ([jsonDictionary objectForKey:PNLiteData.navigationMode] != (id)[NSNull null] &&
+            [[jsonDictionary objectForKey:PNLiteData.navigationMode] isKindOfClass:[NSString class]]) {
+            result = [jsonDictionary objectForKey:PNLiteData.navigationMode];
+        }
+    }
+    return result;
+}
+
+- (BOOL)landingPage {
+    BOOL landingPageInputValue = [self landingPageInputValue];
+    if (landingPageInputValue) { return landingPageInputValue;}
+    
+    BOOL result = NO;
+    NSDictionary *jsonDictionary = [self jsonData];
+    if (jsonDictionary) {
+        if ([jsonDictionary objectForKey:PNLiteData.landingPage] != (id)[NSNull null]) {
+            result = [[jsonDictionary objectForKey:PNLiteData.landingPage] boolValue];
+        }
+    }
+    return result;
+}
+
+- (BOOL)landingPageInputValue {
+    BOOL result = NO;
+    NSDictionary *jsonDictionary = [self jsonData];
+    if (jsonDictionary) {
+        if ([jsonDictionary objectForKey:PNLiteData.landingPageInputValue] != (id)[NSNull null]) {
+            result = [[jsonDictionary objectForKey:PNLiteData.landingPageInputValue] boolValue];
+        }
+    }
+    return result;
+}
+
+- (HyBidCTAData *)ctaData {
+
+    if (![self.adExperience isEqualToString:HyBidAdExperienceBrandValue] || [self.assetGroupID intValue] != VAST_INTERSTITIAL || [self.assetGroupID intValue] != VAST_REWARDED) {
+        return [[HyBidCTAData alloc] initWithSize:HyBidCTASizeDefault location:HyBidCTALocationDefault];
+    }
+    
+    NSDictionary *jsonDictionary = [self jsonData];
+    HyBidCTASize size = [HyBidCTAData sizeFromValue: [self gettingObjectFrom:jsonDictionary key:PNLiteData.ctaButtonSizeInputValue]];
+    HyBidCTALocation location = [HyBidCTAData locationFromValue: [self gettingObjectFrom:jsonDictionary
+                                                                                     key:PNLiteData.ctaButtonLocationInputValue]];
+    
+    if (![self parameterHasValue:PNLiteData.ctaButtonSizeInputValue dictionary:jsonDictionary]){
+        size = [HyBidCTAData sizeFromValue: [self gettingObjectFrom:jsonDictionary key:PNLiteData.ctaButtonSize]];
+    }
+    
+    if (![self parameterHasValue:PNLiteData.ctaButtonLocationInputValue dictionary:jsonDictionary]){
+        location = [HyBidCTAData locationFromValue: [jsonDictionary objectForKey:PNLiteData.ctaButtonLocation]];
+    }
+        
+    return [[HyBidCTAData alloc] initWithSize: size location:location];
+}
+
+- (nullable id)gettingObjectFrom:(NSDictionary*)dictionary key:(NSString*)key {
+    if (dictionary && [dictionary objectForKey:key] != nil && [dictionary objectForKey:key] != (id)[NSNull null]) {
+        return [dictionary objectForKey:key];
+    }
+    return nil;
+}
+
+- (BOOL)parameterHasValue:(NSString *)parameter dictionary:(NSDictionary *)dictionary  {
+    if (dictionary && parameter && [dictionary objectForKey:parameter] != nil && [dictionary objectForKey:parameter] != (id)[NSNull null]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (NSArray<HyBidDataModel *> *)beacons {
     if (self.data) {
         return self.data.beacons;
@@ -982,7 +1063,7 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
     self.contentInfoView.display = [self determineContentInfoDisplay];
     self.contentInfoView.horizontalPosition = [self determineContentInfoHorizontalPosition];
     self.contentInfoView.verticalPosition = [self determineContentInfoVerticalPosition];
-    self.contentInfoView.zoneID = self.zoneID;
+    self.contentInfoView.isCustom = NO;
     return self.contentInfoView;
 }
 
@@ -1007,8 +1088,11 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
         HyBidContentInfoView *result = [[HyBidContentInfoView alloc] init];
         result.icon = contentInfoView.icon;
         result.link = contentInfoView.link;
+        result.isCustom = contentInfoView.isCustom;
         result.text = [contentInfoView.text length] == 0 ? contentInfoView.text : ContentInfoViewText;
         result.zoneID = self.zoneID;
+        result.display = [self determineContentInfoDisplay];
+        result.clickAction = [self determineContentInfoIconClickAction];
         return result;
     }
 }
@@ -1079,6 +1163,9 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
     HyBidOpenRTBDataModel *data = [self skAdNetworkModelInputValue]
                                 ? [[HyBidOpenRTBDataModel alloc] initWithDictionary: [self skAdNetworkModelInputValue]]
                                 : [self extensionDataWithType:PNLiteMeta.skadnetwork];
+    if (![data.data isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
     HyBidSkAdNetworkModel *model = [[HyBidSkAdNetworkModel alloc] init];
     
     if (data) {
@@ -1089,6 +1176,9 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
         }
         if ([data stringFieldWithKey:HyBidSKAdNetworkParameter.campaign] != nil) {
             [dict setValue:[data stringFieldWithKey:HyBidSKAdNetworkParameter.campaign] forKey:HyBidSKAdNetworkParameter.campaign];
+        }
+        if ([data stringFieldWithKey:HyBidSKAdNetworkParameter.productPageId] != nil) {
+            [dict setValue:[data stringFieldWithKey:HyBidSKAdNetworkParameter.productPageId] forKey:HyBidSKAdNetworkParameter.productPageId];
         }
         
         if ([self itunesIdValue]) {
@@ -1166,7 +1256,33 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
         
         model.productParameters = [dict copy];
     }
+    
+    return model;
+}
 
+- (HyBidSkAdNetworkModel *)getOpenRTBAdAttributionModel {
+    HyBidOpenRTBDataModel *data = [self extensionDataWithType:PNLiteMeta.adattributionkit];
+    HyBidSkAdNetworkModel *model = [[HyBidSkAdNetworkModel alloc] init];
+    
+    if (data) {
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+        
+        if ([data stringFieldWithKey:HyBidAdAttributionParameter.jwt] != nil) {
+            [dict setValue:[data stringFieldWithKey:HyBidAdAttributionParameter.jwt] forKey:HyBidAdAttributionParameter.jwt];
+        }
+        
+        if ([data numberFieldWithKey:HyBidAdAttributionParameter.custom_market_place] != nil) {
+            [dict setValue: [data numberFieldWithKey:HyBidAdAttributionParameter.custom_market_place]
+                    forKey: HyBidAdAttributionParameter.custom_market_place];
+        }
+        
+        if ([data stringFieldWithKey:HyBidAdAttributionParameter.reengagement_url] != nil) {
+            [dict setValue:[data stringFieldWithKey:HyBidAdAttributionParameter.reengagement_url] forKey:HyBidAdAttributionParameter.reengagement_url];
+        }
+        
+        model.productParameters = [dict copy];
+    }
+    
     return model;
 }
 
@@ -1184,6 +1300,9 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
         }
         if ([data stringFieldWithKey:HyBidSKAdNetworkParameter.campaign] != nil) {
             [dict setValue:[data stringFieldWithKey:HyBidSKAdNetworkParameter.campaign] forKey:HyBidSKAdNetworkParameter.campaign];
+        }
+        if ([data stringFieldWithKey:HyBidSKAdNetworkParameter.productPageId] != nil) {
+            [dict setValue:[data stringFieldWithKey:HyBidSKAdNetworkParameter.productPageId] forKey:HyBidSKAdNetworkParameter.productPageId];
         }
         
         if ([self itunesIdValue]) {
@@ -1277,6 +1396,32 @@ NSString *const ContentInfoViewIcon = @"https://cdn.pubnative.net/static/adserve
         }
     }
     return result;
+}
+
+- (HyBidSkAdNetworkModel *)getAdAttributionModel {
+    HyBidSkAdNetworkModel *model = [[HyBidSkAdNetworkModel alloc] init];
+    HyBidDataModel *data = [self metaDataWithType:PNLiteMeta.adattributionkit];
+    
+    if (data) {
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+        
+        if ([data stringFieldWithKey:HyBidAdAttributionParameter.jwt] != nil) {
+            [dict setValue:[data stringFieldWithKey:HyBidAdAttributionParameter.jwt] forKey:HyBidAdAttributionParameter.jwt];
+        }
+        
+        if ([data numberFieldWithKey:HyBidAdAttributionParameter.custom_market_place] != nil) {
+            [dict setValue: [data numberFieldWithKey:HyBidAdAttributionParameter.custom_market_place]
+                    forKey: HyBidAdAttributionParameter.custom_market_place];
+        }
+        
+        if ([data stringFieldWithKey:HyBidAdAttributionParameter.reengagement_url] != nil) {
+            [dict setValue:[data stringFieldWithKey:HyBidAdAttributionParameter.reengagement_url] forKey:HyBidAdAttributionParameter.reengagement_url];
+        }
+        
+        model.productParameters = [dict copy];
+    }
+    
+    return model;
 }
 
 - (HyBidDataModel *)assetDataWithType:(NSString *)type {

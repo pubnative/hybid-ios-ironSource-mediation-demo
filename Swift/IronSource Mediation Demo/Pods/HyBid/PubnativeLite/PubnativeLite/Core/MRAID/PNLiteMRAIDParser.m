@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2018 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "PNLiteMRAIDParser.h"
@@ -39,7 +23,7 @@
 
 @implementation PNLiteMRAIDParser
 
-- (NSDictionary *)parseCommandUrl:(NSString *)commandUrl; {
+- (NSDictionary *)parseCommandUrl:(NSString *)commandUrl prefixToRemove:(NSString *)prefixToRemove {
     /*
      The command is a URL string that looks like this:
      
@@ -51,8 +35,9 @@
     
     [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"%@ %@", NSStringFromSelector(_cmd), commandUrl]];
     
-    // Remove mraid:// prefix.
-    NSString *s = [commandUrl substringFromIndex:8];
+    NSString *s = commandUrl;
+    // Remove prefix if it isn't nil
+    if (prefixToRemove) { s = [commandUrl substringFromIndex:prefixToRemove.length]; }
     
     NSString *command;
     NSMutableDictionary *params;
@@ -97,7 +82,10 @@
         [command isEqualToString:@"setOrientationProperties"] ||
         [command isEqualToString:@"setResizeProperties"] ||
         [command isEqualToString:@"storePicture"] ||
-        [command isEqualToString:@"useCustomClose"]
+        [command isEqualToString:@"useCustomClose"] ||
+        [command isEqualToString:@"setcustomisation"] ||
+        [command isEqualToString:@"landingbehaviour"] ||
+        [command isEqualToString:@"closedelay"]
         ) {
         if ([command isEqualToString:@"expand"] ||
                    [command isEqualToString:@"open"] ||
@@ -111,6 +99,10 @@
             paramObj = params;
         } else if ([command isEqualToString:@"useCustomClose"]) {
             paramObj = [params valueForKey:@"useCustomClose"];
+        } else if ([command isEqualToString:@"setcustomisation"] ||
+                   [command isEqualToString:@"landingbehaviour"] ||
+                   [command isEqualToString:@"closedelay"]) {
+            paramObj = [params valueForKey:@"text"];
         }
         command = [command stringByAppendingString:@":"];
     }
@@ -134,7 +126,10 @@
                            @"setOrientationProperties",
                            @"setResizeProperties",
                            @"storePicture",
-                           @"useCustomClose"
+                           @"useCustomClose",
+                           @"setcustomisation",
+                           @"landingbehaviour",
+                           @"closedelay"
                            ];
 
     return [kCommands containsObject:command];

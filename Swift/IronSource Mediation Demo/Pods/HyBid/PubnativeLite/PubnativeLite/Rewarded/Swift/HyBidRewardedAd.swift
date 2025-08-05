@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2020 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 import Foundation
@@ -71,6 +55,7 @@ public class HyBidRewardedAd: NSObject {
     private var renderErrorReportingProperties: [String: String] = [:]
     private var sessionReportingProperties: [String: Any] = [:]
     private var closeOnFinish = false
+    private var adSessionData: HyBidAdSessionData?
     
     func cleanUp() {
         self.ad = nil
@@ -101,6 +86,7 @@ public class HyBidRewardedAd: NSObject {
         self.delegate = delegate
         self.htmlSkipOffset = HyBidConstants.rewardedHtmlSkipOffset
         self.closeOnFinish = HyBidConstants.rewardedCloseOnFinish
+        self.adSessionData = HyBidAdSessionData()
     }
     
     @objc
@@ -222,6 +208,9 @@ public class HyBidRewardedAd: NSObject {
             }
             if initialLoadTimestamp < adExpireTime {
                 self.rewardedPresenter?.show()
+                if let adSessionData = self.adSessionData {
+                    ATOMManager.fireAdSessionEvent(data: adSessionData)
+                }
             } else {
                 HyBidLogger.errorLog(fromClass: String(describing: HyBidRewardedAd.self), fromMethod: #function, withMessage: "Ad has expired")
                 self.cleanUp()
@@ -266,7 +255,7 @@ public class HyBidRewardedAd: NSObject {
                 self.rewardedPresenter = rewardedPresenterFactory.createRewardedPresenter(with: ad, withHTMLSkipOffset: UInt(skipOffset), withCloseOnFinish: self.closeOnFinish, with: HyBidRewardedPresenterWrapper(parent: self))
             }
         } else {
-            let skipOffset = HyBidSkipOffset(offset: NSNumber(value: HyBidSkipOffset.DEFAULT_HTML_SKIP_OFFSET), isCustom: false);
+            let skipOffset = HyBidSkipOffset(offset: NSNumber(value: HyBidSkipOffset.DEFAULT_REWARDED_HTML_SKIP_OFFSET), isCustom: false);
             self.rewardedPresenter = rewardedPresenterFactory.createRewardedPresenter(with: ad, withHTMLSkipOffset: UInt(skipOffset.offset?.intValue ?? 0), withCloseOnFinish: self.closeOnFinish, with: HyBidRewardedPresenterWrapper(parent: self))
         }
         
@@ -275,20 +264,24 @@ public class HyBidRewardedAd: NSObject {
             
             self.invokeDidFailWithError(error: NSError.hyBidUnsupportedAsset())
             
-            self.renderErrorReportingProperties[Common.ERROR_MESSAGE] = NSError.hyBidUnsupportedAsset().localizedDescription
-            self.renderErrorReportingProperties[Common.ERROR_CODE] = String(format: "%ld", NSError.hyBidUnsupportedAsset().code)
-            self.renderReportingProperties.update(other: HyBid.reportingManager().addCommonProperties(forAd: self.ad, withRequest: self.rewardedAdRequest))
-            self.reportEvent(EventType.RENDER_ERROR, properties: self.renderReportingProperties)
+            if HyBidSDKConfig.sharedConfig.reporting {
+                self.renderErrorReportingProperties[Common.ERROR_MESSAGE] = NSError.hyBidUnsupportedAsset().localizedDescription
+                self.renderErrorReportingProperties[Common.ERROR_CODE] = String(format: "%ld", NSError.hyBidUnsupportedAsset().code)
+                self.renderReportingProperties.update(other: HyBid.reportingManager().addCommonProperties(forAd: self.ad, withRequest: self.rewardedAdRequest))
+                self.reportEvent(EventType.RENDER_ERROR, properties: self.renderReportingProperties)
+            }
             return
         } else {
+            self.rewardedPresenter?.adSessionData = self.adSessionData
             self.rewardedPresenter?.load()
         }
     }
     
-    func addSessionReportingProperties() -> [String:Any] {
-        var sessionReportingDictionaryToAppend = [String:Any]()
-        if !HyBidSessionManager.sharedInstance.impressionCounter.isEmpty {
-            sessionReportingDictionaryToAppend[Common.IMPRESSION_SESSION_COUNT] = HyBidSessionManager.sharedInstance.impressionCounter
+    func addSessionReportingProperties() -> [String: Any] {
+        var sessionReportingDictionaryToAppend = [String: Any]()
+        let impressionCounter = HyBidSessionManager.sharedInstance.safeImpressionCounter
+        if !impressionCounter.isEmpty {
+            sessionReportingDictionaryToAppend[Common.IMPRESSION_SESSION_COUNT] = impressionCounter
         }
         if let sessionDuration = UserDefaults.standard.string(forKey: Common.SESSION_DURATION), !sessionDuration.isEmpty{
             sessionReportingDictionaryToAppend[Common.SESSION_DURATION] = sessionDuration
@@ -315,21 +308,28 @@ public class HyBidRewardedAd: NSObject {
     }
     
     func invokeDidLoad() {
-        if let initialLoadTimestamp = self.initialLoadTimestamp, initialLoadTimestamp != -1 {
-            self.loadReportingProperties[Common.TIME_TO_LOAD] = String(format: "%f", elapsedTimeSince(initialLoadTimestamp))
+        if HyBidSDKConfig.sharedConfig.reporting {
+            if let initialLoadTimestamp = self.initialLoadTimestamp, initialLoadTimestamp != -1 {
+                self.loadReportingProperties[Common.TIME_TO_LOAD] = String(format: "%f", elapsedTimeSince(initialLoadTimestamp))
+            }
+            self.loadReportingProperties = HyBid.reportingManager().addCommonProperties(forAd: self.ad, withRequest: self.rewardedAdRequest)
+            self.reportEvent(EventType.LOAD, properties: self.loadReportingProperties)
         }
-        self.loadReportingProperties = HyBid.reportingManager().addCommonProperties(forAd: self.ad, withRequest: self.rewardedAdRequest)
-        self.reportEvent(EventType.LOAD, properties: self.loadReportingProperties)
+        HyBidVASTEventBeaconsManager.shared.reportVASTEvent(type: EventType.LOAD, ad: self.ad)
         guard let delegate = self.delegate else { return }
         delegate.rewardedDidLoad()
     }
     
     func invokeDidFailWithError(error: Error) {
-        if let initialLoadTimestamp = self.initialLoadTimestamp, initialLoadTimestamp != -1 {
-            self.loadReportingProperties[Common.TIME_TO_LOAD] = String(format: "%f", elapsedTimeSince(initialLoadTimestamp))
+        if HyBidSDKConfig.sharedConfig.reporting {
+            if let initialLoadTimestamp = self.initialLoadTimestamp, initialLoadTimestamp != -1 {
+                self.loadReportingProperties[Common.TIME_TO_LOAD] = String(format: "%f", elapsedTimeSince(initialLoadTimestamp))
+            }
+            self.loadReportingProperties = HyBid.reportingManager().addCommonProperties(forAd: self.ad, withRequest: self.rewardedAdRequest)
+            self.reportEvent(EventType.LOAD_FAIL, properties: self.loadReportingProperties)
         }
-        self.loadReportingProperties = HyBid.reportingManager().addCommonProperties(forAd: self.ad, withRequest: self.rewardedAdRequest)
-        self.reportEvent(EventType.LOAD_FAIL, properties: self.loadReportingProperties)
+        let error = error as NSError
+        HyBidVASTEventBeaconsManager.shared.reportVASTEvent(type: EventType.LOAD_FAIL, ad: self.ad, errorCode: error.code)
         HyBidLogger.errorLog(fromClass: String(describing: HyBidRewardedAd.self), fromMethod: #function, withMessage: error.localizedDescription)
         if let delegate = delegate {
             delegate.rewardedDidFailWithError(error)
@@ -340,7 +340,10 @@ public class HyBidRewardedAd: NSObject {
         guard let delegate = self.delegate else { return }
         delegate.rewardedDidTrackImpression()
         if #available(iOS 14.5, *) {
-            HyBidAdImpression.sharedInstance().start(for: self.ad)
+            HyBidAdImpression.sharedInstance().startSKANImpression(for: self.ad)
+        }
+        if #available(iOS 17.4, *) {
+            HyBidAdImpression.sharedInstance().startAAKImpression(for: self.ad, adFormat: AdFormat.REWARDED)
         }
     }
     
@@ -363,14 +366,19 @@ public class HyBidRewardedAd: NSObject {
     func invokeOnReward() {
         guard let delegate = self.delegate else { return }
         delegate.onReward()
-        self.reportEvent(EventType.REWARD, properties: [:])
+        if HyBidSDKConfig.sharedConfig.reporting {
+            self.reportEvent(EventType.REWARD, properties: [:])
+        }
     }
     
     func invokeDidDismiss() {
         guard let delegate = self.delegate else { return }
         delegate.rewardedDidDismiss()
         if #available(iOS 14.5, *) {
-            HyBidAdImpression.sharedInstance().end(for: self.ad)
+            HyBidAdImpression.sharedInstance().endSKANImpression(for: self.ad)
+        }
+        if #available(iOS 17.4, *) {
+            HyBidAdImpression.sharedInstance().endAAKImpression(for: self.ad, adFormat: AdFormat.REWARDED)
         }
     }
     
@@ -406,6 +414,7 @@ extension HyBidRewardedAd {
         
         if let ad = ad {
             self.ad = ad
+            self.adSessionData = ATOMManager.createAdSessionData(from: request, ad: ad)
             self.determineSkipOffsetValuesFor(ad)
             self.ad?.adType = Int(kHyBidAdTypeVideo)
             self.determineCloseOnFinishFor(ad)
@@ -433,15 +442,17 @@ extension HyBidRewardedAd {
     }
     
     func rewardedPresenterDidShow(_ rewardedPresenter: HyBidRewardedPresenter!) {
-        if let initialRenderTimestamp = self.initialRenderTimestamp, initialRenderTimestamp
-            != -1 {
-            self.loadReportingProperties[Common.RENDER_TIME] = String(format: "%f",
-                                                                      elapsedTimeSince(initialRenderTimestamp))
+        if HyBidSDKConfig.sharedConfig.reporting {
+            if let initialRenderTimestamp = self.initialRenderTimestamp, initialRenderTimestamp
+                != -1 {
+                self.loadReportingProperties[Common.RENDER_TIME] = String(format: "%f",
+                                                                          elapsedTimeSince(initialRenderTimestamp))
+            }
+            self.renderReportingProperties = HyBid.reportingManager().addCommonProperties(forAd: self.ad, withRequest: self.rewardedAdRequest)
+            self.sessionReportingProperties = self.addSessionReportingProperties()
+            self.reportEvent(EventType.RENDER, properties: self.renderReportingProperties)
+            self.reportEvent(EventType.SESSION_REPORT_INFO, properties: self.sessionReportingProperties)
         }
-        self.renderReportingProperties = HyBid.reportingManager().addCommonProperties(forAd: self.ad, withRequest: self.rewardedAdRequest)
-        self.sessionReportingProperties = self.addSessionReportingProperties()
-        self.reportEvent(EventType.RENDER, properties: self.renderReportingProperties)
-        self.reportEvent(EventType.SESSION_REPORT_INFO, properties: self.sessionReportingProperties)
         self.invokeDidTrackImpression()
     }
     
@@ -463,6 +474,7 @@ extension HyBidRewardedAd {
 extension HyBidRewardedAd {
     func signalDataDidFinish(with ad: HyBidAd) {
         self.ad = ad
+        self.adSessionData = ATOMManager.createAdSessionData(from: nil, ad: ad)
         self.ad?.adType = Int(kHyBidAdTypeVideo)
         self.renderAd(ad: ad)
     }

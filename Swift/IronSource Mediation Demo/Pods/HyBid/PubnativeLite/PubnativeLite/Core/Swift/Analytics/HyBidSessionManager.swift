@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2021 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 import Foundation
@@ -29,10 +13,16 @@ public class HyBidSessionManager: NSObject {
     @objc public var impressionCounter: [String: Int] = [:]
     @objc public var sessionDuration: String = ""
    
-    @objc private override init(){}
+    @objc private override init() {}
+    
+    @objc public var safeImpressionCounter: [String: Int] {
+        serialQueue.sync {
+            return self.impressionCounter
+        }
+    }
     
     @objc
-    public func setStartSession(){
+    public func setStartSession() {
         let startTime = Date(timeIntervalSince1970: TimeInterval(Date().timeIntervalSince1970))
         UserDefaults.standard.set(startTime, forKey: Common.START_SESSION_TIMESTAMP)
     }
@@ -43,7 +33,7 @@ public class HyBidSessionManager: NSObject {
         let lastTimeStamp = NSDate(timeIntervalSince1970: TimeInterval(NSDate().timeIntervalSince1970))
         UserDefaults.standard.set(lastTimeStamp, forKey: Common.LAST_SESSION_TIMESTAMP)
         self.incrementImpressionCounter(zoneID: zoneID)
-        if let startTime = UserDefaults.standard.object(forKey: Common.START_SESSION_TIMESTAMP) as? Date{
+        if let startTime = UserDefaults.standard.object(forKey: Common.START_SESSION_TIMESTAMP) as? Date {
             sessionDuration = lastTimeStamp.timeIntervalSince(startTime)
             self.sessionDuration = String(sessionDuration.milliseconds)
             UserDefaults.standard.set(sessionDuration.stringFromTimeInterval(), forKey: Common.SESSION_DURATION)
@@ -51,9 +41,9 @@ public class HyBidSessionManager: NSObject {
     }
     
     @objc
-    public func incrementImpressionCounter(zoneID: String){
+    public func incrementImpressionCounter(zoneID: String) {
         serialQueue.async {
-            if self.impressionCounter.keys.contains(zoneID){
+            if self.impressionCounter.keys.contains(zoneID) {
                 if let num = self.impressionCounter[zoneID] {
                     self.impressionCounter[zoneID] = num + 1
                 }
@@ -64,27 +54,29 @@ public class HyBidSessionManager: NSObject {
     }
     
     @objc
-    public func sessionDuration(zoneID: String){
-        if self.impressionCounter.isEmpty {
-            self.updateSession(zoneID: zoneID)
-        } else {
-            if let lastTimeStamp = UserDefaults.standard.object(forKey: Common.LAST_SESSION_TIMESTAMP) as? Date{
-                let now = NSDate(timeIntervalSince1970: TimeInterval(NSDate().timeIntervalSince1970))
-                let ttl = now.timeIntervalSince(lastTimeStamp as Date)
-                
-                if ttl.minutes >= 30 {
-                    self.impressionCounter = [:]
-                    self.setStartSession()
-                    self.updateSession(zoneID: zoneID)
-                } else {
-                    self.updateSession(zoneID: zoneID)
+    public func sessionDuration(zoneID: String) {
+        serialQueue.sync {
+            if self.impressionCounter.isEmpty {
+                self.updateSession(zoneID: zoneID)
+            } else {
+                if let lastTimeStamp = UserDefaults.standard.object(forKey: Common.LAST_SESSION_TIMESTAMP) as? Date {
+                    let now = NSDate(timeIntervalSince1970: TimeInterval(NSDate().timeIntervalSince1970))
+                    let ttl = now.timeIntervalSince(lastTimeStamp as Date)
+                    
+                    if ttl.minutes >= 30 {
+                        self.impressionCounter = [:]
+                        self.setStartSession()
+                        self.updateSession(zoneID: zoneID)
+                    } else {
+                        self.updateSession(zoneID: zoneID)
+                    }
                 }
             }
         }
     }
     
     @objc
-    public func setAgeOfAppSinceCreated(){
+    public func setAgeOfAppSinceCreated() {
         if UserDefaults.standard.object(forKey: Common.AGE_OF_APP) == nil {
             let timeStamp = String(Date().millisecondsSince1970)
             UserDefaults.standard.set(timeStamp, forKey: Common.AGE_OF_APP)

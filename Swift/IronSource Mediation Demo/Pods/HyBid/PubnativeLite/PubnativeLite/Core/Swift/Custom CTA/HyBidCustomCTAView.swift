@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2021 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 import UIKit
@@ -57,7 +41,6 @@ public class HyBidCustomCTAView: UIView {
     private var topViewController: UIViewController?
     private weak var delayTimer: Timer?
     private var remainingSecondsToShow = 0
-    private var elementsBlockingAdFocus = 0
     private var iconURL: URL?
     private var isIconError = false
     private weak var delegate: HyBidCustomCTAViewDelegate?
@@ -108,7 +91,7 @@ public class HyBidCustomCTAView: UIView {
     
     private func moveFromLeftToRight() {
         guard let topViewController else { return }
-        if !topViewController.view.subviews.filter({ type(of: $0) == HyBidCustomCTAView.self }).isEmpty {
+        if !topViewController.view.subviews.filter({ type(of: $0) == HyBidCustomCTAView.self }).isEmpty || self.isIconError {
             return
         }
         
@@ -122,12 +105,14 @@ public class HyBidCustomCTAView: UIView {
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self else { return }
             self.setPositionConstraint(type: .rightAnchor, viewController: topViewController, constant: -self.ctaRightPadding)
+            HyBidInterruptionHandler.shared.overlappingElementDelegate = self;
             
             guard let adFormat = self.adFormat else { return }
             if HyBidSDKConfig.sharedConfig.reporting == true {
                 let reportingEvent = HyBidReportingEvent(with: EventType.CUSTOM_CTA_IMPRESSION, adFormat: adFormat, properties: nil)
                 HyBid.reportingManager().reportEvent(for: reportingEvent)
             }
+            self.delegate?.customCTADidShow()
         }
     }
     
@@ -225,7 +210,8 @@ public class HyBidCustomCTAView: UIView {
     }
     
     @IBAction func openOffer() {
-        self.delegate?.customCTAButtonDidPress()
+        HyBidInterruptionHandler.shared.overlappingElementDelegate = self;
+        self.delegate?.customCTADidClick()
     }
 }
 
@@ -241,10 +227,17 @@ extension HyBidCustomCTAView {
         NotificationCenter.default.removeObserver(self)
         self.invalidateTimer()
         self.removeFromSuperview()
+        HyBidInterruptionHandler.shared.overlappingElementDelegate = nil
+    }
+    
+    @objc(changeDelegateFor:)
+    public func changeDelegate(delegate: HyBidCustomCTAViewDelegate) {
+        self.delegate = delegate
     }
     
     @objc static public func isCustomCTAValid(ad: HyBidAd) -> Bool {
-        guard ad.skoverlayEnabled == nil || 
+        guard ad.adExperience != HyBidAdExperienceBrandValue,
+              ad.skoverlayEnabled == nil ||
               (ad.skoverlayEnabled != nil &&
               ad.skoverlayEnabled.boolValue == false) ||
               (ad.isUsingOpenRTB ? ad.getOpenRTBSkAdNetworkModel() : ad.getSkAdNetworkModel()) == nil ||
@@ -336,26 +329,21 @@ extension HyBidCustomCTAView {
 extension HyBidCustomCTAView {
     
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(adHasNotFocus), name: Notification.Name("adFeedbackViewDidShow"), object: nil)
-        HyBidNotificationCenter.shared.addObserver(self, selector: #selector(adHasNotFocus), notificationType: .SKStoreProductViewIsShown, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(adHasNotFocus), name: UIApplication.willResignActiveNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(adMayHaveFocus), name: Notification.Name("adFeedbackViewIsDismissed"), object: nil)
-        
-        HyBidNotificationCenter.shared.addObserver(self, selector: #selector(adMayHaveFocus), notificationType: .SKStoreProductViewIsDismissed, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(adMayHaveFocus), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+        HyBidInterruptionHandler.shared.overlappingElementDelegate = self
+    }
+}
+
+//MARK: - Observers
+extension HyBidCustomCTAView: HyBidInterruptionDelegate {
+    
+    public func adHasFocus() {
+        updateCustomCTATimer(state: .start)
     }
     
-    @objc private func adHasNotFocus() {
+    public func adHasNoFocus() {
         updateCustomCTATimer(state: .pause)
-        elementsBlockingAdFocus += 1
-    }
-    
-    @objc private func adMayHaveFocus() {
-        elementsBlockingAdFocus -= 1
-        if elementsBlockingAdFocus == 0 {
-            updateCustomCTATimer(state: .start)
-        }
     }
 }

@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2021 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "PNLiteMRAIDUtil.h"
@@ -26,30 +10,20 @@
 #import "HyBid.h"
 #import "HyBidVASTEndCardCloseIcon.h"
 #import "HyBidURLDriller.h"
-#import "HyBidSKAdNetworkViewController.h"
 #import "UIApplication+PNLiteTopViewController.h"
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 #import "HyBidCloseButton.h"
 #import "HyBidSKAdNetworkParameter.h"
 #import "HyBidCustomClickUtil.h"
-#import "HyBidAdTracker.h"
 #import "HyBidStoreKitUtils.h"
-
-#if __has_include(<HyBid/HyBid-Swift.h>)
-    #import <UIKit/UIKit.h>
-    #import <HyBid/HyBid-Swift.h>
-#else
-    #import <UIKit/UIKit.h>
-    #import "HyBid-Swift.h"
-#endif
 
 #define kContentInfoContainerTag 2343
 #define STOREKIT_DELAY_MAXIMUM_VALUE 10
 #define STOREKIT_DELAY_MINIMUM_VALUE 0
 #define STOREKIT_DELAY_DEFAULT_VALUE 2
 
-@interface HyBidVASTEndCardView () <HyBidMRAIDViewDelegate, HyBidMRAIDServiceDelegate, UIGestureRecognizerDelegate, WKNavigationDelegate, HyBidVASTEventProcessorDelegate, HyBidURLDrillerDelegate, SKStoreProductViewControllerDelegate>
+@interface HyBidVASTEndCardView () <HyBidMRAIDViewDelegate, HyBidMRAIDServiceDelegate, UIGestureRecognizerDelegate, WKNavigationDelegate, HyBidVASTEventProcessorDelegate, HyBidURLDrillerDelegate, HyBidInterruptionDelegate>
 
 @property (nonatomic, strong) UIImageView *endCardImageView;
 
@@ -104,20 +78,20 @@
 @property (nonatomic, assign) BOOL isTimerPaused;
 
 @property (nonatomic, assign) NSInteger delayTimeRemaining;
-@property (nonatomic, assign) BOOL storekitPageIsPresented;
-@property (nonatomic, assign) BOOL storekitPageIsBeingPresented;
 @property (nonatomic, strong) NSTimer *delayTimer;
 @property (nonatomic, strong) NSDate *storekitDelayTimerStartDate;
 @property (nonatomic, assign) NSTimeInterval storekitDelayTimeElapsed;
 @property (nonatomic, strong) NSArray<NSString *> *vastCompanionsClicksThrough;
 @property (nonatomic, strong) NSArray<NSString *> *vastCompanionsClicksTracking;
 @property (nonatomic, strong) NSArray<NSString *> *vastVideoClicksTracking;
-@property (nonatomic, assign) BOOL autoClickHasBeenTracked;
+@property (nonatomic, assign) BOOL isAutoStoreKit;
+@property (nonatomic, strong) HyBidAdAttributionCustomClickAdsWrapper* aakCustomClickAd;
 @end
 
 @implementation HyBidVASTEndCardView
 
-NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
+NSString * const adClickTriggerFlag = @"https://customendcard.verve.com/click";
+NSString * const replayURLFlag = @"https://customendcard.verve.com/replay";
 
 - (instancetype)initWithDelegate:(NSObject<HyBidVASTEndCardViewDelegate> *)delegate
               withViewController:(UIViewController *)viewController
@@ -146,8 +120,6 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
         self.vastCompanionsClicksTracking = vastCompanionsClicksTracking;
         self.vastVideoClicksTracking = vastVideoClicksTracking;
         self.shouldOpenBrowser = NO;
-        self.storekitPageIsPresented = NO;
-        self.storekitPageIsBeingPresented = NO;
         [self determineSdkAutoStorekitEnabledForAd:ad];
         self.vastEventProcessor = [[HyBidVASTEventProcessor alloc] init];
         [self setFrame: self.rootViewController.view.bounds];
@@ -161,15 +133,64 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
             }
         }];
 
-        [self addObservers];
+        HyBidInterruptionHandler.shared.delegate = self;
+        self.aakCustomClickAd = [[HyBidAdAttributionCustomClickAdsWrapper alloc] initWithAd:self.ad adFormat:nil];
     }
     return self;
 }
 
+- (void)dealloc {
+    [self removingReferences];
+}
+
+- (void)removeFromSuperview {
+    [super removeFromSuperview];
+    [self removingReferences];
+}
+
+- (void)removingReferences {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.endCardImageView = nil;
+    self.mraidView = nil;
+    self.serviceProvider = nil;
+    self.delegate = nil;
+    self.closeButton = nil;
+    self.endCard = nil;
+    self.vastEventProcessor = nil;
+    self.rootViewController = nil;
+    self.endCardCloseDelay = nil;
+    self.showStorekitEnabled = nil;
+    self.sdkAutoStorekitEnabled = nil;
+    self.isFallbackDisplay = nil;
+    self.isExtensionDisplay = nil;
+    self.shouldOpenBrowser = nil;
+    self.storekitDelayTimeElapsed = 0;
+    self.vastCompanionsClicksThrough = nil;
+    self.vastCompanionsClicksTracking = nil;
+    self.vastVideoClicksTracking = nil;
+    self.aakCustomClickAd = nil;
+    [self.closeButtonTimer invalidate];
+    self.closeButtonTimer = nil;
+    self.closeButton = nil;
+}
+
 - (void)determineEndCardCloseDelayForAd:(HyBidAd *)ad {
-    NSNumber *skipOffset = ad.endcardCloseDelay;
-    if (skipOffset && [skipOffset doubleValue] >= 0) {
-        self.endCardCloseDelay = [[HyBidSkipOffset alloc] initWithOffset:skipOffset isCustom:YES];
+    id skipOffset = ad.endcardCloseDelay;
+    if (skipOffset != nil && [skipOffset isKindOfClass:[NSString class]]) {
+        NSString *delayString = (NSString *)skipOffset;
+        NSCharacterSet *nonDigitCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        
+        if ([delayString rangeOfCharacterFromSet:nonDigitCharacterSet].location == NSNotFound) {
+            self.endCardCloseDelay = [[HyBidSkipOffset alloc] initWithOffset:[NSNumber numberWithInteger:[delayString integerValue]] isCustom:YES];
+        } else {
+            self.endCardCloseDelay = HyBidConstants.endCardCloseOffset;
+        }
+    } else if (skipOffset && [skipOffset integerValue] >= 0 && [skipOffset isKindOfClass:[NSNumber class]]) {
+        if ([skipOffset integerValue] > 30) {
+            self.endCardCloseDelay = HyBidConstants.endCardCloseMaxOffset;
+        } else {
+            self.endCardCloseDelay = [[HyBidSkipOffset alloc] initWithOffset:skipOffset isCustom:YES];
+        }
     } else {
         self.endCardCloseDelay = HyBidConstants.endCardCloseOffset;
     }
@@ -237,70 +258,6 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
     [self.companionView layoutSubviews];
 }
 
-- (void)addObservers {
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(applicationDidBecomeActive:)
-                                                 name: UIApplicationDidBecomeActiveNotification
-                                               object: nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(applicationWillResignActive:)
-                                                 name: UIApplicationWillResignActiveNotification
-                                               object: nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(resumeCloseButtonTimer)
-                                                 name:@"adFeedbackViewIsDismissed"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(pauseCloseButtonTimer)
-                                                 name:@"adFeedbackViewDidShow"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(resumeStorekitDelayTimer)
-                                                 name:@"adFeedbackViewIsDismissed"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(pauseStorekitDelayTimer)
-                                                 name:@"adFeedbackViewDidShow"
-                                               object:nil];
-    
-    [HyBidNotificationCenter.shared addObserver: self
-                                       selector: @selector(pauseStorekitDelayTimer)
-                               notificationType: HyBidNotificationTypeSKStoreProductViewIsShown
-                                         object: nil];
-    
-    [HyBidNotificationCenter.shared addObserver: self
-                                       selector: @selector(resumeStorekitDelayTimer)
-                               notificationType: HyBidNotificationTypeSKStoreProductViewIsDismissed
-                                         object: nil];
-    
-    [HyBidNotificationCenter.shared addObserver:self
-                                        selector:@selector(handleSKStoreProductViewIsShown:)
-                               notificationType:HyBidNotificationTypeSKStoreProductViewIsShown
-                                          object:nil];
-    
-    [HyBidNotificationCenter.shared addObserver:self
-                                        selector:@selector(handleSKStoreProductViewIsDismissed:)
-                               notificationType:HyBidNotificationTypeSKStoreProductViewIsDismissedFromVideo
-                                          object:nil];
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)notification {
-    [self resumeCloseButtonTimer];
-    if (self.shouldResumeTimer && self.storekitPageIsBeingPresented == NO) {
-        [self resumeStorekitDelayTimer];
-    }
-}
-
-- (void)applicationWillResignActive:(NSNotification *)notification {
-    [self pauseCloseButtonTimer];
-    [self pauseStorekitDelayTimer];
-}
-
 - (void)resumeCloseButtonTimer {
     if (!self.isInterstitial) { return; }
     
@@ -343,16 +300,6 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
         self.storekitDelayTimeElapsed += [[NSDate date] timeIntervalSinceDate:self.storekitDelayTimerStartDate];
         self.isTimerPaused = YES;
     }
-}
-
-- (void)handleSKStoreProductViewIsShown:(NSNotification *)notification {
-    NSNumber *isShownNumber = notification.object;
-    self.storekitPageIsBeingPresented = [isShownNumber boolValue];
-}
-
-- (void)handleSKStoreProductViewIsDismissed:(NSNotification *)notification {
-    NSNumber *isDismissedNumber = notification.object;
-    self.storekitPageIsBeingPresented = ![isDismissedNumber boolValue];
 }
 
 - (void)setupUI
@@ -422,11 +369,17 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                     HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.DEFAULT_ENDCARD_CLOSE adFormat:nil properties:nil];
                     [[HyBid reportingManager] reportEventFor:reportingEvent];
                 }
+                
+                [[HyBidVASTEventBeaconsManager shared] reportVASTEventWithType:HyBidReportingEventType.DEFAULT_ENDCARD_CLOSE
+                                                                            ad:self.ad];
             } else {
                 if ([HyBidSDKConfig sharedConfig].reporting) {
                     HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.CUSTOM_ENDCARD_CLOSE adFormat:nil properties:nil];
                     [[HyBid reportingManager] reportEventFor:reportingEvent];
                 }
+                
+                [[HyBidVASTEventBeaconsManager shared] reportVASTEventWithType:HyBidReportingEventType.CUSTOM_ENDCARD_CLOSE
+                                                                            ad:self.ad];
             }
         }];
     } else {
@@ -438,6 +391,9 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                 HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.DEFAULT_ENDCARD_SKIP adFormat:nil properties:nil];
                 [[HyBid reportingManager] reportEventFor:reportingEvent];
             }
+            
+            [[HyBidVASTEventBeaconsManager shared] reportVASTEventWithType:HyBidReportingEventType.DEFAULT_ENDCARD_SKIP
+                                                                        ad:self.ad];
         }
         [self.delegate vastEndCardViewSkipButtonTapped];
     }
@@ -630,7 +586,8 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                                         rootViewController:self.rootViewController
                                                contentInfo:nil
                                                 skipOffset:self.endCardCloseDelay.offset.integerValue
-                                                 isEndcard:YES];
+                                                 isEndcard:YES
+                                 shouldHandleInterruptions:NO];
 }
 
 - (void)displayImageViewWithURL:(NSString *)url withView:(UIView *)view
@@ -659,6 +616,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf setupUI];
             [weakSelf setViewsOrderRelativeToView:view];
+            [weakSelf.aakCustomClickAd startImpressionWithAdView:view];
         });
     }];
 }
@@ -703,35 +661,12 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
 {
     [self vastEndCardClickedWithType:[self.endCard type] withURL:nil withShouldOpenBrowser:YES];
     [self trackEndCardClick];
-    [self.delegate vastEndCardViewClicked: self.shouldTriggerAdClick];
+    [self.delegate vastEndCardViewClicked: self.shouldTriggerAdClick aakCustomClickAd:self.aakCustomClickAd];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    self.endCardImageView = nil;
-    self.mraidView = nil;
-    self.serviceProvider = nil;
-    self.delegate = nil;
-    self.closeButton = nil;
-    self.endCard = nil;
-    self.vastEventProcessor = nil;
-    self.rootViewController = nil;
-    self.endCardCloseDelay = nil;
-    self.showStorekitEnabled = nil;
-    self.sdkAutoStorekitEnabled = nil;
-    self.isFallbackDisplay = nil;
-    self.isExtensionDisplay = nil;
-    self.shouldOpenBrowser = nil;
-    self.storekitDelayTimeElapsed = 0;
-    self.vastCompanionsClicksThrough = nil;
-    self.vastCompanionsClicksTracking = nil;
-    self.vastVideoClicksTracking = nil;
 }
 
 // MARK: - Helper methods
@@ -740,15 +675,26 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data,NSURLResponse *response,NSError *error)
       {
-          if (!error) {
+          if (!error && data.length > 0) {
               UIImage *image = [[UIImage alloc] initWithData:data];
-              completionBlock(YES,image);
+              if (image) {
+                  completionBlock(YES, image);
+              } else {
+                  completionBlock(NO, nil);
+              }
           } else {
               if ([HyBidSDKConfig sharedConfig].reporting) {
                   HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.ERROR errorMessage: error.localizedDescription properties:nil];
                   [[HyBid reportingManager] reportEventFor:reportingEvent];
               }
-              completionBlock(NO,nil);
+              
+              [[HyBidVASTEventBeaconsManager shared]
+               reportVASTEventWithType: self.endCard.isCustomEndCard
+               ? HyBidReportingEventType.CUSTOM_ENDCARD_IMPRESSION_ERROR
+               : HyBidReportingEventType.DEFAULT_ENDCARD_IMPRESSION_ERROR
+               ad:self.ad
+               errorCode:error.code];
+              completionBlock(NO, nil);
           }
       }] resume];
 }
@@ -797,8 +743,17 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
     
     [self.mraidView setIsViewable:YES];
     [self presentSdkAutoStorekitPage];
+    [self.aakCustomClickAd startImpressionWithAdView:self.mraidView];
 }
 
+- (void)mraidViewAdFailed:(HyBidMRAIDView *)mraidView withError:(NSError *)error {
+    [[HyBidVASTEventBeaconsManager shared] reportVASTEventWithType: self.endCard.isCustomEndCard
+                                                                  ? HyBidReportingEventType.CUSTOM_ENDCARD_IMPRESSION_ERROR
+                                                                  : HyBidReportingEventType.DEFAULT_ENDCARD_IMPRESSION_ERROR
+                                                                ad:self.ad
+                                                         errorCode:error.code];
+    [self mraidViewAdFailed:mraidView];
+}
 - (void)mraidViewAdFailed:(HyBidMRAIDView *)mraidView {
     [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"MRAID View failed."];
     [self.delegate vastEndCardViewFailedToLoad];
@@ -816,7 +771,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
 - (void)vastEndCardClickedWithType:(HyBidVASTEndCardType)endCardType withURL:(NSString *)url withShouldOpenBrowser:(BOOL)shouldOpenBrowser {
     if (self.vastAd == nil || self.shouldTriggerAdClick) {
         if ([[self.endCard clickTrackings] count] > 0) {
-            [self.vastEventProcessor sendVASTUrls:[self.endCard clickTrackings]];
+            [self.vastEventProcessor sendVASTUrls:[self.endCard clickTrackings] withType:HyBidVASTClickTrackingURL];
         }
         return;
     }
@@ -825,12 +780,23 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
         [self pauseStorekitDelayTimer];
     }
     
+    if(![self.aakCustomClickAd adHasCustomMarketPlace]){
+        [self triggerClickFlowWith:endCardType url:url shouldOpenBrowser:shouldOpenBrowser];
+    } else {
+        [self.aakCustomClickAd handlingCustomMarketPlaceWithCompletion:^(BOOL successful) {
+            if (!successful) { [self triggerClickFlowWith:endCardType url:url shouldOpenBrowser:shouldOpenBrowser]; }
+        }];
+    }
+}
+
+- (void)triggerClickFlowWith:(HyBidVASTEndCardType)endCardType url:(NSString *)url shouldOpenBrowser:(BOOL)shouldOpenBrowser {
+    
     NSDictionary *trackersDictionary = [self gettingTrackingAndThroughClickURLWith:endCardType];
     NSMutableArray<NSString *> *trackingClickURLs = [trackersDictionary objectForKey: @"trackingClickURLs"];
     NSString *throughClickURL = [trackersDictionary objectForKey: @"throughClickURL"];
     
     if (trackingClickURLs && [trackingClickURLs count] > 0) {
-        [self.vastEventProcessor sendVASTUrls:trackingClickURLs];
+        [self.vastEventProcessor sendVASTUrls:trackingClickURLs withType:HyBidVASTClickTrackingURL];
     }
     
     [self.vastEventProcessor trackEventWithType:HyBidVASTAdTrackingEventType_click];
@@ -839,11 +805,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
     
     NSString *customUrl = [HyBidCustomClickUtil extractPNClickUrl:throughClickURL];
     if (customUrl != nil) {
-        if(shouldOpenBrowser) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:customUrl] options:@{} completionHandler:^(BOOL success) {
-                [self.delegate vastEndCardViewRedirectedWithSuccess:success];
-            }];
-        }
+        [self navigationToURL:customUrl shouldOpenBrowser:shouldOpenBrowser navigationType:HyBidWebBrowserNavigationExternalValue];
     } else if (skAdNetworkModel) {
         NSMutableDictionary* productParams = [[skAdNetworkModel getStoreKitParameters] mutableCopy];
         
@@ -859,13 +821,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
             }
             
             if(shouldOpenBrowser) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    HyBidSKAdNetworkViewController *skAdnetworkViewController = [[HyBidSKAdNetworkViewController alloc] initWithProductParameters: [HyBidStoreKitUtils cleanUpProductParams:productParams] delegate: self];
-                    self.storekitPageIsBeingPresented = YES;
-                    [skAdnetworkViewController presentSKStoreProductViewController:^(BOOL success) {
-                        
-                    }];
-                });
+                [HyBidSKAdNetworkViewController.shared presentStoreKitViewWithProductParameters:[HyBidStoreKitUtils cleanUpProductParams:productParams] adFormat:self.isInterstitial ? HyBidReportingAdFormat.FULLSCREEN : HyBidReportingAdFormat.REWARDED isAutoStoreKitView:self.isAutoStoreKit ad:self.ad];
             }
 
         } else {
@@ -875,11 +831,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                     if(!canOpenURL){
                         throughClickURL = [throughClickURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]];
                     }
-                    if(shouldOpenBrowser) {
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:throughClickURL] options:@{} completionHandler:^(BOOL success) {
-                            [self.delegate vastEndCardViewRedirectedWithSuccess:success];
-                        }];
-                    }
+                    [self navigationToURL:throughClickURL shouldOpenBrowser:shouldOpenBrowser navigationType:self.ad.navigationMode];
                 }
             } else {
                 [self determineIfAdClickIsTriggeredWithURL:url withShouldOpenBrowser:shouldOpenBrowser];
@@ -892,14 +844,25 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                 if(!canOpenURL){
                     throughClickURL = [throughClickURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]];
                 }
-                if(shouldOpenBrowser) {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:throughClickURL] options:@{} completionHandler:^(BOOL success) {
-                        [self.delegate vastEndCardViewRedirectedWithSuccess:success];
-                    }];
-                }
+                [self navigationToURL:throughClickURL shouldOpenBrowser:shouldOpenBrowser navigationType:self.ad.navigationMode];
             }
         } else {
             [self determineIfAdClickIsTriggeredWithURL:url withShouldOpenBrowser:shouldOpenBrowser];
+        }
+    }
+}
+
+- (void)navigationToURL:(NSString *)url shouldOpenBrowser:(BOOL)shouldOpenBrowser navigationType:(NSString *)navigationType {
+    
+    if(shouldOpenBrowser) {
+        HyBidWebBrowserNavigation navigation = [HyBidInternalWebBrowser.shared webBrowserNavigationBehaviourFromString: navigationType];
+        
+        if (navigation == HyBidWebBrowserNavigationInternal) {
+            [HyBidInternalWebBrowser.shared navigateToURL:url];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:^(BOOL success) {
+                [self.delegate vastEndCardViewRedirectedWithSuccess:success];
+            }];
         }
     }
 }
@@ -1089,11 +1052,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
 - (void)triggerShowStorekitPage {
     self.delayTimer = nil;
     self.storekitDelayTimeElapsed = 0;
-
-    if (!self.storekitPageIsPresented) {
-        [self showStorekitPage:[self.endCard type] withURL:nil withShouldOpenBrowser:YES];
-        self.storekitPageIsPresented = YES;
-    }
+    [self showStorekitPage:[self.endCard type] withURL:nil withShouldOpenBrowser:YES];
 }
 
 - (void)presentSdkAutoStorekitPage {
@@ -1113,6 +1072,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                 [self showStorekitPage:[self.endCard type] withURL:nil withShouldOpenBrowser:YES];
             }
         }
+        self.isAutoStoreKit = YES;
     }
 }
 
@@ -1126,11 +1086,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
     
     NSString *customUrl = [HyBidCustomClickUtil extractPNClickUrl:self.throughClickURL];
     if (customUrl != nil) {
-        if(shouldOpenBrowser) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:customUrl] options:@{} completionHandler:^(BOOL success) {
-                [self.delegate vastEndCardViewRedirectedWithSuccess:success];
-            }];
-        }
+        [self navigationToURL:customUrl shouldOpenBrowser:shouldOpenBrowser navigationType:HyBidWebBrowserNavigationExternalValue];
     } else if (productParams.count != 0) {
         
         [HyBidStoreKitUtils insertFidelitiesIntoDictionaryIfNeeded:productParams];
@@ -1145,20 +1101,19 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
             }
             
             if(shouldOpenBrowser) {
-                if(!self.storekitPageIsBeingPresented) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        HyBidSKAdNetworkViewController *skAdnetworkViewController = [[HyBidSKAdNetworkViewController alloc] initWithProductParameters: [HyBidStoreKitUtils cleanUpProductParams:productParams] delegate: self];
-                        self.storekitPageIsBeingPresented = YES;
-                        [HyBidNotificationCenter.shared post: HyBidNotificationTypeSKStoreProductViewIsReadyToPresentForSDKStorekit object: nil userInfo: nil];
-                        [skAdnetworkViewController presentSKStoreProductViewController:^(BOOL success) {
-                            if (success) {
-                                if ([skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] != [NSNull null] && [[skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] boolValue]){
-                                    [self fireClicksForAutoStorekit];
-                                }
-                                [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat: @"StoreKit from SDK is presented"]];
-                            }
-                        }];
-                    });
+                NSDictionary *params = [HyBidStoreKitUtils cleanUpProductParams:productParams];
+                NSString *adFormat = self.isInterstitial ? HyBidReportingAdFormat.FULLSCREEN : HyBidReportingAdFormat.REWARDED;
+                if (self.isAutoStoreKit) {
+                    [HyBidSKAdNetworkViewController.shared presentStoreKitViewWithProductParameters:params
+                                                                                           adFormat:adFormat
+                                                                                 isAutoStoreKitView:self.isAutoStoreKit
+                                                                                                 ad:self.ad
+                                                                                 rootViewController:self.mraidView.rootViewController];
+                } else {
+                    [HyBidSKAdNetworkViewController.shared presentStoreKitViewWithProductParameters:params
+                                                                                           adFormat:adFormat
+                                                                                 isAutoStoreKitView:self.isAutoStoreKit
+                                                                                                 ad:self.ad];
                 }
             }
         } else {
@@ -1168,11 +1123,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                     if(!canOpenURL){
                         self.throughClickURL = [self.throughClickURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]];
                     }
-                    if(shouldOpenBrowser) {
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.throughClickURL] options:@{} completionHandler:^(BOOL success) {
-                            [self.delegate vastEndCardViewRedirectedWithSuccess:success];
-                        }];
-                    }
+                    [self navigationToURL:self.throughClickURL shouldOpenBrowser:shouldOpenBrowser navigationType:self.ad.navigationMode];
                 }
             } else {
                 [self determineIfAdClickIsTriggeredWithURL:url withShouldOpenBrowser:shouldOpenBrowser];
@@ -1185,11 +1136,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                 if(!canOpenURL){
                     self.throughClickURL = [self.throughClickURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]];
                 }
-                if(shouldOpenBrowser) {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.throughClickURL] options:@{} completionHandler:^(BOOL success) {
-                        [self.delegate vastEndCardViewRedirectedWithSuccess:success];
-                    }];
-                }
+                [self navigationToURL:self.throughClickURL shouldOpenBrowser:shouldOpenBrowser navigationType:self.ad.navigationMode];
             }
         } else {
             [self determineIfAdClickIsTriggeredWithURL:url withShouldOpenBrowser:shouldOpenBrowser];
@@ -1198,14 +1145,15 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
 }
 
 - (void)trackEndCardImpression {
-    if (!self.endCard.isCustomEndCard) {
-        if ([HyBidSDKConfig sharedConfig].reporting) {
-            HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.DEFAULT_ENDCARD_IMPRESSION adFormat: self.isInterstitial ? HyBidReportingAdFormat.FULLSCREEN : HyBidReportingAdFormat.REWARDED properties:nil];
-            [[HyBid reportingManager] reportEventFor:reportingEvent];
-        }
-        return;
-    }   
+    if (!self.endCard.isCustomEndCard && [HyBidSDKConfig sharedConfig].reporting) {
+        HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.DEFAULT_ENDCARD_IMPRESSION adFormat: self.isInterstitial ? HyBidReportingAdFormat.FULLSCREEN : HyBidReportingAdFormat.REWARDED properties:nil];
+        [[HyBid reportingManager] reportEventFor:reportingEvent];
+    }
     
+    [[HyBidVASTEventBeaconsManager shared] reportVASTEventWithType:self.endCard.isCustomEndCard
+                                                                  ? HyBidReportingEventType.CUSTOM_ENDCARD_IMPRESSION
+                                                                  : HyBidReportingEventType.DEFAULT_ENDCARD_IMPRESSION
+                                                                ad:self.ad];
 }
 
 - (void)trackEndCardClick {
@@ -1214,62 +1162,70 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
             HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.DEFAULT_ENDCARD_CLICK adFormat:self.isInterstitial ? HyBidReportingAdFormat.FULLSCREEN : HyBidReportingAdFormat.REWARDED properties:nil];
             [[HyBid reportingManager] reportEventFor:reportingEvent];
         }
+        
+        [[HyBidVASTEventBeaconsManager shared] reportVASTEventWithType:HyBidReportingEventType.DEFAULT_ENDCARD_CLICK
+                                                                    ad:self.ad];
         return;
     }
 }
 
 - (void)fireClicksForAutoStorekit {
-    if (!self.autoClickHasBeenTracked) {
-        HyBidSkAdNetworkModel* skAdNetworkModel = [self.ad getSkAdNetworkModel];
-        if ([skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] != [NSNull null] && [[skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] boolValue]) {
+    HyBidSkAdNetworkModel* skAdNetworkModel = [self.ad getSkAdNetworkModel];
+    if ([skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] != [NSNull null] && [[skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] boolValue]) {
+        
+        self.shouldTriggerAdClick = [self.endCard.content containsString: adClickTriggerFlag] ? YES : NO;
+        if (self.vastAd == nil || self.shouldTriggerAdClick) {
+            if ([[self.endCard clickTrackings] count] > 0) {
+                [self.vastEventProcessor sendVASTUrls:[self.endCard clickTrackings] withType:HyBidVASTClickTrackingURL];
+            }
+        } else {
+            HyBidVASTEndCardType endCardType = [self.endCard type];
+            NSDictionary *trackersDictionary = [self gettingTrackingAndThroughClickURLForAutoStorekit:endCardType];
+            NSMutableArray<NSString *> *trackingClickURLs = [trackersDictionary objectForKey: @"trackingClickURLs"];
+            NSString *throughClickURL = [trackersDictionary objectForKey: @"throughClickURL"];
             
-            self.shouldTriggerAdClick = [self.endCard.content containsString: adClickTriggerFlag] ? YES : NO;
-            if (self.vastAd == nil || self.shouldTriggerAdClick) {
-                if ([[self.endCard clickTrackings] count] > 0) {
-                    [self.vastEventProcessor sendVASTUrls:[self.endCard clickTrackings]];
-                }
-            } else {
-                HyBidVASTEndCardType endCardType = [self.endCard type];
-                NSDictionary *trackersDictionary = [self gettingTrackingAndThroughClickURLForAutoStorekit:endCardType];
-                NSMutableArray<NSString *> *trackingClickURLs = [trackersDictionary objectForKey: @"trackingClickURLs"];
-                NSString *throughClickURL = [trackersDictionary objectForKey: @"throughClickURL"];
-                
-                if (trackingClickURLs && [trackingClickURLs count] > 0) {
-                    [self.vastEventProcessor sendVASTUrls:trackingClickURLs];
-                }
-                
-                [self.vastEventProcessor trackEventWithType:HyBidVASTAdTrackingEventType_click];
-                
-                HyBidSkAdNetworkModel *skAdNetworkModel = self.ad.isUsingOpenRTB ? [self.ad getOpenRTBSkAdNetworkModel] : [self.ad getSkAdNetworkModel];
-                
-                NSString *customUrl = [HyBidCustomClickUtil extractPNClickUrl:throughClickURL];
-                if (!customUrl && skAdNetworkModel) {
-                    NSMutableDictionary* productParams = [[skAdNetworkModel getStoreKitParameters] mutableCopy];
-                    
-                    [HyBidStoreKitUtils insertFidelitiesIntoDictionaryIfNeeded:productParams];
-                    if ([productParams count] > 0 && [skAdNetworkModel isSKAdNetworkIDVisible:productParams] && throughClickURL) {
-                        [[HyBidURLDriller alloc] startDrillWithURLString:throughClickURL delegate:self];
-                    }
-                }
+            if (trackingClickURLs && [trackingClickURLs count] > 0) {
+                [self.vastEventProcessor sendVASTUrls:trackingClickURLs withType:HyBidVASTClickTrackingURL];
             }
             
-            [self trackEndCardClick];
-            [self.delegate vastEndCardViewAutoStorekitClicked: self.shouldTriggerAdClick];
+            [self.vastEventProcessor trackEventWithType:HyBidVASTAdTrackingEventType_click];
             
-            self.autoClickHasBeenTracked = YES;
+            HyBidSkAdNetworkModel *skAdNetworkModel = self.ad.isUsingOpenRTB ? [self.ad getOpenRTBSkAdNetworkModel] : [self.ad getSkAdNetworkModel];
+            
+            NSString *customUrl = [HyBidCustomClickUtil extractPNClickUrl:throughClickURL];
+            if (!customUrl && skAdNetworkModel) {
+                NSMutableDictionary* productParams = [[skAdNetworkModel getStoreKitParameters] mutableCopy];
+                
+                [HyBidStoreKitUtils insertFidelitiesIntoDictionaryIfNeeded:productParams];
+                if ([productParams count] > 0 && [skAdNetworkModel isSKAdNetworkIDVisible:productParams] && throughClickURL) {
+                    [[HyBidURLDriller alloc] startDrillWithURLString:throughClickURL delegate:self];
+                }
+            }
         }
+        [self.delegate vastEndCardViewAutoStorekitClicked: self.shouldTriggerAdClick clickType: self.endCard.isCustomEndCard
+         ? HyBidStorekitAutomaticClickCustomEndCard : HyBidStorekitAutomaticClickDefaultEndCard ];
     }
 }
 
 - (void)determineIfAdClickIsTriggeredWithURL:(NSString *)url withShouldOpenBrowser:(BOOL)shouldOpenBrowser {
-    if(!self.shouldTriggerAdClick){
-        if (shouldOpenBrowser) {
+    if(!self.shouldTriggerAdClick && shouldOpenBrowser) {
+        HyBidWebBrowserNavigation navigation = [HyBidInternalWebBrowser.shared webBrowserNavigationBehaviourFromString:self.ad.navigationMode];
+        
+        if (navigation == HyBidWebBrowserNavigationInternal) {
+            [HyBidInternalWebBrowser.shared navigateToURL:url];
+        } else {
             [self.serviceProvider openBrowser:url];
         }
     }
 }
 
 - (void)mraidViewNavigate:(HyBidMRAIDView *)mraidView withURL:(NSURL *)url {
+    
+    if ([url.absoluteString isEqualToString: replayURLFlag]) {
+        [self.delegate vastEndCardViewReplayButtonClicked];
+        return;
+    }
+    
     if([url.absoluteString containsString: adClickTriggerFlag]){
         self.shouldTriggerAdClick = YES;
     } else {
@@ -1277,7 +1233,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
     }
     [self vastEndCardClickedWithType:[self.endCard type] withURL:url.absoluteString withShouldOpenBrowser:YES];
     [self trackEndCardClick];
-    [self.delegate vastEndCardViewClicked:self.shouldTriggerAdClick];
+    [self.delegate vastEndCardViewClicked:self.shouldTriggerAdClick aakCustomClickAd:self.aakCustomClickAd];
 }
 
 - (BOOL)mraidViewShouldResize:(HyBidMRAIDView *)mraidView toPosition:(CGRect)position allowOffscreen:(BOOL)allowOffscreen {
@@ -1335,7 +1291,7 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
 
 - (void)mraidServiceOpenBrowserWithUrlString:(NSString *)urlString {
     [self vastEndCardClickedWithType:[self.endCard type] withURL:urlString withShouldOpenBrowser:YES];
-    [self.delegate vastEndCardViewClicked: self.shouldTriggerAdClick];
+    [self.delegate vastEndCardViewClicked: self.shouldTriggerAdClick aakCustomClickAd:self.aakCustomClickAd];
 }
 
 - (void)mraidServicePlayVideoWithUrlString:(NSString *)urlString {
@@ -1348,33 +1304,70 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
 
 - (void)mraidServiceTrackingEndcardWithUrlString:(NSString *)urlString {
     [self vastEndCardClickedWithType:[self.endCard type] withURL:urlString withShouldOpenBrowser:self.shouldOpenBrowser];
-    [self.delegate vastEndCardViewClicked: self.shouldTriggerAdClick];
+    [self.delegate vastEndCardViewClicked: self.shouldTriggerAdClick aakCustomClickAd:self.aakCustomClickAd];
 }
 
-#pragma mark SKStoreProductViewControllerDelegate
+#pragma mark HyBidInterruptionDelegate
 
-- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
-    if ([HyBidSDKConfig sharedConfig].reporting) {
-        HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.STOREKIT_PRODUCT_VIEW_DISMISS adFormat:self.isInterstitial ? HyBidReportingAdFormat.FULLSCREEN : HyBidReportingAdFormat.REWARDED properties:nil];
-        [[HyBid reportingManager] reportEventFor:reportingEvent];
+- (void)adHasFocus {
+    [self resumeCloseButtonTimer];
+    if (self.shouldResumeTimer) {
+        [self resumeStorekitDelayTimer];
     }
-    [HyBidNotificationCenter.shared post: HyBidNotificationTypeSKStoreProductViewIsDismissed object: self.ad userInfo: nil];
-    self.storekitPageIsBeingPresented = NO;
-    [self resumeStorekitDelayTimer];
+}
+
+- (void)adHasNoFocus {
+    [self pauseCloseButtonTimer];
+    [self pauseStorekitDelayTimer];
+}
+
+- (void)productViewControllerDidShow {
+    
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat: @"StoreKit from SDK is presented"]];
+    
+    if (self.isAutoStoreKit) {
+        HyBidSkAdNetworkModel *skAdNetworkModel = self.ad.isUsingOpenRTB ? [self.ad getOpenRTBSkAdNetworkModel] : [self.ad getSkAdNetworkModel];
+        NSMutableDictionary* productParams = [[skAdNetworkModel getStoreKitParameters] mutableCopy];
+        [HyBidStoreKitUtils insertFidelitiesIntoDictionaryIfNeeded:productParams];
+        
+        if ([skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] != [NSNull null] && [[skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] boolValue]){
+            [self fireClicksForAutoStorekit];
+        }
+        
+        [[HyBidVASTEventBeaconsManager shared] reportVASTEventWithType:HyBidReportingEventType.AUTO_STORE_KIT_IMPRESSION
+                                                                    ad:self.ad
+                                                               onTopOf:self.endCard.isCustomEndCard
+                                                                      ? HyBidOnTopOfTypeCUSTOM_ENDCARD
+                                                                      : HyBidOnTopOfTypeCOMPANION_AD];
+        self.isAutoStoreKit = NO;
+    } else if (self.mraidView.urlStringForEndCardTracking) {
+        [self mraidServiceTrackingEndcardWithUrlString: self.mraidView.urlStringForEndCardTracking];
+    }
+}
+
+- (void)productViewControllerDidFailWithError:(NSError *)error {
+    if (self.isAutoStoreKit) {
+        [[HyBidVASTEventBeaconsManager shared] reportVASTEventWithType:HyBidReportingEventType.AUTO_STORE_KIT_IMPRESSION_ERROR
+                                                                    ad:self.ad
+                                                               onTopOf:self.endCard.isCustomEndCard
+                                                                      ? HyBidOnTopOfTypeCUSTOM_ENDCARD
+                                                                      : HyBidOnTopOfTypeCOMPANION_AD
+                                                             errorCode:error.code];
+        self.isAutoStoreKit = NO;
+    }
 }
 
 #pragma mark HyBidSKOverlayDelegate
 
-- (void)skoverlayDidShowOnCreative {
-
-    if (!self.autoClickHasBeenTracked) {
-        HyBidSkAdNetworkModel* skAdNetworkModel = [self.ad getSkAdNetworkModel];
+- (void)skoverlayDidShowOnCreative:(BOOL)isFirstPresentation {
+    if (![HyBidSKAdNetworkViewController.shared isSKProductViewControllerPresented]) {
+    HyBidSkAdNetworkModel* skAdNetworkModel = [self.ad getSkAdNetworkModel];
         if ([skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] != [NSNull null] && [[skAdNetworkModel.productParameters objectForKey:HyBidSKAdNetworkParameter.click] boolValue]) {
             
             self.shouldTriggerAdClick = [self.endCard.content containsString: adClickTriggerFlag] ? YES : NO;
             if (self.vastAd == nil || self.shouldTriggerAdClick) {
                 if ([[self.endCard clickTrackings] count] > 0) {
-                    [self.vastEventProcessor sendVASTUrls:[self.endCard clickTrackings]];
+                    [self.vastEventProcessor sendVASTUrls:[self.endCard clickTrackings] withType:HyBidVASTClickTrackingURL];
                 }
             } else {
                 HyBidVASTEndCardType endCardType = [self.endCard type];
@@ -1383,10 +1376,12 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                 NSString *throughClickURL = [trackersDictionary objectForKey: @"throughClickURL"];
                 
                 if (trackingClickURLs && [trackingClickURLs count] > 0) {
-                    [self.vastEventProcessor sendVASTUrls:trackingClickURLs];
+                    [self.vastEventProcessor sendVASTUrls:trackingClickURLs withType:HyBidVASTClickTrackingURL];
                 }
                 
-                [self.vastEventProcessor trackEventWithType:HyBidVASTAdTrackingEventType_click];
+                if (isFirstPresentation) {
+                    [self.vastEventProcessor trackEventWithType:HyBidVASTAdTrackingEventType_click];
+                }
                 
                 HyBidSkAdNetworkModel *skAdNetworkModel = self.ad.isUsingOpenRTB ? [self.ad getOpenRTBSkAdNetworkModel] : [self.ad getSkAdNetworkModel];
                 
@@ -1401,11 +1396,28 @@ NSString * adClickTriggerFlag = @"https://customendcard.verve.com/click";
                 }
             }
             
-            [self trackEndCardClick];
-            [self.delegate vastEndCardViewSKOverlayClicked: self.shouldTriggerAdClick];
-            
-            self.autoClickHasBeenTracked = YES;
+            [self.delegate vastEndCardViewSKOverlayClicked: self.shouldTriggerAdClick
+                                                 clickType: self.endCard.isCustomEndCard
+                                                          ? HyBidSKOverlayAutomaticCLickCustomEndCard
+                                                          : HyBidSKOverlayAutomaticCLickDefaultEndCard
+                                       isFirstPresentation: isFirstPresentation];
         }
+    }
+}
+
+#pragma mark - HyBidCustomCTAViewDelegate
+
+- (void)customCTADidLoadWithSuccess:(BOOL)success{}
+
+- (void)customCTADidShow {
+    if ([self.delegate respondsToSelector:@selector(vastEndCardViewCustomCTAClicked)]) {
+        [self.delegate vastEndCardViewCustomCTAPresented];
+    }
+}
+
+- (void)customCTADidClick {
+    if ([self.delegate respondsToSelector:@selector(vastEndCardViewCustomCTAClicked)]) {
+        [self.delegate vastEndCardViewCustomCTAClicked];
     }
 }
 

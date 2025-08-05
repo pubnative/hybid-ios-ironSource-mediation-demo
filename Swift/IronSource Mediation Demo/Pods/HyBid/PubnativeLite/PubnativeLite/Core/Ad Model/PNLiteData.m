@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2018 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "PNLiteData.h"
@@ -33,6 +17,7 @@
 + (NSString *)width { return @"w"; }
 + (NSString *)height { return @"h"; }
 + (NSString *)jsonData { return @"jsondata"; }
++ (NSString *)boolean { return @"boolean"; }
 + (NSString *)skoverlayEnabled { return @"SKOverlayenabled"; }
 + (NSString *)pcSKoverlayEnabled { return @"pc_skoverlayenabled"; }
 + (NSString *)audioState { return @"audiostate"; }
@@ -76,10 +61,17 @@
 + (NSString *)sdkAutoStorekitEnabled { return @"sdk_autostorekit"; }
 + (NSString *)pcSDKAutoStorekitEnabled { return @"pc_sdk_autostorekit"; }
 + (NSString *)sdkAutoStorekitDelay { return @"sdk_autostorekit_delay"; }
-+ (NSString *)atomEnabled { return @"atom_enabled"; }
 + (NSString *)itunesIdValue { return @"itunesid_value"; }
 + (NSString *)reducedIconSizes { return @"pc_reduced_icon_sizes"; }
 + (NSString *)reducedIconSizesInputValue { return @"pc_reduced_icon_sizes_input_value"; }
 + (NSString *)hideControls { return @"bc_hide_controls"; }
++ (NSString *)navigationMode { return @"navigation_mode"; }
++ (NSString *)navigationModeInputValue { return @"navigation_mode_input_value"; }
++ (NSString *)landingPage { return @"landing_page"; }
++ (NSString *)landingPageInputValue { return @"landing_page_input_value"; }
++ (NSString *)ctaButtonSize { return @"bc_learn_more_size"; }
++ (NSString *)ctaButtonSizeInputValue { return @"bc_learn_more_size_input_value"; }
++ (NSString *)ctaButtonLocation { return @"bc_learn_more_location"; }
++ (NSString *)ctaButtonLocationInputValue { return @"bc_learn_more_location_input_value"; }
 
 @end

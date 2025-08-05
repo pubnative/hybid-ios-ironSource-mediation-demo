@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2018 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "HyBidContentInfoView.h"
@@ -52,6 +36,7 @@ CGFloat const HyBidIconMaximumHeight = 30.0f;
 @property (nonatomic, assign) BOOL closeButtonTapped;
 @property (nonatomic, assign) BOOL adFeedbackViewRequested;
 @property (nonatomic, assign) CGFloat xPosition;
+@property (nonatomic, assign) BOOL isRenderable;
 
 @end
 
@@ -90,15 +75,17 @@ CGFloat const HyBidIconMaximumHeight = 30.0f;
         self.textView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.textView setNumberOfLines: 1];
                 
-        self.iconView = [[UIImageView alloc] init];
-        [self.iconView setFrame: self.frame];
+        self.iconView = [[UIImageView alloc] initWithFrame:self.frame];
         [self.iconView setContentMode:UIViewContentModeScaleAspectFit];
         self.iconView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.display = HyBidContentInfoDisplaySystem;
+        self.clickAction = HyBidContentInfoClickActionExpand;
         
         [self addSubview:self.iconView];
         [self addSubview:self.textView];
 
         [PNLiteOrientationManager sharedInstance].delegate = self;
+        HyBidInterruptionHandler.shared.feedbackViewDelegate = self;
     }
     return self;
 }
@@ -160,6 +147,7 @@ CGFloat const HyBidIconMaximumHeight = 30.0f;
                 if (data) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         self.iconImage = [UIImage imageWithData: data];
+                        self.isRenderable = self.iconImage ? YES : NO;
                         completionBlock(YES);
                     });
                 } else {
@@ -198,7 +186,7 @@ CGFloat const HyBidIconMaximumHeight = 30.0f;
     
     NSString* accessibilityLabelTextView = @"isLearnAboutAdPresent";
     NSString* accessibilityLabel = @"contentInfoIconView";
-    if (self.isCustom) {
+    if (self.isCustom && self.isRenderable) {
         accessibilityLabel = @"Custom-contentInfoIconView";
     }
     [self.iconView setIsAccessibilityElement:YES];
@@ -226,7 +214,9 @@ CGFloat const HyBidIconMaximumHeight = 30.0f;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.iconView setImage:self.iconImage];
                     });
-                    self.link = @"https://pubnative.net/content-info";
+                    if (self.link == nil || self.link.length == 0) {
+                        self.link = @"https://pubnative.net/content-info";
+                    }
                 }
                 self.openSize = self.iconView.frame.size.width + self.textView.frame.size.width;
                 self.hidden = NO;
@@ -293,8 +283,6 @@ CGFloat const HyBidIconMaximumHeight = 30.0f;
             }else {
                 self.adFeedbackView = [[HyBidAdFeedbackView alloc] initWithURL:self.link withZoneID:self.zoneID];
             }
-            self.adFeedbackView.delegate = self;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"adFeedbackViewIsReady" object:nil];
         }
     }
 }

@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2020 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "HyBidSignalDataProcessor.h"
@@ -35,11 +19,11 @@
 #import "HyBidVASTParserError.h"
 
 #if __has_include(<HyBid/HyBid-Swift.h>)
-    #import <UIKit/UIKit.h>
-    #import <HyBid/HyBid-Swift.h>
+#import <UIKit/UIKit.h>
+#import <HyBid/HyBid-Swift.h>
 #else
-    #import <UIKit/UIKit.h>
-    #import "HyBid-Swift.h"
+#import <UIKit/UIKit.h>
+#import "HyBid-Swift.h"
 #endif
 
 NSString *const HyBidSignalDataResponseOK = @"ok";
@@ -75,14 +59,19 @@ NSInteger const HyBidSignalDataResponseStatusRequestMalformed = 422;
 
 - (NSDictionary *)createDictionaryFromData:(NSData *)data {
     NSError *parseError;
-    NSDictionary *jsonDictonary = [NSJSONSerialization JSONObjectWithData:data
-                                                                  options:NSJSONReadingMutableContainers
-                                                                    error:&parseError];
-    if (parseError) {
-        [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:parseError.localizedDescription];
-        return nil;
+    if (data) {
+        NSDictionary *jsonDictonary = [NSJSONSerialization JSONObjectWithData:data
+                                                                      options:NSJSONReadingMutableContainers
+                                                                        error:&parseError];
+        if (parseError) {
+            [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:parseError.localizedDescription];
+            return nil;
+        } else {
+            return jsonDictonary;
+        }
     } else {
-        return jsonDictonary;
+        [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:@"Received data is either nil or not valid."];
+        return nil;
     }
 }
 
@@ -155,7 +144,7 @@ NSInteger const HyBidSignalDataResponseStatusRequestMalformed = 422;
                         if (!vastModel) {
                             [self invokeDidFail: error];
                             HyBidVASTEventProcessor *vastEventProcessor = [[HyBidVASTEventProcessor alloc] init];
-                            [vastEventProcessor sendVASTUrls: error.errorTagURLs];
+                            [vastEventProcessor sendVASTUrls: error.errorTagURLs withType:HyBidVASTParserErrorURL];
                         } else {
                             NSArray *endCards = [self fetchEndCardsFromVastAd:vastModel.ads.firstObject];
                             if ([ad.endcardEnabled boolValue] || (ad.endcardEnabled == nil && HyBidConstants.showEndCard)) {
@@ -229,7 +218,7 @@ NSInteger const HyBidSignalDataResponseStatusRequestMalformed = 422;
     if (ad == nil) {
         return [NSArray new];
     }
-        
+    
     NSArray<HyBidVASTCreative *> *creatives = [[ad inLine] creatives];
     HyBidVASTCompanionAds *companionAds;
     
@@ -240,9 +229,14 @@ NSInteger const HyBidSignalDataResponseStatusRequestMalformed = 422;
         }
     }
     
+    dispatch_group_t group = dispatch_group_create();
     for (HyBidVASTCompanion *companion in [companionAds companions]) {
-        [self.endCardManager addCompanion:companion];
+        dispatch_group_enter(group);
+        [self.endCardManager addCompanion:companion completion:^{
+            dispatch_group_leave(group);
+        }];
     }
+    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
     
     NSArray *endCards = [self.endCardManager endCards];
     return [[NSArray alloc] initWithArray:endCards];
@@ -251,21 +245,19 @@ NSInteger const HyBidSignalDataResponseStatusRequestMalformed = 422;
 #pragma mark PNLiteHttpRequestDelegate
 
 - (void)request:(PNLiteHttpRequest *)request didFinishWithData:(NSData *)data statusCode:(NSInteger)statusCode {
-    if(HyBidSignalDataResponseStatusOK == statusCode ||
-       HyBidSignalDataResponseStatusRequestMalformed == statusCode) {
-        
+    if(HyBidSignalDataResponseStatusOK == statusCode || HyBidSignalDataResponseStatusRequestMalformed == statusCode) {
         NSString *responseString;
-        if ([self createDictionaryFromData:data]) {
-                responseString = [NSString stringWithFormat:@"%@", [self createDictionaryFromData:data]];
+        if (data && [self createDictionaryFromData:data]) {
+            responseString = [NSString stringWithFormat:@"%@", [self createDictionaryFromData:data]];
+            NSDictionary *jsonDictonary = [self createDictionaryFromData:data];
+            if (jsonDictonary) {
+                PNLiteResponseModel *response = [[PNLiteResponseModel alloc] initWithDictionary:jsonDictonary];
+                [self processResponse:response];
+            } else {
+                [self invokeDidFail: [NSError hyBidInvalidSignalData]];
+            }
         } else {
-                responseString = [NSString stringWithFormat:@"Error while creating a JSON Object with the response. Here is the raw data: \r\r%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
-        }
-        
-        NSDictionary *jsonDictonary = [self createDictionaryFromData:data];
-        if (jsonDictonary) {
-            PNLiteResponseModel *response = [[PNLiteResponseModel alloc] initWithDictionary:jsonDictonary];
-            [self processResponse:response];
-        } else {
+            responseString = [NSString stringWithFormat:@"Error while creating a JSON Object with the response. Here is the raw data: \r\r%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
             [self invokeDidFail: [NSError hyBidInvalidSignalData]];
         }
     } else {

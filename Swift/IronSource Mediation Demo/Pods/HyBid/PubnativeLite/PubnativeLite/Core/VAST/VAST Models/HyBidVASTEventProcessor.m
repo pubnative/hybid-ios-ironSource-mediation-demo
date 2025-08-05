@@ -1,28 +1,13 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2018 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "HyBidVASTEventProcessor.h"
 #import "HyBidWebBrowserUserAgentInfo.h"
 #import "HyBidViewabilityNativeVideoAdSession.h"
+#import "PNLiteData.h"
 
 #if __has_include(<HyBid/HyBid-Swift.h>)
     #import <UIKit/UIKit.h>
@@ -74,6 +59,8 @@
     
     if (type == HyBidVASTAdTrackingEventType_start) {
         eventString = HyBidVASTAdTrackingEventType_start;
+    } else if (type == HyBidVASTAdTrackingEventType_rewind) {
+        eventString = HyBidVASTAdTrackingEventType_rewind;
     } else if (type == HyBidVASTAdTrackingEventType_firstQuartile) {
         eventString = HyBidVASTAdTrackingEventType_firstQuartile;
         [[HyBidViewabilityNativeVideoAdSession sharedInstance] fireOMIDFirstQuartileEvent];
@@ -120,7 +107,7 @@
             NSArray<NSString *> *urlStrings = self.eventsDictionary[eventString];
             if (urlStrings && urlStrings.count > 0) {
                 for (NSString *urlString in urlStrings) {
-                    [self sendTrackingRequest:urlString];
+                    [self sendTrackingRequest:urlString trackingType:type];
                     [HyBidLogger debugLogFromClass:NSStringFromClass([self class])
                                         fromMethod:NSStringFromSelector(_cmd)
                                        withMessage:[NSString stringWithFormat:@"Sent event '%@' to url: %@", eventString, urlString]];
@@ -129,7 +116,7 @@
         }else if (self.events.count != 0) {
             for (HyBidVASTTracking *event in self.events) {
                 if ([[event event] isEqualToString:eventString]) {
-                    [self sendTrackingRequest:[event url]];
+                    [self sendTrackingRequest:[event url] trackingType:type];
                     [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Sent event '%@' to url: %@", eventString, [event url]]];
                 }
             }
@@ -139,7 +126,7 @@
 - (void)trackProgressEvent:(NSString*)offset {
     if (self.progressEvents != nil && self.progressEvents.count != 0) {
         NSString* urlString = self.progressEvents[offset];
-        [self sendTrackingRequest:urlString];
+        [self sendTrackingRequest:urlString trackingType:@"Progress event"];
         [HyBidLogger debugLogFromClass:NSStringFromClass([self class])
                             fromMethod:NSStringFromSelector(_cmd)
                            withMessage:[NSString stringWithFormat:@"Sent event '%@' to url: %@", HyBidVASTAdTrackingEventType_progress, urlString]];
@@ -149,7 +136,7 @@
 
 - (void)trackImpression:(HyBidVASTImpression *)impression {
     if (impression != NULL) {
-        [self sendTrackingRequest:impression.url];
+        [self sendTrackingRequest:impression.url trackingType:@"Impression"];
         [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Sent event impression to url: %@", impression.url]];
     } else {
         [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Error while sending event impression"]];
@@ -159,7 +146,7 @@
 
 - (void)trackImpressionWith:(NSString *)impressionURL {
     if (impressionURL && impressionURL.length != 0) {
-        [self sendTrackingRequest:impressionURL];
+        [self sendTrackingRequest:impressionURL trackingType:@"Impression"];
         [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Sent event impression to url: %@", impressionURL]];
     } else {
         [HyBidLogger errorLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Error while sending event impression"]];
@@ -172,9 +159,24 @@
     }
 }
 
-- (void)sendVASTUrls:(NSArray *)urls {
+- (void)sendVASTBeaconUrl:(NSString *)url withTrackingType:(NSString *)trackingType beaconName:(NSString *)beaconName {
+    [self sendTrackingRequest:url trackingType:trackingType beaconTrackerName:beaconName];
+    [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Sent http request to url: %@", url]];
+}
+
+- (void)sendVASTUrls:(NSArray *)urls withType:(HyBidVASTUrlType)type {
+    NSString *trackingType = @"HTTP request to URL";
+    switch (type) {
+        case HyBidVASTImpressionURL: trackingType = @"Impression"; break;
+        case HyBidVASTClickTrackingURL: trackingType = @"ClickTracking"; break;
+        case HyBidVASTIconClickTrackingURL: trackingType = @"IconClickTracking"; break;
+        case HyBidVASTParserErrorURL: trackingType = @"ParserError"; break;
+        case HyBidVASTErrorURL: trackingType = @"Error"; break;
+        default: trackingType = @"HTTP request to URL"; break;
+    }
+    
     for (NSString *stringURL in urls) {
-        [self sendTrackingRequest:stringURL];
+        [self sendTrackingRequest:stringURL trackingType:trackingType];
         [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Sent http request to url: %@", stringURL]];
     }
 }
@@ -184,9 +186,17 @@
     self.events = [events mutableCopy];
 }
 
-- (void)sendTrackingRequest:(NSString *)url {
+- (void)sendTrackingRequest:(NSString *)url trackingType:(NSString *)vastTrackerType {
+    [self sendTrackingRequest:url trackingType:vastTrackerType beaconTrackerName:nil];
+}
+
+- (void)sendTrackingRequest:(NSString *)url trackingType:(NSString *)vastTrackerType beaconTrackerName:(NSString *)beaconTrackerName {
     dispatch_queue_t sendTrackRequestQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(sendTrackRequestQueue, ^{
+        
+        HyBidVASTTracker *tracker = [[HyBidVASTTracker alloc] initWithType:vastTrackerType url:url beaconName:beaconTrackerName];
+        if (![tracker shouldBeTriggered]) { return; }
+        [tracker addToTriggeredTrackersList];
         
         [HyBidLogger debugLogFromClass:NSStringFromClass([self class]) fromMethod:NSStringFromSelector(_cmd) withMessage:[NSString stringWithFormat:@"Event processor sending request to url: %@", url]];
         
@@ -199,7 +209,18 @@
             
             [[session dataTaskWithRequest:request
                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+             
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                NSString *vastTrackerValue = [NSString stringWithFormat:@"%@ - %ld", vastTrackerType, (long)httpResponse.statusCode];
+
+                NSMutableDictionary* vastTrackerProperties = [NSMutableDictionary new];
+                [vastTrackerProperties setObject: vastTrackerValue forKey: @"type"];
+                [vastTrackerProperties setObject: @{PNLiteData.url : url} forKey: @"data"];
                 
+                HyBidReportingVASTTracker *reportingVASTTracker = [[HyBidReportingVASTTracker alloc] initWith:vastTrackerType properties:vastTrackerProperties];
+                if ([HyBidSDKConfig sharedConfig].reporting) {
+                    [[HyBid reportingManager] reportVASTTrackerFor:reportingVASTTracker];
+                }
                 // Send the request only, no response or errors
                 if(!error) {
                     if ([data length] > 0 && [data length] < 100) { // Ignore debugging long responses

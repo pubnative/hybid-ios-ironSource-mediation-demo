@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2018 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "PNLiteAdPresenterDecorator.h"
@@ -33,7 +17,7 @@
     #import "HyBid-Swift.h"
 #endif
 
-@interface PNLiteAdPresenterDecorator () <PNLiteImpressionTrackerDelegate>
+@interface PNLiteAdPresenterDecorator () <PNLiteImpressionTrackerDelegate,PercentVisibleDelegate>
 
 @property (nonatomic, strong) HyBidAdPresenter *adPresenter;
 @property (nonatomic, strong) HyBidAdTracker *adTracker;
@@ -111,6 +95,7 @@ NSString * const kUserDefaultsHyBidPreviousBannerPresenterDecoratorKey = @"kUser
     self.trackedView = adView;
     if(!self.impressionTracker) {
         self.impressionTracker = [[PNLiteImpressionTracker alloc] init];
+        self.impressionTracker.visibilityTracker.visibilityDelegate = self;
         [self.impressionTracker determineViewbilityRemoteConfig:self.adPresenter.ad];
         self.impressionTracker.delegate = self;
     }
@@ -131,19 +116,24 @@ NSString * const kUserDefaultsHyBidPreviousBannerPresenterDecoratorKey = @"kUser
 
 - (void)adPresenterDidClick:(HyBidAdPresenter *)adPresenter {
     if (self.adPresenterDelegate && [self.adPresenterDelegate respondsToSelector:@selector(adPresenterDidClick:)]) {
-        [self.adTracker trackClickWithAdFormat:HyBidReportingAdFormat.BANNER];
+        if (self.adPresenter.ad.shouldReportCustomEndcardImpression) {
+            [self.adTracker trackCustomEndCardClickWithAdFormat:HyBidReportingAdFormat.BANNER];
+        } else {
+            [self.adTracker trackClickWithAdFormat:HyBidReportingAdFormat.BANNER];
+        }
         [self.adPresenterDelegate adPresenterDidClick:adPresenter];
     }
 }
 
 - (void)adPresenter:(HyBidAdPresenter *)adPresenter didFailWithError:(NSError *)error {
     if (self.adPresenterDelegate && [self.adPresenterDelegate respondsToSelector:@selector(adPresenter:didFailWithError:)]) {
-        if (error != nil && error.localizedDescription != nil && error.localizedDescription.length > 0) {
-            [self.errorReportingProperties setObject:error.localizedDescription forKey:HyBidReportingCommon.ERROR_MESSAGE];
-        }
-        if(self.errorReportingProperties) {
-            [self.errorReportingProperties addEntriesFromDictionary:[[HyBid reportingManager] addCommonPropertiesForAd:adPresenter.ad withRequest:nil]];
-            if ([HyBidSDKConfig sharedConfig].reporting) {
+        if ([HyBidSDKConfig sharedConfig].reporting) {
+            if (error != nil && error.localizedDescription != nil && error.localizedDescription.length > 0) {
+                [self.errorReportingProperties setObject:error.localizedDescription forKey:HyBidReportingCommon.ERROR_MESSAGE];
+            }
+            if(self.errorReportingProperties) {
+                [self.errorReportingProperties addEntriesFromDictionary:[[HyBid reportingManager] addCommonPropertiesForAd:adPresenter.ad withRequest:nil]];
+                
                 HyBidReportingEvent* reportingEvent = [[HyBidReportingEvent alloc]initWith:HyBidReportingEventType.ERROR adFormat:HyBidReportingAdFormat.BANNER properties:self.errorReportingProperties];
                 [[HyBid reportingManager] reportEventFor:reportingEvent];
             }
@@ -173,6 +163,16 @@ NSString * const kUserDefaultsHyBidPreviousBannerPresenterDecoratorKey = @"kUser
     
 }
 
+- (void)adPresenterDidPresentCustomEndCard:(HyBidAdPresenter *)adPresenter {
+    if (self.adPresenter.ad.shouldReportCustomEndcardImpression) {
+        [self.adTracker trackCustomEndCardImpressionWithAdFormat:HyBidReportingAdFormat.BANNER];
+    }
+}
+
+- (void)adPresenterDidReplay {
+    [self.adTracker trackReplayClickWithAdFormat:HyBidReportingAdFormat.BANNER];
+}
+
 #pragma mark PNLiteImpressionTrackerDelegate
 
 - (void)impressionDetectedWithView:(UIView *)view {
@@ -188,6 +188,13 @@ NSString * const kUserDefaultsHyBidPreviousBannerPresenterDecoratorKey = @"kUser
                 [self.adPresenter startTracking];
             });
         }
+    }
+}
+
+- (void)percentVisibleDidChange:(CGFloat)newValue {
+    self.adPresenter.adSessionData.viewability = [NSNumber numberWithFloat:newValue];
+    if(self.adPresenter.adSessionData !=  nil) {
+        [ATOMManager fireAdSessionEventWithData:self.adPresenter.adSessionData];
     }
 }
 

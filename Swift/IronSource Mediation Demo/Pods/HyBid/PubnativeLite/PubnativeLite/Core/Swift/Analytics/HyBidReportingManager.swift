@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2021 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 import Foundation
@@ -25,6 +9,8 @@ import Foundation
 @objc
 public protocol HyBidReportingDelegate: AnyObject {
     func onEvent(with event: HyBidReportingEvent)
+    func onBeacon(with beacon: HyBidReportingBeacon)
+    func onVASTTracker(with tracker: HyBidReportingVASTTracker)
 }
 
 @objc
@@ -36,6 +22,12 @@ public class HyBidReportingManager: NSObject {
     @objc weak public var delegate: HyBidReportingDelegate?
     @objc public var isAtomStarted: Bool = false
     private let eventsQueue = DispatchQueue(label: "com.verve.HyBid.eventsQueue", target: nil)
+    
+    @objc public var beacons: [HyBidReportingBeacon] = []
+    private let beaconsQueue = DispatchQueue(label: "com.verve.HyBid.beaconsQueue", target: nil)
+    
+    @objc public var vastTrackers: [HyBidReportingVASTTracker] = []
+    private let vastTrackersQueue = DispatchQueue(label: "com.verve.HyBid.beaconsQueue", target: nil)
     
     @objc
     public func reportEvent(for event: HyBidReportingEvent) {
@@ -62,6 +54,16 @@ public class HyBidReportingManager: NSObject {
                     self.delegate?.onEvent(with: event)
                 }
             }
+        }
+    }
+    
+    @objc
+    public func clearAllReports() {
+        eventsQueue.async { [weak self] in
+            guard let self = self else { return }
+            self.events.removeAll()
+            self.beacons.removeAll()
+            self.vastTrackers.removeAll()
         }
     }
     
@@ -120,5 +122,39 @@ public class HyBidReportingManager: NSObject {
             }
         }
         return commonProperties
+    }
+    
+    @objc
+    public func reportBeacon(for beacon: HyBidReportingBeacon) {
+        guard HyBidSDKConfig.sharedConfig.reporting == true else { return }
+        beaconsQueue.async { [weak self] in
+            guard let self else { return }
+            self.beacons.append(beacon)
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.delegate?.onBeacon(with: beacon)
+            }
+        }
+    }
+    
+    @objc
+    public func clearBeacons() {
+        beaconsQueue.async { [weak self] in
+            guard let self else { return }
+            self.beacons.removeAll()
+        }
+    }
+    
+    @objc
+    public func reportVASTTracker(for tracker: HyBidReportingVASTTracker) {
+        guard HyBidSDKConfig.sharedConfig.reporting == true else { return }
+        vastTrackersQueue.async { [weak self] in
+            guard let self else { return }
+            self.vastTrackers.append(tracker)
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.delegate?.onVASTTracker(with: tracker)
+            }
+        }
     }
 }

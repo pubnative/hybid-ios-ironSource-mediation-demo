@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2021 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "HyBidSkipOverlay.h"
@@ -37,7 +21,6 @@
 @property (nonatomic, assign) NSInteger skipTimeRemaining;
 @property (nonatomic, assign) HyBidCountdownStyle countdownStyle;
 @property (nonatomic, strong) PNLiteProgressLabel *progressLabel;
-@property (nonatomic, strong) UIView *adView;
 @property (nonatomic, strong) HyBidAd *ad;
 @property (nonatomic) CGSize buttonSize;
 
@@ -353,7 +336,12 @@
                     weakSelf.skipTimeRemaining = seconds;
                     [weakSelf updateSkipOffsetOnProgressTick:self.skipTimeRemaining];
                     if(!weakSelf.skipTimer){
-                        weakSelf.skipTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:weakSelf selector:@selector(skipTimerTicked) userInfo:nil repeats:YES];
+                        weakSelf.skipTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                                          target:weakSelf
+                                                                        selector:@selector(skipTimerTicked)
+                                                                        userInfo:nil
+                                                                         repeats:YES];
+                        [[NSRunLoop mainRunLoop] addTimer:weakSelf.skipTimer forMode:NSRunLoopCommonModes];
                     }
                 });
             }
@@ -435,10 +423,9 @@
     [[view.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:0] setActive:YES];
 }
 
-- (void)addSkipOverlayViewIn:(UIView *)adView delegate:(id<HyBidSkipOverlayDelegate>)delegate withIsMRAID:(BOOL)isMRAID
+- (void)addSkipOverlayViewIn:(UIView *)adView delegate:(id<HyBidSkipOverlayDelegate>)delegate
 {
-    self.adView = adView;
-    if([adView isEqual: nil] || [adView.subviews containsObject:self]){
+    if([adView isEqual: nil] || adView == nil || [adView.subviews containsObject:self]){
         return;
     }
     
@@ -453,6 +440,9 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [adView addSubview: skipOverlayView];
         [skipOverlayView updateTimerStateWithRemainingSeconds:weakSelf.skipOffset withTimerState:HyBidTimerState_Start];
+        if ([weakSelf.delegate respondsToSelector:@selector(skipOverlayStarts)]) {
+            [weakSelf.delegate skipOverlayStarts];
+        }
     });
 
     NSMutableArray *constraints = [[NSMutableArray alloc] init];
@@ -462,9 +452,8 @@
     positionConstraints = [self getSkipOverlayTopPositionConstraintsIn:adView];
     
     [constraints addObjectsFromArray: [self getSkipOverlaySizeConstraints]];
-    if (isMRAID) {
-        [constraints addObjectsFromArray: positionConstraints];
-    }
+    [constraints addObjectsFromArray: positionConstraints];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [NSLayoutConstraint activateConstraints: constraints];
     });

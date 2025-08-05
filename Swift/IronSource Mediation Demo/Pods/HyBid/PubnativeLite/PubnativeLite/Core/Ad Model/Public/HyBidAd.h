@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2018 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import <Foundation/Foundation.h>
@@ -46,6 +30,14 @@ typedef enum {
     HyBidDemoAppPlacementInterstitial = 3,
     HyBidDemoAppPlacementRewarded = 4
 } HyBidMarkupPlacement;
+
+typedef enum : NSUInteger {
+    HyBidStorekitAutomaticClickVideo = 1 << 0,
+    HyBidStorekitAutomaticClickDefaultEndCard = 1 << 1,
+    HyBidStorekitAutomaticClickCustomEndCard = 1 << 2
+} HyBidStorekitAutomaticClickType;
+
+@class HyBidCTAData;
 
 @interface HyBidAd : NSObject
 
@@ -85,6 +77,8 @@ typedef enum {
 @property (nonatomic, readonly) NSString *contentInfoIconClickAction;
 @property (nonatomic, readonly) NSString *contentInfoDisplay;
 @property (nonatomic, readonly) NSString *contentInfoText;
+@property (nonatomic, readonly) NSString *adFormat;
+
 //@property (nonatomic, readonly) NSString *contentInfoHorizontalPosition;
 //@property (nonatomic, readonly) NSString *contentInfoVeritcalPosition;
 @property (nonatomic, readonly) NSNumber *interstitialHtmlSkipOffset;
@@ -114,6 +108,9 @@ typedef enum {
 @property (nonatomic, assign) BOOL iconSizeReduced;
 @property (nonatomic, assign) BOOL hideControls;
 @property (nonatomic, assign) BOOL isBrandCompatible;
+@property (nonatomic, readonly) NSString *navigationMode;
+@property (nonatomic, assign) BOOL landingPage;
+@property (nonatomic, strong) HyBidCTAData* ctaData;
 
 // The following 15 properties are created as NSNumber instead of BOOL beacuse it'll be important whether they have a value or not when we'll decide which setting to use.
 @property (nonatomic, readonly) NSNumber *endcardEnabled;
@@ -151,7 +148,11 @@ typedef enum {
 - (NSArray *)beaconsDataWithType:(NSString *)type;
 - (HyBidSkAdNetworkModel *)getSkAdNetworkModel;
 - (HyBidSkAdNetworkModel *)getOpenRTBSkAdNetworkModel;
+- (HyBidSkAdNetworkModel *)getAdAttributionModel;
+- (HyBidSkAdNetworkModel *)getOpenRTBAdAttributionModel;
 - (HyBidContentInfoView *)getContentInfoView;
 - (HyBidContentInfoView *)getContentInfoViewFrom:(HyBidContentInfoView *)infoView;
+- (HyBidContentInfoDisplay)determineContentInfoDisplay;
+- (HyBidContentInfoClickAction)determineContentInfoIconClickAction;
 
 @end

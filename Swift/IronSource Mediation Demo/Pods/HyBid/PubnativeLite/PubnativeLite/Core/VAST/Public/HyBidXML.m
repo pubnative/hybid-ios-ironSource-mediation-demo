@@ -1,23 +1,7 @@
+// 
+// HyBid SDK License
 //
-//  Copyright © 2022 PubNative. All rights reserved.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
+// https://github.com/pubnative/pubnative-hybid-ios-sdk/blob/main/LICENSE
 //
 
 #import "HyBidXML.h"
@@ -87,16 +71,19 @@
 - (id)initWithXMLString:(NSString*)aXMLString {
 	self = [self init];
 	if (self != nil) {
-		
-		// copy string to byte array
-		bytesLength = [aXMLString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-		bytes = malloc(bytesLength+1);
-		[aXMLString getBytes:bytes maxLength:bytesLength usedLength:0 encoding:NSUTF8StringEncoding options:NSStringEncodingConversionAllowLossy range:NSMakeRange(0, bytesLength) remainingRange:nil];
-		
-		// set null terminator at end of byte array
-		bytes[bytesLength] = 0;
-		
-		// decode xml data
+        
+        aXMLString = [self convertString:aXMLString toEncoding:NSUTF8StringEncoding];
+        
+        // copy string to byte array
+        bytesLength = [aXMLString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+        bytes = malloc(bytesLength+1);
+
+        [aXMLString getBytes:bytes maxLength:bytesLength usedLength:0 encoding:NSUTF8StringEncoding options:NSStringEncodingConversionAllowLossy range:NSMakeRange(0, bytesLength) remainingRange:nil];
+
+        // set null terminator at end of byte array
+        bytes[bytesLength] = 0;
+        
+        // decode xml data
 		[self decodeBytes];
 	}
 	return self;
@@ -137,6 +124,16 @@
 		[self decodeData:data];
 	}
 	return self;
+}
+
+- (NSString *) convertString:(NSString *)string toEncoding:(NSStringEncoding)encoding {
+
+    NSData *data = [string dataUsingEncoding:encoding];
+    NSString *base64Encoded = [data base64EncodedStringWithOptions:0];
+    
+    NSData *dataBase64String = [[NSData alloc]initWithBase64EncodedString:base64Encoded options:0];
+    NSString *base64Decoded = [[NSString alloc] initWithData:dataBase64String encoding:NSUTF8StringEncoding];
+    return base64Decoded;
 }
 
 @end
@@ -347,13 +344,18 @@
 		
 		// ignore tags that start with ? or ! unless cdata "<![CDATA"
 		if (*elementNameStart == '?' || (*elementNameStart == '!' && isCDATA != 0)) {
-			elementStart = elementEnd+1;
+            if (elementEnd && elementEnd+1) {
+                elementStart = elementEnd+1;
+            }
 			continue;
 		}
 		
 		// ignore attributes/text if this is a closing element
 		if (*elementNameStart == '/') {
-			elementStart = elementEnd+1;
+            if (elementEnd && elementEnd+1) {
+                elementStart = elementEnd+1;
+            }
+
 			if (parentXMLElement) {
 
 				if (parentXMLElement->text) {
@@ -530,14 +532,16 @@
 		// if tag is not self closing, set parent to current element
 		if (!selfClosingElement) {
 			// set text on element to element end+1
-			if (*(elementEnd+1) != '>')
-				xmlElement->text = elementEnd+1;
+			if (elementEnd && elementEnd+1 && *(elementEnd+1) != '>')
+                xmlElement->text = elementEnd+1;
 			
 			parentXMLElement = xmlElement;
 		}
 		
 		// start looking for next element after end of current element
-		elementStart = elementEnd+1;
+        if (elementEnd && elementEnd+1) {
+            elementStart = elementEnd+1;
+        }
 	}
 }
 
