@@ -13,7 +13,7 @@
 #import "ISAdQualityCustomMediationRevenue.h"
 #import "ISAdQualitySegment.h"
 
-#define IRONSOURCE_AD_QUALITY_VERSION    @"7.25.2"
+#define IRONSOURCE_AD_QUALITY_VERSION    @"7.26.2"
 
 static NSString *IRONSOURCE_AD_QUALITY_TAG = @"ISAdQualitySDK";
 

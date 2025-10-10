@@ -1,37 +1,37 @@
 PODS:
-  - ATOM-Standalone (3.7.0)
-  - HyBid (3.6.1):
-    - HyBid/ATOM (= 3.6.1)
-    - HyBid/Banner (= 3.6.1)
-    - HyBid/Core (= 3.6.1)
-    - HyBid/FullScreen (= 3.6.1)
-    - HyBid/Native (= 3.6.1)
-    - HyBid/RewardedVideo (= 3.6.1)
-  - HyBid/ATOM (3.6.1):
+  - ATOM-Standalone (3.8.0)
+  - HyBid (3.7.0):
+    - HyBid/ATOM (= 3.7.0)
+    - HyBid/Banner (= 3.7.0)
+    - HyBid/Core (= 3.7.0)
+    - HyBid/FullScreen (= 3.7.0)
+    - HyBid/Native (= 3.7.0)
+    - HyBid/RewardedVideo (= 3.7.0)
+  - HyBid/ATOM (3.7.0):
     - ATOM-Standalone
     - HyBid/Core
-  - HyBid/Banner (3.6.1):
+  - HyBid/Banner (3.7.0):
     - HyBid/Core
-  - HyBid/Core (3.6.1)
-  - HyBid/FullScreen (3.6.1):
+  - HyBid/Core (3.7.0)
+  - HyBid/FullScreen (3.7.0):
     - HyBid/Core
-  - HyBid/Native (3.6.1):
+  - HyBid/Native (3.7.0):
     - HyBid/Core
-  - HyBid/RewardedVideo (3.6.1):
+  - HyBid/RewardedVideo (3.7.0):
     - HyBid/Core
-  - ironSource-HyBid-Adapters (3.6.1.0):
-    - HyBid (= 3.6.1)
+  - ironSource-HyBid-Adapters (3.7.0.0):
+    - HyBid (= 3.7.0)
     - IronSourceSDK (~> 8.0)
-  - IronSourceAdQualitySDK (7.25.2)
-  - IronSourceSDK (8.10.0.0):
-    - IronSourceSDK/AdQuality (= 8.10.0.0)
-    - IronSourceSDK/Ads (= 8.10.0.0)
-  - IronSourceSDK/AdQuality (8.10.0.0):
-    - IronSourceAdQualitySDK (~> 7.25.2)
-  - IronSourceSDK/Ads (8.10.0.0)
+  - IronSourceAdQualitySDK (7.26.2)
+  - IronSourceSDK (8.11.0.0):
+    - IronSourceSDK/AdQuality (= 8.11.0.0)
+    - IronSourceSDK/Ads (= 8.11.0.0)
+  - IronSourceSDK/AdQuality (8.11.0.0):
+    - IronSourceAdQualitySDK (~> 7.26.1)
+  - IronSourceSDK/Ads (8.11.0.0)
 
 DEPENDENCIES:
-  - ironSource-HyBid-Adapters (= 3.6.1.0)
+  - ironSource-HyBid-Adapters (= 3.7.0.0)
 
 SPEC REPOS:
   trunk:
@@ -42,12 +42,12 @@ SPEC REPOS:
     - IronSourceSDK
 
 SPEC CHECKSUMS:
-  ATOM-Standalone: 28d598876cd7ab619f2cf0b910d4f4fd7e8c8f74
-  HyBid: f6ed92d6af10dcbc23f8a43a42fdf88a45ecdec7
-  ironSource-HyBid-Adapters: baafea075a8b6656d2989468aa27cbec47e30e4e
-  IronSourceAdQualitySDK: 639d5a93e15e823538f87b75f3809c4905afc30b
-  IronSourceSDK: 41b727888a5853a5489eb00115f26bb07044a76e
+  ATOM-Standalone: ad17f0d0e60b22f67ed99e5a336425d68d324f3e
+  HyBid: 84608b62cdebde3dcab171948959fa617957063b
+  ironSource-HyBid-Adapters: f981ebe484506ede66899808a4c9eea038c65510
+  IronSourceAdQualitySDK: 03888a0ac60e1f24ff6277672c3184f00813af64
+  IronSourceSDK: 32eeb199f608b590112a8263028a485e50f8d1b7
 
-PODFILE CHECKSUM: 3ee9df97dbefb8874a1740e442338b5247ce77c2
+PODFILE CHECKSUM: f11b7814f4a2ff64de1aeee35a9cc47b2c55fb86
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.16.0
