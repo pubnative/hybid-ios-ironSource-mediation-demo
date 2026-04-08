@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3421BA272F7D175800A556A3 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */; };
-		3421BA282F7D175800A556A3 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3421BA2B2F864F5C00A556A3 /* IronSourceHyBidAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 3421BA2A2F864F5C00A556A3 /* IronSourceHyBidAdapters */; };
 		34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E1288EE11F0028433E /* AppDelegate.m */; };
 		34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E4288EE11F0028433E /* SceneDelegate.m */; };
 		34B0B3ED288EE1200028433E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EC288EE1200028433E /* Assets.xcassets */; };
@@ -27,7 +26,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3421BA282F7D175800A556A3 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -35,8 +33,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_IronSource_Mediation_Demo___ObjC.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IronSource Mediation Demo - ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "IronSource Mediation Demo - ObjC.app"; path = "/Users/ayselabdullayeva/Documents/hybid-ios-ironSource-mediation-demo/Objective-C/IronSource Mediation Demo - ObjC/build/Debug-iphoneos/IronSource Mediation Demo - ObjC.app"; sourceTree = "<absolute>"; };
 		34B0B3E0288EE11F0028433E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		34B0B3E1288EE11F0028433E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		34B0B3E3288EE11F0028433E /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -51,8 +48,6 @@
 		34B0B409288EE5400028433E /* RewardedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RewardedViewController.m; sourceTree = "<group>"; };
 		34B0B40B288EED590028433E /* IronSourceMediation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IronSourceMediation.storyboard; sourceTree = "<group>"; };
 		34B0B40E288EEF620028433E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		F48E32021694D0FAA2828FD1 /* Pods-IronSource Mediation Demo - ObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IronSource Mediation Demo - ObjC.debug.xcconfig"; path = "Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC.debug.xcconfig"; sourceTree = "<group>"; };
-		F7B2D82A9DD9C6F0A72C667B /* Pods-IronSource Mediation Demo - ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IronSource Mediation Demo - ObjC.release.xcconfig"; path = "Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,38 +55,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3421BA272F7D175800A556A3 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */,
+				3421BA2B2F864F5C00A556A3 /* IronSourceHyBidAdapters in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0EAAC2738B77AEC13BDC4DAD /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F48E32021694D0FAA2828FD1 /* Pods-IronSource Mediation Demo - ObjC.debug.xcconfig */,
-				F7B2D82A9DD9C6F0A72C667B /* Pods-IronSource Mediation Demo - ObjC.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		34B0B3D4288EE11F0028433E = {
 			isa = PBXGroup;
 			children = (
 				34B0B3DF288EE11F0028433E /* IronSource Mediation Demo - ObjC */,
-				34B0B3DE288EE11F0028433E /* Products */,
-				0EAAC2738B77AEC13BDC4DAD /* Pods */,
-				E7A9A42EC5F30762EDF14F5B /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		34B0B3DE288EE11F0028433E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		34B0B3DF288EE11F0028433E /* IronSource Mediation Demo - ObjC */ = {
@@ -129,14 +104,6 @@
 				34B0B40B288EED590028433E /* IronSourceMediation.storyboard */,
 			);
 			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		E7A9A42EC5F30762EDF14F5B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,7 +153,10 @@
 				Base,
 			);
 			mainGroup = 34B0B3D4288EE11F0028433E;
-			productRefGroup = 34B0B3DE288EE11F0028433E /* Products */;
+			packageReferences = (
+				3421BA292F864F5C00A556A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */,
+			);
+			productRefGroup = 34B0B3D4288EE11F0028433E;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -417,7 +387,6 @@
 		};
 		34B0B3F7288EE1200028433E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F48E32021694D0FAA2828FD1 /* Pods-IronSource Mediation Demo - ObjC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -445,7 +414,6 @@
 		};
 		34B0B3F8288EE1200028433E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F7B2D82A9DD9C6F0A72C667B /* Pods-IronSource Mediation Demo - ObjC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -493,6 +461,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3421BA292F864F5C00A556A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pubnative/ironSource-hybid-adapters-ios";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3421BA2A2F864F5C00A556A3 /* IronSourceHyBidAdapters */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3421BA292F864F5C00A556A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */;
+			productName = IronSourceHyBidAdapters;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 34B0B3D5288EE11F0028433E /* Project object */;
 }
