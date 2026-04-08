@@ -5,59 +5,75 @@
 #import "RewardedViewController.h"
 #import "IronSource/IronSource.h"
 
-@interface RewardedViewController () <LevelPlayRewardedVideoDelegate>
+@interface RewardedViewController () <LPMRewardedAdDelegate>
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *showAdButton;
+@property (nonatomic, strong) LPMRewardedAd *rewardedAd;
 
 @end
 
 @implementation RewardedViewController
 
+static NSString *const kAdUnitId = @"3vungq1070mrm73e";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"IronSource Mediation Rewarded";
-    [IronSource setLevelPlayRewardedVideoDelegate:self];
-    self.showAdButton.enabled = [IronSource hasRewardedVideo];
+    self.rewardedAd = [[LPMRewardedAd alloc] initWithAdUnitId:kAdUnitId];
+    [self.rewardedAd setDelegate:self];
+}
+
+- (IBAction)loadAdTouchUpInside:(id)sender {
+    [self.activityIndicator startAnimating];
+    self.showAdButton.hidden = YES;
+    [self.rewardedAd loadAd];
 }
 
 - (IBAction)showAdTouchUpInside:(UIButton *)sender {
-    if ([IronSource hasRewardedVideo]) {
-        [IronSource showRewardedVideoWithViewController:self];
+    if ([self.rewardedAd isAdReady]) {
+        [self.rewardedAd showAdWithViewController:self placementName:NULL];
     } else {
         NSLog(@"Ad wasn't ready");
     }
 }
 
-#pragma mark - LevelPlayRewardedVideoDelegate
+#pragma mark - LPMRewardedAdDelegate
 
-- (void)hasAvailableAdWithAdInfo:(ISAdInfo *)adInfo {
-    self.showAdButton.enabled = YES;
-    NSLog(@"hasAvailableAd");
+- (void)didLoadAdWithAdInfo:(LPMAdInfo *)adInfo {
+    [self.activityIndicator stopAnimating];
+    self.showAdButton.hidden = NO;
 }
 
-- (void)hasNoAvailableAd {
-    self.showAdButton.enabled = NO;
-    NSLog(@"hasNoAvailableAd");
+- (void)didFailToLoadAdWithAdUnitId:(NSString *)adUnitId error:(NSError *)error {
+    [self.activityIndicator stopAnimating];
+    NSLog(@"Failed to load rewarded ad with error: %@", error.localizedDescription);
 }
 
-- (void)didReceiveRewardForPlacement:(ISPlacementInfo *)placementInfo withAdInfo:(ISAdInfo *)adInfo {
-    NSLog(@"User did receive reward: %@ with amount: %@", placementInfo.rewardName, placementInfo.rewardAmount);
+- (void)didChangeAdInfo:(LPMAdInfo *)adInfo {
+    NSLog(@"rewardedDidChangeAdInfo");
 }
 
-- (void)didFailToShowWithError:(NSError *)error andAdInfo:(ISAdInfo *)adInfo {
-    NSLog(@"Failed to show rewarded ad with error: %@", [error localizedDescription]);
+- (void)didDisplayAdWithAdInfo:(LPMAdInfo *)adInfo {
+    NSLog(@"rewardedVideoDidDisplay");
 }
 
-- (void)didOpenWithAdInfo:(ISAdInfo *)adInfo {
-    NSLog(@"rewardedVideoDidOpen");
+- (void)didFailToDisplayAdWithAdInfo:(LPMAdInfo *)adInfo error:(NSError *)error {
+    NSLog(@"Failed to display rewarded ad with error: %@", error.localizedDescription);
 }
 
-- (void)didCloseWithAdInfo:(ISAdInfo *)adInfo {
-    NSLog(@"rewardedVideoDidClose");
-}
-
-- (void)didClick:(ISPlacementInfo *)placementInfo withAdInfo:(ISAdInfo *)adInfo {
+- (void)didClickAdWithAdInfo:(LPMAdInfo *)adInfo {
     NSLog(@"didClickRewardedVideo");
+}
+
+- (void)didCloseAdWithAdInfo:(LPMAdInfo *)adInfo {
+    self.showAdButton.hidden = YES;
+    NSLog(@"rewardedVideoDidClose");
+    [self.rewardedAd loadAd];
+}
+
+- (void)didRewardAdWithAdInfo:(LPMAdInfo *)adInfo reward:(LPMReward *)reward {
+    NSLog(@"User did receive reward: %@ with amount: %ld", reward.name, (long)reward.amount);
 }
 
 @end

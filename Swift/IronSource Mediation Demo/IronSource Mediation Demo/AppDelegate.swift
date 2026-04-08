@@ -8,15 +8,27 @@ import IronSource
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let appToken = "543027b8e954474cbcd9a98481622a3b"
+    let appToken = "1e3772d975444b7c89b765b5527734d7"
     let appStoreID = "1530210244"
-    let appKey = "1224c378d"
-    
+    let appKey = "8f8fae85"
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 // Step 3: Setup & Initialize HyBid SDK
         HyBid.initWithAppToken(appToken, completion: nil)
 // Step 4: Setup & Initialize IronSource SDK
-        IronSource.initWithAppKey(appKey)
+        let requestBuilder = LPMInitRequestBuilder(appKey: appKey)
+            .withUserId("a")
+        let initRequest = requestBuilder.build()
+        LevelPlay.initWith(initRequest) { config, error in
+            if let error = error {
+                print("LevelPlay init failed: \(error.localizedDescription)")
+            } else {
+                print("LevelPlay init succeeded")
+            }
+        }
+        
+ 
+
 // Step 5: Set COPPA (Optional)
         HyBid.setCoppa(false)
 // Step 6: Set Test Mode (Optional)
@@ -31,24 +43,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         HyBid.setTargeting(targeting)
 // Step 9: Set HyBid log level (Optional)
         HyBidLogger.setLogLevel(HyBidLogLevelDebug)
-// Step 10: Validate IronSource SDK integration (Optional)
-        ISIntegrationHelper.validateIntegration()
-        
+
         return true
     }
     
     // MARK: UISceneSession Lifecycle
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-    
+
 }

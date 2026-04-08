@@ -9,7 +9,7 @@
 #endif
 
 #define APP_TOKEN @"543027b8e954474cbcd9a98481622a3b"
-#define APP_KEY @"1224c378d"
+#define APP_KEY @"255e942fd"
 #define APP_STORE_ID @"1530210244"
 
 // Step 2: Import IronSource SDK into your class
@@ -25,24 +25,31 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Step 3: Setup & Initialize HyBid SDK
         [HyBid initWithAppToken:APP_TOKEN completion:nil];
-    // Step 4: Setup & Initialize IronSource SDK
-        [IronSource initWithAppKey:APP_KEY];
-    // Step 5: Set COPPA (Optional)
+    // Step 4: Set COPPA (Optional)
         [HyBid setCoppa:NO];
-    // Step 6: Set Test Mode (Optional)
+    // Step 5: Set Test Mode (Optional)
         [HyBid setTestMode:YES];
-    // Step 7: Set Location Tracking (Optional)
+    // Step 6: Set Location Tracking (Optional)
         [HyBid setLocationTracking:YES];
-    // Step 8: Set Targeting (Optional)
+    // Step 7: Set Targeting (Optional)
         HyBidTargetingModel *targeting = [[HyBidTargetingModel alloc] init];
         targeting.age = [NSNumber numberWithInt:28];
         targeting.interests = @[@"music"];
         targeting.gender = @"f";     // "f" for female, "m" for male
         [HyBid setTargeting:targeting];
-    // Step 9: Set HyBid log level (Optional)
+    // Step 8: Set HyBid log level (Optional)
         [HyBidLogger setLogLevel:HyBidLogLevelDebug];
-    // Step 10: Validate IronSource SDK integration (Optional)
-        [ISIntegrationHelper validateIntegration];
+    // Step 9: Setup & Initialize IronSource SDK using the LevelPlay Init API
+        LPMInitRequest *initRequest = [[[LPMInitRequestBuilder alloc] initWithAppKey:APP_KEY]
+                                       withUserId:@""].build;
+        [LevelPlay initWithRequest:initRequest completion:^(LPMConfiguration * _Nullable config, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"LevelPlay init failed: %@", error.localizedDescription);
+            } else {
+                NSLog(@"LevelPlay init succeeded");
+            }
+        }];
+
     return YES;
 }
 

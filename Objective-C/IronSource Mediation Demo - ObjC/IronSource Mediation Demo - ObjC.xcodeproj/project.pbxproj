@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0118D2ACCBC7E8FBDB2F2188 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */; };
+		3421BA272F7D175800A556A3 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */; };
+		3421BA282F7D175800A556A3 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E1288EE11F0028433E /* AppDelegate.m */; };
 		34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E4288EE11F0028433E /* SceneDelegate.m */; };
 		34B0B3ED288EE1200028433E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EC288EE1200028433E /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3421BA282F7D175800A556A3 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -33,7 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IronSource_Mediation_Demo___ObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0602471E05AA3732A2BD5C03 /* Pods_IronSource_Mediation_Demo___ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods_IronSource_Mediation_Demo___ObjC.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IronSource Mediation Demo - ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34B0B3E0288EE11F0028433E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		34B0B3E1288EE11F0028433E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -58,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0118D2ACCBC7E8FBDB2F2188 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */,
+				3421BA272F7D175800A556A3 /* Pods_IronSource_Mediation_Demo___ObjC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,9 +240,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -255,9 +261,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-IronSource Mediation Demo - ObjC/Pods-IronSource Mediation Demo - ObjC-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

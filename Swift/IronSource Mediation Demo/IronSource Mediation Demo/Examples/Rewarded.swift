@@ -6,55 +6,70 @@ import UIKit
 import IronSource
 
 class Rewarded: UIViewController {
-    
+
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var showAdButton: UIButton!
+
+    var rewardedAd: LPMRewardedAd!
+    let adUnitId = "evit0dy92tb2hzq8"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "IronSource Mediation Rewarded"
-        IronSource.setLevelPlayRewardedVideoDelegate(self)
-        showAdButton.isEnabled = IronSource.hasRewardedVideo()
+        rewardedAd = LPMRewardedAd(adUnitId: adUnitId)
+        rewardedAd.setDelegate(self)
     }
-    
+
+    @IBAction func loadAdTouchUpInside(_ sender: UIButton) {
+        activityIndicator.startAnimating()
+        showAdButton.isHidden = true
+        rewardedAd.loadAd()
+    }
+
     @IBAction func showAdTouchUpInside(_ sender: UIButton) {
-        if IronSource.hasRewardedVideo() {
-            IronSource.showRewardedVideo(with: self)
+        if rewardedAd.isAdReady() {
+            rewardedAd.showAd(viewController: self, placementName: nil)
         } else {
             print("Ad wasn't ready")
         }
     }
 }
 
-extension Rewarded: LevelPlayRewardedVideoDelegate {
-    
-    func hasAvailableAd(with adInfo: ISAdInfo!) {
-        showAdButton.isEnabled = true
-        print("rewardedVideoHasChangedAvailability: true")
+extension Rewarded: LPMRewardedAdDelegate {
+
+    func didLoadAd(with adInfo: LPMAdInfo) {
+        activityIndicator.stopAnimating()
+        showAdButton.isHidden = false
     }
-    
-    func hasNoAvailableAd() {
-        showAdButton.isEnabled = false
-        print("rewardedVideoHasChangedAvailability: false")
+
+    func didFailToLoadAd(withAdUnitId adUnitId: String, error: Error) {
+        activityIndicator.stopAnimating()
+        print("Failed to load rewarded ad with error: \(error.localizedDescription)")
     }
-    
-    func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
-        print("User did receive reward: \(String(describing: placementInfo.rewardName)) with amount: \(String(describing: placementInfo.rewardAmount))")
+
+    func didChangeAdInfo(_ adInfo: LPMAdInfo) {
+        print("rewardedDidChangeAdInfo")
     }
-    
-    func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) {
-        print("Failed to show rewarded ad with error: \(error.localizedDescription)")
+
+    func didDisplayAd(with adInfo: LPMAdInfo) {
+        print("rewardedVideoDidDisplay")
     }
-    
-    func didOpen(with adInfo: ISAdInfo!) {
-        print("rewardedVideoDidOpen")
+
+    func didFailToDisplayAd(with adInfo: LPMAdInfo, error: Error) {
+        print("Failed to display rewarded ad with error: \(error.localizedDescription)")
     }
-    
-    func didClose(with adInfo: ISAdInfo!) {
-        print("rewardedVideoDidClose")
-    }
-    
-    func didClick(_ placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
+
+    func didClickAd(with adInfo: LPMAdInfo) {
         print("didClickRewardedVideo")
     }
-    
+
+    func didCloseAd(with adInfo: LPMAdInfo) {
+        showAdButton.isHidden = true
+        print("rewardedVideoDidClose")
+    }
+
+    func didRewardAd(with adInfo: LPMAdInfo, reward: LPMReward) {
+        print("User did receive reward: \(reward.name) with amount: \(reward.amount)")
+    }
+
 }

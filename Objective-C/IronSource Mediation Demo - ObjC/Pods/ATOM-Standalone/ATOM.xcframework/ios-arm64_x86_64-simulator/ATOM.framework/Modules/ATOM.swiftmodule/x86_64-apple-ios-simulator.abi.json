@@ -102816,7 +102816,7 @@
       "kind": "StringLiteral",
       "offset": 272,
       "length": 7,
-      "value": "\"3.8.0\""
+      "value": "\"3.8.1\""
     },
     {
       "filePath": "\/Users\/runner\/work\/ai-atom-ios\/ai-atom-ios\/ATOM\/ATOMDB\/GRDB\/Core\/DatabaseValueConvertible.swift",
@@ -102953,29 +102953,36 @@
     },
     {
       "filePath": "\/Users\/runner\/work\/ai-atom-ios\/ai-atom-ios\/ATOM\/Atom.swift",
+      "kind": "StringLiteral",
+      "offset": 1045,
+      "length": 15,
+      "value": "\"com.atom.ssid\""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ai-atom-ios\/ai-atom-ios\/ATOM\/Atom.swift",
       "kind": "BooleanLiteral",
-      "offset": 1503,
+      "offset": 1553,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/ai-atom-ios\/ai-atom-ios\/ATOM\/Atom.swift",
       "kind": "BooleanLiteral",
-      "offset": 20454,
+      "offset": 20995,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/ai-atom-ios\/ai-atom-ios\/ATOM\/Atom.swift",
       "kind": "BooleanLiteral",
-      "offset": 23717,
+      "offset": 24258,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/runner\/work\/ai-atom-ios\/ai-atom-ios\/ATOM\/Atom.swift",
       "kind": "BooleanLiteral",
-      "offset": 23757,
+      "offset": 24298,
       "length": 5,
       "value": "false"
     },
@@ -103726,7 +103733,7 @@
       "kind": "StringLiteral",
       "offset": 1453,
       "length": 9,
-      "value": "\"3.8.0.5\""
+      "value": "\"3.8.1.0\""
     },
     {
       "filePath": "\/Users\/runner\/work\/ai-atom-ios\/ai-atom-ios\/ATOM\/rules\/matchers\/ATOMEventRuleMatcher.swift",
