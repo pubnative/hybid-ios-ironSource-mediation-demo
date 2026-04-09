@@ -26,8 +26,8 @@
 		341ACEE7278C7C7300823EA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		341ACEEE278C863C00823EA5 /* IronSourceMediation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IronSourceMediation.storyboard; sourceTree = "<group>"; };
 		341ACEF4278C87E100823EA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3421BA262F7A98EB00A556A3 /* IronSource Mediation Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "IronSource Mediation Demo.app"; path = "/Users/ayselabdullayeva/Documents/hybid-ios-ironSource-mediation-demo/Swift/IronSource Mediation Demo/build/Debug-iphoneos/IronSource Mediation Demo.app"; sourceTree = "<absolute>"; };
 		3498DD6A278C8D890083BA85 /* Interstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interstitial.swift; sourceTree = "<group>"; };
+		349D96782F87E7DF009AC3A3 /* IronSource Mediation Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "IronSource Mediation Demo.app"; path = "/Users/ayselabdullayeva/Documents/hybid-ios-ironSource-mediation-demo/Swift/IronSource Mediation Demo/build/Debug-iphoneos/IronSource Mediation Demo.app"; sourceTree = "<absolute>"; };
 		34B0B3C9288ECA1F0028433E /* Rewarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewarded.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,7 +99,7 @@
 			);
 			name = "IronSource Mediation Demo";
 			productName = "IronSource Mediation Demo";
-			productReference = 3421BA262F7A98EB00A556A3 /* IronSource Mediation Demo.app */;
+			productReference = 349D96782F87E7DF009AC3A3 /* IronSource Mediation Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

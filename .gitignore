@@ -30,8 +30,11 @@ DerivedData/
 *.dSYM.zip
 
 ## SPM
-.swiftpm/
+.swiftpm
+/swiftpm/
+**/xcshareddata/swiftpm/
 .DS_Store
+**/.DS_Store
 
 ## Playgrounds
 timeline.xctimeline
