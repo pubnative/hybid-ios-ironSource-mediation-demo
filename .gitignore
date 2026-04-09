@@ -29,6 +29,10 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 
+## SPM
+.swiftpm/
+.DS_Store
+
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace

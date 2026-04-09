@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3421BA2B2F864F5C00A556A3 /* IronSourceHyBidAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 3421BA2A2F864F5C00A556A3 /* IronSourceHyBidAdapters */; };
+		349D96772F87E49B009AC3A3 /* IronSourceHyBidAdapters in Frameworks */ = {isa = PBXBuildFile; productRef = 349D96762F87E49B009AC3A3 /* IronSourceHyBidAdapters */; };
 		34B0B3E2288EE11F0028433E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E1288EE11F0028433E /* AppDelegate.m */; };
 		34B0B3E5288EE11F0028433E /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B0B3E4288EE11F0028433E /* SceneDelegate.m */; };
 		34B0B3ED288EE1200028433E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 34B0B3EC288EE1200028433E /* Assets.xcassets */; };
@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "IronSource Mediation Demo - ObjC.app"; path = "/Users/ayselabdullayeva/Documents/hybid-ios-ironSource-mediation-demo/Objective-C/IronSource Mediation Demo - ObjC/build/Debug-iphoneos/IronSource Mediation Demo - ObjC.app"; sourceTree = "<absolute>"; };
+		349D96742F87E432009AC3A3 /* IronSource Mediation Demo - ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "IronSource Mediation Demo - ObjC.app"; path = "/Users/ayselabdullayeva/Documents/hybid-ios-ironSource-mediation-demo/Objective-C/IronSource Mediation Demo - ObjC/build/Debug-iphoneos/IronSource Mediation Demo - ObjC.app"; sourceTree = "<absolute>"; };
 		34B0B3E0288EE11F0028433E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		34B0B3E1288EE11F0028433E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		34B0B3E3288EE11F0028433E /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3421BA2B2F864F5C00A556A3 /* IronSourceHyBidAdapters in Frameworks */,
+				349D96772F87E49B009AC3A3 /* IronSourceHyBidAdapters in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +110,7 @@
 			);
 			name = "IronSource Mediation Demo - ObjC";
 			productName = "IronSource Mediation Demo - ObjC";
-			productReference = 34B0B3DD288EE11F0028433E /* IronSource Mediation Demo - ObjC.app */;
+			productReference = 349D96742F87E432009AC3A3 /* IronSource Mediation Demo - ObjC.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -137,7 +137,7 @@
 			);
 			mainGroup = 34B0B3D4288EE11F0028433E;
 			packageReferences = (
-				3421BA292F864F5C00A556A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */,
+				349D96752F87E49B009AC3A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */,
 			);
 			productRefGroup = 34B0B3D4288EE11F0028433E;
 			projectDirPath = "";
@@ -379,7 +379,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3421BA292F864F5C00A556A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */ = {
+		349D96752F87E49B009AC3A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pubnative/ironSource-hybid-adapters-ios";
 			requirement = {
@@ -390,9 +390,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3421BA2A2F864F5C00A556A3 /* IronSourceHyBidAdapters */ = {
+		349D96762F87E49B009AC3A3 /* IronSourceHyBidAdapters */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3421BA292F864F5C00A556A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */;
+			package = 349D96752F87E49B009AC3A3 /* XCRemoteSwiftPackageReference "ironSource-hybid-adapters-ios" */;
 			productName = IronSourceHyBidAdapters;
 		};
 /* End XCSwiftPackageProductDependency section */
