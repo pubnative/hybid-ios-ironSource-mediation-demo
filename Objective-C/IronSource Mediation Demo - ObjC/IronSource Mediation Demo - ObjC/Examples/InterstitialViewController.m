@@ -5,66 +5,71 @@
 #import "InterstitialViewController.h"
 #import "IronSource/IronSource.h"
 
-@interface InterstitialViewController () <LevelPlayInterstitialDelegate>
+@interface InterstitialViewController () <LPMInterstitialAdDelegate>
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *showAdButton;
+@property (nonatomic, strong) LPMInterstitialAd *interstitialAd;
 
 @end
 
 @implementation InterstitialViewController
 
+static NSString *const kAdUnitId = @"4a0n1i4je40eigxl";
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"IronSource Mediation Interstitial";
+    self.interstitialAd = [[LPMInterstitialAd alloc] initWithAdUnitId:kAdUnitId];
+    [self.interstitialAd setDelegate:self];
 }
 
 - (IBAction)loadAdTouchUpInside:(id)sender {
     [self.activityIndicator startAnimating];
     self.showAdButton.hidden = YES;
-    [IronSource setLevelPlayInterstitialDelegate:self];
-    [IronSource loadInterstitial];
+    [self.interstitialAd loadAd];
 }
 
 - (IBAction)showAdTouchUpInside:(UIButton *)sender {
-    if ([IronSource hasInterstitial]) {
-        [IronSource showInterstitialWithViewController:self];
+    if ([self.interstitialAd isAdReady]) {
+        [self.interstitialAd showAdWithViewController:self placementName:NULL];
     } else {
         NSLog(@"Ad wasn't ready");
     }
 }
 
-#pragma mark - LevelPlayInterstitialDelegate
+#pragma mark - LPMInterstitialAdDelegate
 
-- (void)didLoadWithAdInfo:(ISAdInfo *)adInfo {
+- (void)didLoadAdWithAdInfo:(LPMAdInfo *)adInfo {
     [self.activityIndicator stopAnimating];
     self.showAdButton.hidden = NO;
 }
 
-- (void)didFailToLoadWithError:(NSError *)error {
+- (void)didFailToLoadAdWithAdUnitId:(NSString *)adUnitId error:(NSError *)error {
     [self.activityIndicator stopAnimating];
-    NSLog(@"Failed to load interstitial ad with error: %@", [error localizedDescription]);
+    NSLog(@"Failed to load interstitial with error: %@", error.localizedDescription);
 }
 
-- (void)didFailToShowWithError:(NSError *)error andAdInfo:(ISAdInfo *)adInfo {
-    NSLog(@"Failed to show interstitial ad with error: %@", [error localizedDescription]);
+- (void)didChangeAdInfo:(LPMAdInfo *)adInfo {
+    NSLog(@"interstitialDidChangeAdInfo");
 }
 
--(void)didClickWithAdInfo:(ISAdInfo *)adInfo {
+- (void)didDisplayAdWithAdInfo:(LPMAdInfo *)adInfo {
+    NSLog(@"interstitialDidDisplay");
+}
+
+- (void)didFailToDisplayAdWithAdInfo:(LPMAdInfo *)adInfo error:(NSError *)error {
+    NSLog(@"Failed to display interstitial with error: %@", error.localizedDescription);
+}
+
+- (void)didClickAdWithAdInfo:(LPMAdInfo *)adInfo {
     NSLog(@"didClickInterstitial");
 }
 
-- (void)didOpenWithAdInfo:(ISAdInfo *)adInfo {
-    NSLog(@"interstitialDidOpen");
-}
-
--(void)didCloseWithAdInfo:(ISAdInfo *)adInfo {
+- (void)didCloseAdWithAdInfo:(LPMAdInfo *)adInfo {
     self.showAdButton.hidden = YES;
     NSLog(@"interstitialDidClose");
-}
-
-- (void)didShowWithAdInfo:(ISAdInfo *)adInfo {
-    NSLog(@"interstitialDidShow");
+    [self.interstitialAd loadAd];
 }
 
 @end
